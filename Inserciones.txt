@@ -1,3 +1,0 @@
-insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('bruno'),8 );
-insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),4 );
-insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
