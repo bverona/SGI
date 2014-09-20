@@ -1,0 +1,4 @@
+1-Se justifica que exista una tabla intermedia entre almacén y movimiento ( tabla mvimiento - almacén), 
+porque permitiria conocer qué almacén intermedio puede entregar o recibir el artículo solicitado por otro o sí mismo y se puede actualizar en una tabla central.
+Además sabrá que almacén intermedio entregó, a quien entrego permitiendo actualizar la información al decisor.
+Es decir se sabría quién entregó, qué entregó, cuándo y se actualiza el stock para no comprometer loque no existe.
