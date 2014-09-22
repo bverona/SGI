@@ -3,17 +3,17 @@ insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('br
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),4 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
 -- almacenes
-insert into almacen (nombre_alm) values('Almacén Grande');
-insert into almacen (nombre_alm) values('Almacén Mediano');
-insert into almacen (nombre_alm) values('Almacén Pequeño');
-insert into almacen (nombre_alm) values('Almacén Obras');
-insert into almacen (nombre_alm) values('Almacén Oficina');
+insert into almacen (nombre_alm) values('AlmacÃ©n Grande');
+insert into almacen (nombre_alm) values('AlmacÃ©n Mediano');
+insert into almacen (nombre_alm) values('AlmacÃ©n PequeÃ±o');
+insert into almacen (nombre_alm) values('AlmacÃ©n Obras');
+insert into almacen (nombre_alm) values('AlmacÃ©n Oficina');
 
--- áreas
+-- Ã¡reas
 insert into area(nombre_are) values('Area Catastro');
 insert into area(nombre_are) values('Area Gerencia');
-insert into area(nombre_are) values('Area Alcaldía');
-insert into area(nombre_are) values('Area Tesorería');
+insert into area(nombre_are) values('Area AlcaldÃ­a');
+insert into area(nombre_are) values('Area TesorerÃ­a');
 insert into area(nombre_are) values('Area Tributos');
 
 
@@ -27,19 +27,10 @@ insert into pedido (area_id_are,fecha_ped) values(4,'2014/10/30');
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lapiceros");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Papel Bond");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Tinta para impresora");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lápices");
+insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lÃ¡pices");
 
-/*
-Procedimientos para registrar en el kardex
-TABLAS: Movimiento - Detalle Movimiento - Producto
- lo ideal sería, que por cada almacen, se creen triggers que registren los movimientos
- de entrada y salida respectivamente, esto para que el registro de entradas y salidas se
- lleve a cabo en la tabla detalle movimiento
- 1 entrada, 0 salida
- */
-insert into movimiento (tipo_mov, fecha_mov, almacen_id_alm) values(1,1);
--- 2
-insert into articulo(nombre_art,unidad_art,cantidad_art) values () ;
+
+
 
 
 

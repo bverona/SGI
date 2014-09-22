@@ -25,7 +25,7 @@
             
             //resultado almacena la tabla obtenida de la consulta
             $resultado=$objConexion->Consultar($sql)->fetch();
-
+            
             if($resultado['pass']==  md5($this->pass))
                 {
                 session_name("SGI_session");
@@ -36,10 +36,6 @@
                
                 }
             return $sesion;
-        }
-        
-        
-        
-        
+        }        
     }
 ?>
