@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/AppServ/www/SGI/Modelo/ClsSesion.php</file>
-            <file>file:/C:/AppServ/www/SGI/Vista/index.php</file>
-            <file>file:/C:/AppServ/www/SGI/Modelo/clsConexion.php</file>
+            <file>file:/C:/AppServ/www/SGI/Clases/clsArea.php</file>
+            <file>file:/C:/AppServ/www/SGI/Datos/Inserciones.sql</file>
+            <file>file:/C:/AppServ/www/SGI/Clases/ClsUsuario.php</file>
         </group>
     </open-files>
 </project-private>

@@ -25,7 +25,7 @@
 
     <div class="container">
 
-        <form class="form-signin" role="form" action="../Controlador/login.php" method="post">
+        <form class="form-signin" role="form" action="../Datos/login.php" method="post">
         <div>   <h2 class="form-signin-heading ">Inicio Sesión</h2></div>
         <input type="input" class="form-control" placeholder="Usuario" name="txtusuario" value="<?php echo $usuario; ?>" required autofocus>
         <input type="password" class="form-control" placeholder="Contraseña" name="txtpass" required>
