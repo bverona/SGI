@@ -14,13 +14,14 @@
     }
     
     public function Consultar($sql) {
-        $resultado=0;//si devuelve 0, operación realizada con éxito
+        $resultado=0;//si devuelve 0, operación errónea
         try {
             $conexion= $this->Conecta();
             $resultado=$conexion->query($sql);
 
             } 
             catch (Exception $exc) {
+            $resultado=0;
             echo $exc->getMessage();
             exit();
             }
