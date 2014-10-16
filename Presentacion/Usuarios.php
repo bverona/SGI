@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Creación de Usuarios</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -33,16 +33,19 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"></span>
+              <span class="sr-only">Toggle navigation</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
-            <a class="navbar-brand" href="#">Realizar Pedido</a>
+              <a class="navbar-brand" href="Gerente.php">Inicio</a>
           </div>
           <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-brand"><?php echo date('d/m/Y'); ?></li>
-                <li class="dropdown">                
-                <a href="#" class="dropdown-toggle " data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
+            <ul class="nav navbar-nav">
+                <li><a href="ListarUsuarios.php">Listar Usuarios</a></li>
+                <li><a href="Reportes.php">Reportes</a></li>
+            </ul>
+              <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
                     <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
@@ -54,9 +57,9 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-    <div class="container">
+      <div class="container">
             <div class="row">            
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-offset-2 col-lg-6">		
+                <div class="col-xs-offset-1 col-xs-10 col-sm-6 col-md-6 col-lg-offset-2 col-lg-6">		
                     <form action="../Funciones/NuevoUsuario.php" method="POST" role="form">
                             <div class="form-group">
                                     <label for="nombre">Nombre</label>
@@ -88,12 +91,32 @@
 
     </div> <!-- /container -->
 
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../Jquery/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.js"></script>
+ 
+    <script type="text/javascript">        
+        var valorrb ;
+        
+        function ValorArea(){
+        valorrb = $('#area').val();
+        }        
+        
+        function ValorAlmacen(){
+        valorrb = $('#almacen').val();
+        }      
+
+        function LlenaSelect(){
+        $.post( "../Funciones/llenarSelect.php", { valor_Rb: valorrb})
+        .done(function( data ) {
+            $("#cbModulos").html(data);
+        });
+
+    }
+    </script>
+ 
 
   </body>
 </html>

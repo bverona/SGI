@@ -35,7 +35,7 @@
         public  function AgregarArticulo($nombre,$unidad,$cantidad)
         {
             $correcto=false;
-            require_once '../Datos/clsConexion.php';
+            require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
             $sql="insert into articulo(nombre_art,unidad_art,cantidad_art) 
                     values('".$nombre."','".$unidad."',".$cantidad.")";
@@ -45,13 +45,12 @@
             }
 
             return $correcto;
-        }
-        
+        }      
         
         public  function EditarArticulo($nombre,$unidad,$cantidad)
         {
             $correcto=false;
-            require_once '../Datos/clsConexion.php';
+            require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
             $sql="update articulo 
                   set 
@@ -72,7 +71,7 @@
         public  function EliminarArticulo($nombre)
         {
             $correcto=false;
-            require_once '../Datos/clsConexion.php';
+            require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
             $sql="delete from articulo where nombre_art='".$nombre."'";
 

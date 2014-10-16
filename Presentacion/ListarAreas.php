@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Gestionar Almacenes</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -35,21 +35,16 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-            <a class="navbar-brand" href="#">Gestión de Módulos</a>
+           </button>
+              <a class="navbar-brand" href="Gerente.php">Gestión de Módulos</a>
           </div>
           <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
+                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -58,12 +53,28 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-5">    
+            <table class="table table-striped">
+		<thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    </tr>
+		</thead>
+		<tbody>
+                    <?php
+                    require_once '../Clases/clsArea.php';
+                    $obj=new Area();
+                    $obj->ListarAreas();
+                    ?>
+                </tbody>
+            </table>
+
+            </div>
+          </div>
+          
       </div>
 
     </div> <!-- /container -->

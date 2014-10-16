@@ -28,7 +28,7 @@
             
             if($resultado['pass']==  md5($this->pass))
                 {
-                session_name("SGI_session");
+                session_name("SGI");
                 session_start();
                 $_SESSION['usuario']=$resultado['usuario'];
                 $_SESSION['permisos']=$resultado['permisos'];

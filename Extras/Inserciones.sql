@@ -1,39 +1,39 @@
--- usuarios
+-- usuarios ok
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('bruno'),8 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),4 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
--- almacenes
-insert into almacen (nombre_alm) values('Almacén Grande');
-insert into almacen (nombre_alm) values('Almacén Mediano');
-insert into almacen (nombre_alm) values('Almacén Pequeño');
-insert into almacen (nombre_alm) values('Almacén Obras');
-insert into almacen (nombre_alm) values('Almacén Oficina');
+-- almacenes ok
+insert into almacen (nombre_alm) values('Almacï¿½n Grande');
+insert into almacen (nombre_alm) values('Almacï¿½n Mediano');
+insert into almacen (nombre_alm) values('Almacï¿½n Pequeï¿½o');
+insert into almacen (nombre_alm) values('Almacï¿½n Obras');
+insert into almacen (nombre_alm) values('Almacï¿½n Oficina');
 
--- áreas
+-- areas ok
 insert into area(nombre_are) values('Area Catastro');
 insert into area(nombre_are) values('Area Gerencia');
-insert into area(nombre_are) values('Area Alcaldía');
-insert into area(nombre_are) values('Area Tesorería');
+insert into area(nombre_are) values('Area Alcaldï¿½a');
+insert into area(nombre_are) values('Area Tesorerï¿½a');
 insert into area(nombre_are) values('Area Tributos');
 
 
--- Pedido
+-- Pedido ok
 insert into pedido (area_id_are,fecha_ped) values(1,'2014/09/17');
 insert into pedido (area_id_are,fecha_ped) values(2,'2014/08/24');
 insert into pedido (area_id_are,fecha_ped) values(3,'2014/12/18');
 insert into pedido (area_id_are,fecha_ped) values(4,'2014/10/30');
 
--- Detalle Pedido
+-- Detalle Pedido FALTA
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lapiceros");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Papel Bond");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Tinta para impresora");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lápices");
+insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lï¿½pices");
 
-/*
+/* FALTA
 Procedimientos para registrar en el kardex
 TABLAS: Movimiento - Detalle Movimiento - Producto
 ** 1
- lo ideal sería, que por cada almacen, se creen triggers que registren los movimientos
+ lo ideal serï¿½a, que por cada almacen, se creen triggers que registren los movimientos
  de entrada y salida respectivamente, esto para que el registro de entradas y salidas se
  lleve a cabo en la tabla detalle movimiento.
  1 entrada, 0 salida
@@ -47,7 +47,7 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
  insert into movimiento (tipo_mov, almacen_id_alm) values(0,2);
  insert into movimiento (tipo_mov, almacen_id_alm) values(1,2);
  
- -- almacen Pequeño
+ -- almacen Pequeï¿½o
  insert into movimiento (tipo_mov, almacen_id_alm) values(0,3);
  insert into movimiento (tipo_mov, almacen_id_alm) values(1,3);
 
@@ -60,8 +60,8 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
  insert into movimiento (tipo_mov, almacen_id_alm) values(1,1);
 
 /*
-2 si va a insertar uno nuevo artículo registrarlo, si ya existe , 
-toma el historial del artículo y trabaja con eso.
+2 si va a insertar uno nuevo artï¿½culo registrarlo, si ya existe , 
+toma el historial del artï¿½culo y trabaja con eso.
 */
 insert into articulo(nombre_art,unidad_art,cantidad_art) values 
 ('Cemento rojo',' bolsas', 100),
@@ -94,7 +94,10 @@ values
 
 
 
-
+select nombre_usu,  from usuario u
+inner join 
+where 
+order by 1
 
 
 

@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Control Visible de Almacén</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -49,7 +49,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
+                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -58,12 +58,26 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
+      <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-lg-offset-1 col-lg-8">
+            <div class="row">
+                <div class="col-xs-2">
+                    <img class="img-responsive" src="../Imagenes/logo muni motupe.png" alt="Logo" >
+                </div>
+                <div class="col-xs-10">
+                  <h4>Municipalidad Distrital de Motupe</h4>
+                  <h6>Tupac Amaru N° 531 - Telf: 426013</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-lg-offset-1 col-lg-8">
+                    
+                </div>
+            </div>
+
+            </div>
+          </div>
       </div>
 
     </div> <!-- /container -->

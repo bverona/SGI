@@ -14,13 +14,13 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Actualiza Datos Personales</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <link href="../bootstrap/css/navbar.css" rel="stylesheet">
 
   </head>
 
@@ -40,16 +40,15 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
+              <li><a href="Usuarios.php">Usuarios</a></li>
               <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
+                  <li><a href="#">Modificar Datos</a></li>
+                  <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -58,15 +57,29 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>
-          <a class="btn btn-lg btn-primary" href="../components/#navbar" role="button">View navbar docs &raquo;</a>
-        </p>
-      </div>
+      <div class="container">
+        <div class="row">            
+            <div class="col-xs-offset-1 col-xs-10 col-sm-6 col-md-6 col-lg-offset-2 col-lg-6">		
+                <form action="../Funciones/modificaDatos.php" method="POST" role="form">
+                        <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nuevo Usuario">
+                        </div>
+                        <div class="form-group">
+                                <label for="pass">Password</label>
+                                <input type="password" class="form-control" name="pass" id="pass" placeholder="Nueva Contraseña">
+                        </div>
+                        <div class="form-group">
+                                <label for="pass2">Ingrese Password Nuevamente</label>
+                                <input type="password" class="form-control" name="pass2" id="pass" placeholder="Contraseña Nuevamente">
+                        </div>
+                        <input class="btn btn-primary" type="Submit" value="Modificar Datos">
+                    </form>
+            </div>
+        </div>
 
-    </div> <!-- /container -->
+	</div>
+      </div><!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
