@@ -69,7 +69,7 @@
                                     <label for="pass">Contraseña</label>
                                     <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
                             </div>
-                        <div class="form-group" onclick="">
+                            <div class="form-group" onclick="">
                             <label class="radio-inline">
                                 <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect();" value="2"> Área
                             </label>

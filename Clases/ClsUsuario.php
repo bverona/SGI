@@ -81,12 +81,15 @@
             return $correcto;
         }
 
-        public  function ActualizaUsuario($nombreNuevo,$contrasenha, $id)
+        public  function ActualizaUsuario($nombreNuevo,$contrasenha,$almacen,$area,$permisos,$id)
         {
             require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
             $sql="update usuario set ".
                   "nombre_usu='".$nombreNuevo."', ".
+                  "permisos_usu='".$permisos."', ".
+                  "almacen_id_alm='".$almacen."', ".
+                  "almacen_id_are='".$a."', ".
                   "clave_usu='".$contrasenha."' ". 
                   "where id_usu=".$id;
           echo $sql."<br>";
@@ -144,7 +147,7 @@
         public function buscar($id) {
             require_once '../Clases/clsConexion.php';
             $objCon = new Conexion();
-            $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-'),coalesce(area_id_are,'-') from usuario where id_usu=".$id;
+            $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-') as almacen,coalesce(area_id_are,'-')as area from usuario where id_usu=".$id;
             
             $resultdo = $objCon->consultar($sql);
             $registro = $resultdo->fetch();
@@ -152,26 +155,17 @@
             $retorno = array(
               "id"=>$registro["id_usu"],
               "nombre"=>$registro["nombre_usu"],
-              "idAlmacen"=>$registro["almacen_id_alm"],
-              "idArea"=>$registro["area_id_are"]
-                );
+              "idAlmacen"=>$registro["almacen"],
+              "idArea"=>$registro["area"]
+              );
             
-                return ($retorno);
-            
+              return ($retorno);              
         }
         
         public function ListarUsuarios() 
         {
             require_once '../Clases/clsConexion.php';
             $objCon = new Conexion();
-            
-//            $sql = "select count(*) as cantidad from personal";
-//            $registro = $objCon->consultar($sql)->fetch();
-//            
-//            $total_registros = $registro["cantidad"];
-//            $registros_por_pagina = 4;
-//            $total_paginas = ceil($total_registros / $registros_por_pagina);
-//            $pagina_mostrar = ($pagina_actual -1) * $registros_por_pagina;
             
             $sql = "select 
                         u.id_usu as id,
@@ -184,8 +178,6 @@
                     order by 1";
             
             $resultado = $objCon->consultar($sql);
-            
-            //echo $sql;
             
             echo '
                 <div class="panel panel-default">

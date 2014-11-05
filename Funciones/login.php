@@ -1,20 +1,15 @@
 <?php
-    session_name("SGI");
-    session_start();
     
-    if ( ! isset($_SESSION["usuario"])){
-        header("location:index.php");
-    }
 $usuario=$_POST["txtusuario"];
 $pass=$_POST["txtpass"];
 
 require_once '../Clases/ClsSesion.php';
 
-$objSesion = new Sesion($usuario,$pass);
+$objSesion = new Sesion();
 
 /*método que da acceso a los diferentes módulos a través de los permisos 
 de cada usuario */
-if($objSesion->IniciaSesion())
+if($objSesion->IniciaSesion($usuario,$pass))
 {
     if($_SESSION["permisos"]==8)
     {
@@ -29,6 +24,7 @@ if($objSesion->IniciaSesion())
         header("location:../Presentacion/Area.php");
     }
 }  else {
+        
     header("location:../index.php");
 }
 

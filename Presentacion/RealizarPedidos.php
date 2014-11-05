@@ -5,7 +5,7 @@
     if ( ! isset($_SESSION["usuario"])){
         header("location:index.php");
     }
-?>
+    ?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -24,7 +24,7 @@
 
   </head>
 
-  <body>
+  <body onload="creaArreglo();">
 
     <div class="container">
 
@@ -54,8 +54,20 @@
       </div>
 
       <div class="jumbotron">
-        <h1>Sistema de Gestión De Inventario</h1>
-        <p>Módulo Desarrollado para que las diferentes áreas realicen sus pedidos</p>
+            <div class="row">            
+                <div class="col-xs-12 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">		
+                    <form action="../Funciones/NuevoPedido.php" method="POST" role="form">
+                         <div class="form-group">
+                                <label for="elemento">Escriba una descripción de su pedido</label>
+                                <textarea class="form-control" rows="5" name="elemento" maxlength="300" id="elemento"></textarea>
+                        </div>
+                         <div class="form-group">
+                        <p><button class="btn btn-primary" type="button" value="Añadir Artículo" onclick="AñadeArreglo();">Añadir Pedido</button></p>
+                        <p><input type="button" class="btn btn-primary btn-success" onclick="EnviarArreglo();" value="Enviar Pedidos"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>          
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
@@ -68,6 +80,26 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../Jquery/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">
+       var arreglo= new Array(); 
 
+        function AñadeArreglo()
+        {
+         arreglo.push($("#elemento").val()); 
+         $("#elemento").val("");         
+        }
+
+        function EnviarArreglo()
+        {
+
+            $.post("../Funciones/InsertaPedidos.php",{arreglo:arreglo})
+                    .done(function(data){
+                alert("funco!! "+data);
+            });
+    
+        }
+        
+        
+    </script>
   </body>
 </html>

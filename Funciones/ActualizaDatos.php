@@ -16,7 +16,7 @@
         $texto="Cambio No Realizado";            
         if($rb==4)
         {
-        if($objusuario->ActualizaUsuario($usuario,md5($pass),$id))
+        if($objusuario->ActualizaUsuario($usuario,md5($pass),$modulos,0,$id))
             {
             $texto="Cambio Realizado, satisfactoriamente";            
             }            

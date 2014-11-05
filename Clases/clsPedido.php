@@ -25,17 +25,18 @@
             return $this->fecha;
         }
         
-        public  function AgregarPedido($area_id,$fecha)
+        public  function AgregarPedido($area_id,$id,$fecha)
         {
             $correcto=false;
             require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
-            $sql="insert into pedido (area_id_are,fecha_ped)
-                    values(".$area_id.",'".$fecha."');";
+            $sql="insert into pedido (area_id_are,fecha_ped,usuario)
+                    values(".$area_id.",'".$fecha."',".$id.");";
             if(($obj->Consultar($sql))==!0)
             {
                 $correcto=true;
             }
+            echo $sql;
             return $correcto;
         }
         
@@ -72,7 +73,28 @@
             
         return $correcto;
         
-        }        
+        }
+        
+        public function AgregarDetallePedido($detalle)
+        {
+            $correcto=false;
+            require_once '../Clases/clsConexion.php';
+            $obj= new Conexion();
+            $sql="select MAX(id_ped)as maximo from pedido;";
+            
+            $resultado = $obj->Consultar($sql);
+            $registro = $resultado->fetch();
+            
+            $sql="insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)"
+                    . "values(".$registro["maximo"].",'".$detalle."')";
+            
+            if(($obj->Consultar($sql))==!0)
+            {
+                $correcto=true;
+            }
+            return $correcto;
+            
+        }
         
         }
     

@@ -2,19 +2,21 @@
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('bruno'),8 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),4 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
+
 -- almacenes ok
 insert into almacen (nombre_alm) values('Almac�n Grande');
 insert into almacen (nombre_alm) values('Almac�n Mediano');
-insert into almacen (nombre_alm) values('Almac�n Peque�o');
+insert into almacen (nombre_alm) values('Almac�n Pequeño');
 insert into almacen (nombre_alm) values('Almac�n Obras');
 insert into almacen (nombre_alm) values('Almac�n Oficina');
+insert into almacen (nombre_alm) values('XXXXXXXXXXXX');
 
 -- areas ok
 insert into area(nombre_are) values('Area Catastro');
 insert into area(nombre_are) values('Area Gerencia');
-insert into area(nombre_are) values('Area Alcald�a');
-insert into area(nombre_are) values('Area Tesorer�a');
-insert into area(nombre_are) values('Area Tributos');
+insert into area(nombre_are) values('Area Alcaldía');
+insert into area(nombre_are) values('Area Tesorería');
+insert into area(nombre_are) values('XXXXXXXXXXXXXX');
 
 
 -- Pedido ok
@@ -27,7 +29,7 @@ insert into pedido (area_id_are,fecha_ped) values(4,'2014/10/30');
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lapiceros");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Papel Bond");
 insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Tinta para impresora");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de l�pices");
+insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lápices");
 
 /* FALTA
 Procedimientos para registrar en el kardex
@@ -59,10 +61,17 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
  insert into movimiento (tipo_mov, almacen_id_alm) values(0,5);
  insert into movimiento (tipo_mov, almacen_id_alm) values(1,1);
 
+-- tipo Artículo
+insert into tipoArticulo(nombre_tip)values
+("Oficina"),
+("Construccion"),
+("Vehículos");
+
 /*
-2 si va a insertar uno nuevo art�culo registrarlo, si ya existe , 
-toma el historial del art�culo y trabaja con eso.
+2 si va a insertar uno nuevo artículo registrarlo, si ya existe , 
+toma el historial del artículo y trabaja con eso.
 */
+
 insert into articulo(nombre_art,unidad_art,cantidad_art) values 
 ('Cemento rojo',' bolsas', 100),
 ('yeso','bolsas', 50),
@@ -89,15 +98,5 @@ values
 (6,'compra reciente',3,50,'2014/03/11'),
 (8,'compra reciente',4,30,'2014/09/10'),
 (10,'compra antigua',5,200,'2014/12/12');
-
-
-
-
-
-select nombre_usu,  from usuario u
-inner join 
-where 
-order by 1
-
 
 

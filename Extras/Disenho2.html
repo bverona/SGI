@@ -2,68 +2,214 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Control visible almacén</title>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-</head>
+	<title> Control visible almacén</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap/css/borde.css">
+     </head>
 
 <body>
 
     <div class="container">
        
-		<div class="row">
-			<div class="col-xs-6">
+        <div class="row">
+            
+            <div class="borde col-xs-offset-0 col-xs-12">
+            <div class="row">
+                <div class="col-xs-1">
+                    <img class="img-responsive" src="../Imagenes/logo muni motupe.png">
+                </div>
 
-			</div>
-			</div>
+                <div class=" col-xs-10 text-left">
+                
+                    <h3>Municipalidad Distrital de Motupe</h3>
+                    <p class="text-muted">TUPAC AMARU N° 531-TELF: 426013</p>
+                </div>
+            </div>
+ 
                 <div class="row">    
-			<div class="col-xs-6">
-				<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit at, tempora soluta eius! Sit, nemo itaque excepturi dolor pariatur atque voluptate similique sunt ad inventore non, quisquam quod omnis debitis.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem non, nemo? Sit ducimus nobis vitae provident laborum facere illum veritatis rerum, beatae voluptatibus, animi cupiditate ea debitis minus ut quae!</p>
-			</div>
-		</div>
-    </div>
+                <div class="text-center">                    
+                <h3>EXISTENCIAS VALORADAS DEL ALMACÉN</h3>
+                </div>    
+                <div class="col-xs-offset-9 col-xs-3">                    
+                    <p><input type="text" value="Tarjeta N°" class="form-control" disabled></p>
+                </div>    
+            </div>    
+            
+            <!--Inicio Cabeceras-->
+            <div class="row bordeArriba bordeAbajo ">
+                <!--1-->                    
+                <div class=" col-xs-1 text-center bordeDerecha ">
+                    1
+                    <br><br><br>
+                    Fecha 
+                </div>
+                <!--2-->
+                <div class=" col-xs-2 bordeDerecha">
+                    <div class="row">
+                        <div class="col-xs-12 text-center bordeAbajo">
+                            2
+                            <br>
+                            Comprobante
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-xs-6 text-center bordeDerecha">
+                            a
+                            <br>
+                            Clase
+                        </div>
+                        <div class=" col-xs-6 text-center">
+                            b
+                            <br>
+                            N°
+                        </div>
+                    </div>
+                </div>
+                <!--3-->
+                <div class="col-xs-3 bordeDerecha">
+                    <div class=" row text-center bordeAbajo">
+                        3
+                        <br>
+                        Movimiento
+                    </div> 
+                    <div class="row">
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            a
+                            <br>
+                            Entrada
+                        </div>
+                        <div class=" col-xs-4 text-center bordeDerecha">
+                            b
+                            <br>
+                            Salida
+                        </div>
+                        <div class=" col-xs-4 text-center">
+                            c
+                            <br>
+                            Saldo
+                        </div>                            
+                    </div> 
 
-                        <table class=" table table-striped">
-                            <thead>
-                            
-                                    <tr>
-                                        <td rowspan="2" > <img src="logo muni motupe.gif" alt="logo"> </td>
-                                        <td colspan="6" class="center"><h4>MUNICIPALIDAD DISTRITAL DE MOTUPE</h4></td>
-                                    </tr>
-                            
-                                    <tr>
-                                        <td>DIRECCIÓN:______________________</td>
-                                        <td >TELEFONO:______________________</td>
-                                    </tr>
-                                    <tr>
-                                            <td>CONTROL VISIBLE DE ALMACÉN N°:______________</td>
-                                    </tr>
-                                    <tr>
-                                            <td>ARTÍCULO:____________</td>
-                                    </tr>
-                                    <tr>
-                                            <td>CÓDIGO:______________</td>
-                                            <td>MARCA:_____________</td>
-                                    </tr>
-                                    <tr>
-                                            <td>UNIDAD DE MEDIDA:_______________</td>
-                                    </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                            <td rowspan="2">FECHA</td>
-                                            <td colspan="2">COMPROBANTE</td>
-                                            <td colspan="3">MOVIMIENTO</td>
-                                    </tr>
-                                    <tr>
-                                            <td></td>
-                                            <td>a<br>CLASE</td>
-                                            <td>b <br>N°</td>
-                                            <td>a <br>ENTRADA</td>
-                                            <td>b <br>SALIDA</td>
-                                            <td>c <br>SALDO</td>
-                                    </tr>
-                            </tbody>
-                    </table>
+                </div>
+                <!--1-->
+                <div class=" col-xs-1 text-center bordeDerecha ">
+                    4
+                    <br><br>
+                    Precio
+                    <br>
+                    Unitario 
+                </div>
+                
+                <!--4-->
+                <div class="col-xs-4 text-center bordeDerecha">
+                    <div class=" row text-center bordeAbajo">
+                        5
+                        <br>
+                        Importes
+                    </div> 
+                    <div class="row">
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            a
+                            <br>
+                            Entrada
+                        </div>
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            b
+                            <br>
+                            Salida
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            c
+                            <br>
+                            Saldo
+                        </div>                            
+                    </div>                 
+                </div>
+                
+                <!--1-->
+                <div class="col-xs-1">
+                    <br>
+                    <br>
+                     Formulario
+
+                </div>
+                
+            </div><!-- Fin Cabeceras-->
+            
+            <div class="row">
+
+                <div class=" col-xs-1 text-center bordeAbajo bordeDerecha ">
+                    Fecha
+                </div>
+
+                <div class=" col-xs-2 bordeDerecha bordeAbajo">
+                    <div class="row">
+                        <div class=" col-xs-6 text-center bordeDerecha ">
+                            aClase
+                        </div>
+                        <div class=" col-xs-6 text-center">
+                            b N°
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3 bordeDerecha bordeAbajo">
+                    <div class="row">
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            aEntrada
+                        </div>
+                        <div class=" col-xs-4 text-center bordeDerecha">
+                            bSalida
+                        </div>
+                        <div class=" col-xs-4 text-center">
+                            cSaldo
+                        </div>                            
+                    </div> 
+
+                </div>
+
+                <div class=" col-xs-1  bordeDerecha bordeAbajo">
+                    <div class="col-xs-11 bordeDerecha">a</div>
+                    <div class="col-xs-1"> </div>
+                </div>
+
+                
+                <div class="col-xs-4 text-center bordeDerecha bordeAbajo">
+                    <div class="row">
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            aEntrada
+                        </div>
+                        <div class="col-xs-4 text-center bordeDerecha">
+                            b Salida
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            c Saldo
+                        </div>                            
+                    </div>                 
+                </div>
+                <div class="col-xs-1 text-center ">
+                    <div class="col-xs-offset-1 col-xs-11">
+                        Formulario
+                    </div>
+                </div>                                        
+                    
+ 
+            </div><!--row-->    
+            
+            
+            </div>
+
+                
+                
+                
+                <?php ?>
+                <!-- Este es el formato que se va a llenar con PHP
+                por cada registro será un row -->
+        </div>       
+    </div>
+        
+    <script src="../Jquery/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
+
 </body>
 </html>

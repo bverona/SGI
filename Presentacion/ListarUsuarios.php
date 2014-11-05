@@ -56,12 +56,11 @@
         </div><!--/.container-fluid -->
       </div>
 
-      <!-- Main component for a primary marketing message or call to action -->
+      <!-- Componente para Mostrar los usuarios -->
       <div class="container">
           <div class="row">
             <div class="col-xs-12">
-
-                
+      <!-- Listar Usuarios-->         
         <?php
             require_once '../Clases/ClsUsuario.php';
             $objusuario = new Usuario();
@@ -71,8 +70,8 @@
             </div>
           </div>
       </div>
-      <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
 
+      <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -81,6 +80,7 @@
                     <h4 class="modal-title" id="myModalLabel">Editar Datos</h4>
                   </div>
                   <div class="modal-body">
+
                             <div class="form-group">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
@@ -89,8 +89,21 @@
                                     <label for="pass">Contraseña</label>
                                     <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
                             </div>
-                              <input type="hidden" id="id" name="id" value="">
-                              <input type="hidden" id="select" name="select" value="">
+                            <div class="form-group" onclick="">
+                            <label class="radio-inline">
+                                <input type="radio" name="RadioInline" id="area"  onclick="ValorArea();LlenaSelect();"  value="2"> Área
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect();"> Almacén
+                            </label>
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control" id="cbModulos" name="cbModulos">
+
+                                </select>
+                            </div>                                                            
+
                   </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-danger" aria-hidden="true">Aceptar</button>
@@ -116,25 +129,20 @@
         });
     
         function leerDatosPersonal(p_dni){
-            $.post( "../Funciones/BuscarUsuario.php", { id_usu: p_dni })
+        $.post( "../Funciones/BuscarUsuario.php", { id_usu: p_dni })
             .done(function( data ) {
                 data = $.parseJSON(data);
                 $("#nombre").val(data.nombre);
                 $("#id").val(data.id);
                 $("#select").val($("#cbModulos").val());
-                if(data.idAlmacen=='-'){
-                    Select(2);
-                $("#cbModulos").val(data.idArea);
-                }else
-                {
-                    Select(4);
-                $("#cbModulos").val(data.idAlmacen);
-                }
-            },"json");
-        }
+                (data.idAlmacen=='-')?Select(2,data.idArea):Select(4,data.idAlmacen);                
+        },"json");
+        
+    }
 
         function eliminar(p_dni){
-            if (confirm("Esta seguro de eliminar")){
+
+        if (confirm("Esta seguro de eliminar")){
                 $.post( "../Funciones/EliminaUsuario.php", { id_usu: p_dni })
                 .done(function( data ) {
                     alert(data);
@@ -162,10 +170,12 @@
             $("#cbModulos").html(data);
         });
     }
-        function Select(valor){
+        function Select(valor,id){
+        //(valor===4)? $("#area").attr("checked":"true"):$("#almacen").attr("checked":"true");
         $.post( "../Funciones/llenarSelect.php", { valor_Rb: valor})
         .done(function( data ) {
             $("#cbModulos").html(data);
+            $("#cbModulos").val(id);
         });
     }
 
