@@ -10,7 +10,7 @@
     $usuario=$_POST['nombre'];
     $pass=$_POST['pass'];
     $pass2=$_POST['pass2'];
- 
+    echo $_SESSION['id'] . "<br>";
     if($pass==$pass2)
     {
         require_once '../Clases/ClsUsuario.php'; 
@@ -18,13 +18,11 @@
         
         $objusuario = new Usuario();
         $direccion;
-        $objusuario->SetNombre($_SESSION['usuario']);
-        $objusuario->EditarUsuario($usuario,md5($pass));
+
+        $objusuario->EditarUsuario($_SESSION['id'],$usuario,md5($pass));
         $texto="Cambio Realizado, satisfactoriamente";
+
         //Esto por el momento
-
-        
-
     if($_SESSION["permisos"]==8)
             {
                 $direccion="../Presentacion/Gerente.php";

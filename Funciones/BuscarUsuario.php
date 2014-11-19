@@ -1,5 +1,5 @@
 <?php
-     $id = $_POST['id_usu'];
+     $id = $_POST['id'];
     
     require_once '../Clases/ClsUsuario.php';
     $objUsuario = new Usuario();

@@ -35,12 +35,12 @@
             return $correcto;
         }        
         
-        public  function EditarArea($nombre,$nombreNuevo)
+        public  function EditarArea($id,$nombreNuevo)
         {
             $correcto=false;
             require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
-            $sql="update area set nombre_are='".$nombreNuevo."' where nombre_are='".$nombre."'";
+            $sql="update area set nombre_are='".$nombreNuevo."' where id_are=".$id;
 
             if(($obj->Consultar($sql))==!0)
             {
@@ -87,25 +87,51 @@
             $resultado = $objCon->consultar($sql);
             
             while($registro = $resultado->fetch()){  
-
+                  
                 $areas .= '<option value="'.$registro["id_are"].'">'.$registro["nombre_are"].'</option>';
             }
                         
             echo $areas;
         }
+
         public function ListarAreas(){
             
             require_once '../Clases/clsConexion.php';
             $objCon = new Conexion();
-            $sql = "select id_are, nombre_are from area where id_are <> 0 order by 1;";
+            $sql = "select id_are as id, nombre_are as nombre from area where id_are <> 0 order by 1;";
             $resultado = $objCon->consultar($sql);
             
-            while($registro = $resultado->fetch()){  
+        echo '
+        <div class="panel panel-success">
+            <div class="panel-heading"><b>Listado de Almacenes</b></div>
+                <div class="panel-body">
+                    <div class="table-responsive table-hover">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Editar</th>
+                              <th>Eliminar</th>
+                              <th>Areas</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+        ';
 
-                $areas .= '<tr><td>'.$registro["id_are"].'</td><td>'.$registro["nombre_are"].'</td></tr>';                
+            while ($registro = $resultado->fetch()) {
+
+                echo '<tr>';
+                echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../imagenes/editar.png"/></a></td>';
+                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../imagenes/eliminar.png"/></a></td>';
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '</tr>';
             }
-                        
-            echo $areas;
+                echo '</tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+                ';
+
         }
         
     

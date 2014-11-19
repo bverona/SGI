@@ -1,117 +1,136 @@
 <?php
-    
-    class Almacen{
-        
-        private $id;
-        private $nombre;
-        
-        
-        public function SetId($id){
-            $this->id=$id;
+
+class Almacen {
+
+    private $id;
+    private $nombre;
+
+    public function SetId($id) {
+        $this->id = $id;
+    }
+
+    public function GetId() {
+        return $this->id;
+    }
+
+    public function GetNombre() {
+        return $this->nombre;
+    }
+
+    public function SetNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    public function AgregarAlmacen($nombre) {
+        $correcto = false;
+        require_once '../Clases/clsConexion.php';
+        $obj = new Conexion();
+        $sql = "insert into almacen(nombre_alm) values('" . $nombre . "')";
+
+        if (($obj->Consultar($sql)) == !0) {
+            $correcto = true;
         }
-        public function GetId(){
-            return $this->id;
+
+        return $correcto;
+    }
+
+    public function EditarAlmacen($id, $nombreNuevo) {
+        $correcto = false;
+        require_once '../Clases/clsConexion.php';
+        $obj = new Conexion();
+        $sql = "update almacen set nombre_alm='" . $nombreNuevo . "' where id_alm=" . $id ;
+
+        if (($obj->Consultar($sql)) == !0) {
+            $correcto = true;
         }
-        public function GetNombre(){
-            return $this->nombre;
+
+        return $correcto;
+    }
+
+    public function EliminarAlmacen($nombre) {
+        $correcto = false;
+        require_once '../Clases/clsConexion.php';
+        $obj = new Conexion();
+        //antes de eliminar tiene que verificarse que no tenga ningún artículo
+        //$sql = "delete from almacen where nombre_alm='" . $nombre . "'";
+
+        if (($obj->Consultar($sql)) == !0) {
+            $correcto = true;
         }
-        public function SetNombre($nombre) {
-            $this->nombre=$nombre;
+
+        return $correcto;
+    }
+
+    public function ObtenerAlmacen($id) {
+
+        require_once '../datos/accesodatos.php';
+        $objCon = new Conexion();
+        $sql = "select  nombre_alm from almacen where id_alm=" . $id . "order by 1;";
+
+        $resultado = $objCon->consultar($sql);
+        $registro = $resulatdo->fetch();
+
+        $retorno = $registro["nombre_alm"];
+
+        return $retorno;
+    }
+
+    //para agregar al select
+    public function ListarAlmacen() {
+
+        require_once '../Clases/clsConexion.php';
+        $objCon = new Conexion();
+        $sql = "select id_alm, nombre_alm from almacen order by 1;";
+        $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+
+            $almacenes .= '<option value="' . $registro["id_alm"] . '">' . $registro["nombre_alm"] . '</option>';
         }
-        
-        
-        public  function AgregarAlmacen($nombre)
-        {
-            $correcto=false;
-            require_once '../Clases/clsConexion.php';
-            $obj= new Conexion();
-            $sql="insert into almacen(nombre_alm) values('".$nombre."')";
 
-            if(($obj->Consultar($sql))==!0)
-            {
-                $correcto=true;
-            }
+        echo $almacenes;
+    }
 
-            return $correcto;
-        }        
-        
-        public  function EditarAlmacen($nombre,$nombreNuevo)
-        {
-            $correcto=false;
-            require_once '../Clases/clsConexion.php';
-            $obj= new Conexion();
-            $sql="update almacen set nombre_alm='".$nombreNuevo."' where nombre_alm='".$nombre."'";
+    //para Listar todos los almacenes
+    public function ListarAlmacenes() {
 
-            if(($obj->Consultar($sql))==!0)
-            {
-                $correcto=true;
-            }
+        require_once '../Clases/clsConexion.php';
+        $objCon = new Conexion();
+        $sql = "select id_alm, nombre_alm from almacen where id_alm <> 0 order by 1;";
+        $resultado = $objCon->consultar($sql);
 
-            return $correcto;
-        }
-        
-        public  function EliminarAlmacen($nombre)
-        {
-            $correcto=false;
-            require_once '../Clases/clsConexion.php';
-            $obj= new Conexion();
-            $sql="delete from almacen where nombre_alm='".$nombre."'";
+        echo '
+                <div class="panel panel-success">
+                    <div class="panel-heading"><b>Listado de Almacenes</b></div>
+                        <div class="panel-body">
+                            <div class="table-responsive table-hover">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Editar</th>
+                                      <th>Eliminar</th>
+                                      <th>Almacén</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                ';
 
-            if(($obj->Consultar($sql))==!0)
-            {
-                $correcto=true;
-            }
-            
-            return $correcto;
-        }  
+                            while ($registro = $resultado->fetch()) {
 
-        
-        public function ObtenerAlmacen($id){
-            
-            require_once '../datos/accesodatos.php';
-            $objCon = new Conexion();
-            $sql = "select  nombre_alm from almacen where id_alm=".$id."order by 1;";
-            
-            $resultado = $objCon->consultar($sql);
-            $registro = $resulatdo->fetch();
-            
-            $retorno = $registro["nombre_alm"];
-            
-            return $retorno;
-        }        
+                                echo '<tr>';
+                                echo '<td><a href="#" onclick="leerDatos(' . $registro["id_alm"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../imagenes/editar.png"/></a></td>';
+                                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id_alm"] . '\')"><img src="../imagenes/eliminar.png"/></a></td>';
+                                echo '<td>' . $registro["nombre_alm"] . '</td>';
+                                echo '</tr>';
+                            }
+                        echo '</tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+                ';
+    }
 
-        public function ListarAlmacen(){
-            
-            require_once '../Clases/clsConexion.php';
-            $objCon = new Conexion();
-            $sql = "select id_alm, nombre_alm from almacen order by 1;";
-            $resultado = $objCon->consultar($sql);
-            
-            while($registro = $resultado->fetch()){            
+}
 
-                $almacenes .= '<option value="'.$registro["id_alm"].'">'.$registro["nombre_alm"].'</option>';
-                
-            }
-                        
-            echo $almacenes;
-        }        
-        public function ListarAlmacenes(){
-            
-            require_once '../Clases/clsConexion.php';
-            $objCon = new Conexion();
-            $sql = "select id_alm, nombre_alm from almacen where id_alm <> 0 order by 1;";
-            $resultado = $objCon->consultar($sql);
-            
-            while($registro = $resultado->fetch()){            
-
-                $almacenes .= '<tr><td>  '.$registro["id_alm"].'</td><td>'.$registro["nombre_alm"].'</td></tr>';                
-            }
-                        
-            echo $almacenes;
-        }        
-        
-        
-        
-        
-            }    
 ?>

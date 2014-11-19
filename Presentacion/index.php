@@ -1,6 +1,8 @@
 <?php
     if (isset($_COOKIE["usuario"])){
         $usuario = $_COOKIE["usuario"];
+        echo $usuario ;
+        
     }else{
         $usuario = "";
     }

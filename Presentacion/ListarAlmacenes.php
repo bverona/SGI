@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Realizar Pedidos</title>
+    <title>Gestionar Almacenes</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -33,7 +33,7 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only panel-success">Toggle navigation</span>
+              <span class="sr-only">Toggle navigation</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
               <a class="navbar-brand" href="../Presentacion/Gerente.php">Gestión de Módulos</a>
@@ -62,27 +62,29 @@
                         </li>
                         <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
                     </ul>
-                </li>
+              </li>
                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                         <a data-toggle="modal" data-target="#NuevaArea" href="#">
-                        Nueva Area
+                        Nueva Área
                         </a> 
                         </li>
                         <li>
-                            <a  href="ListarAreas.php">Listar Areas</a>
+                            <a  href="ListarAreas.php">Listar Áreas</a>
                         </li>
                     </ul>
               </li>
-<!--               <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="">Reporte 1</a></li>
-                        <li><a href="">Reporte 2</a></li>
-                    </ul>
-              </li>-->
+<!--               
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="">Reporte 1</a></li>
+                    <li><a href="">Reporte 2</a></li>
+                </ul>
+            </li>
+-->
 
               </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -98,7 +100,7 @@
         </div><!--/.container-fluid -->
       </div>
 
-    <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaArea.php">
+    <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaAlmacen.php">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -108,13 +110,11 @@
                                           
                     </div>
                     <div class="modal-body">
-
                         <div class="form-group">
                             <label for="nombre">Nuevo Nombre </label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Área">
+                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Almacén">
                         </div>
                         <input type="hidden" name="id" id="id">
-
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger" aria-hidden="true">Aceptar</button>
@@ -133,16 +133,16 @@
               <div class="col-xs-12 col-lg-6">    
 
                     <?php
-                    require_once '../Clases/clsArea.php';
-                    $obj=new Area();
-                    $obj->ListarAreas();
+                    require_once '../Clases/clsAlmacen.php';
+                    $obj=new Almacen();
+                    $obj->ListarAlmacenes();
                     ?>
 
             </div>
           </div>          
       </div>
 
-            <!-- Modal Nuevo Almacén-->
+           <!-- Modal Nuevo Almacén-->
             <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../Funciones/NuevoAlmacen.php">
                     <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -187,10 +187,10 @@
                                     </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect();" value="2"> Área
+                                        <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect(2);" value="2"> Área
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect();"> Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> Almacén
                                     </label>
                                     </div>
                                     <div class="form-group">
@@ -236,6 +236,7 @@
             </form>        
             <!-- /Modal Nuevo Área-->      
       
+      
     </div> <!-- /container -->
 
 
@@ -246,20 +247,21 @@
     <script src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
     
-    function leerDatos(id)
+    function leerDatos(id,nombre)
     {
         $('#myModal').on('shown.bs.modal', function () {
             $('#nombre').focus();
-        });
-                
-        $("#id").val(id);   
+        })
+        $("#id").val(id);
+        
     }
 
     //para implementar el eliminar primero se deben realizar los pedidos por 
     //las áreas y la gestión por parte de los almacenes
     function eliminar(p_dni) {
 
-    alert("Antes de implementar ver Requerimientos para eliminar Áreas");
+        alert("Antes de implementar ver Requerimientos para eliminar Almacen");
+
 //        if (confirm("Esta seguro de eliminar")) {
 //            $.post("../Funciones/InactivaAlmacen.php", {id_usu: p_dni})
 //                    .done(function(data) {
@@ -269,6 +271,49 @@
 //        }
 
     }
+
+        function SelectAlmacen(valor) {
+            
+            //alert(valor + " valor almacen");
+         $("#area").prop("checked", false) ;
+         $("#almacen").prop("checked", true) ;
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 4})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        function SelectArea(valor) {
+            //alert(valor+ " valor area");
+         $("#almacen").prop("checked", false);
+         $("#area").prop("checked", true);
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 2})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        </script>
+
+        <script type="text/javascript">
+            var valorrb;
+
+            function ValorArea() {
+                valorrb = $('#area').val();
+            }
+
+            function ValorAlmacen() {
+                valorrb = $('#almacen').val();
+            }
+            function LlenaSelect(val) {
+                //alert(valorrb);
+                $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
+                        .done(function(data) {
+                            $("#cbModulos").html(data);
+                        });
+            }
 
         </script>
 

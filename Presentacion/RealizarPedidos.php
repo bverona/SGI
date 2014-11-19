@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Realizar Pedido</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -57,11 +57,20 @@
             <div class="row">            
                 <div class="col-xs-12 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">		
                     <form action="../Funciones/NuevoPedido.php" method="POST" role="form">
-                         <div class="form-group">
-                                <label for="elemento">Escriba una descripción de su pedido</label>
-                                <textarea class="form-control" rows="5" name="elemento" maxlength="300" id="elemento"></textarea>
+                        <div class="form-group">
+                            <select class="form-control" id="cbtipo" name="cbtipo">
+                                
+                            </select>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
+                            <select class="form-control" id="cbarticulo" name="cbarticulo">
+                                
+                            </select>
+                        </div>    
+                        <div class="form-group">
+                            <input type="" class="form-control"  >
+                        </div>    
+                        <div class="form-group">
                         <p><button class="btn btn-primary" type="button" value="Añadir Artículo" onclick="AñadeArreglo();">Añadir Pedido</button></p>
                         <p><input type="button" class="btn btn-primary btn-success" onclick="EnviarArreglo();" value="Enviar Pedidos"></p>
                         </div>

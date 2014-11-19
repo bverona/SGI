@@ -1,4 +1,11 @@
-1-Se justifica que exista una tabla intermedia entre almacén y movimiento ( tabla mvimiento - almacén), 
-porque permitiria conocer qué almacén intermedio puede entregar o recibir el artículo solicitado por otro o sí mismo y se puede actualizar en una tabla central.
-Además sabrá que almacén intermedio entregó, a quien entrego permitiendo actualizar la información al decisor.
-Es decir se sabría quién entregó, qué entregó, cuándo y se actualiza el stock para no comprometer loque no existe.
+1-Se justifica que exista una tabla intermedia entre almacï¿½n y movimiento ( tabla mvimiento - almacï¿½n), 
+porque permitiria conocer quï¿½ almacï¿½n intermedio puede entregar o recibir el artï¿½culo solicitado por otro o sï¿½ mismo y se puede actualizar en una tabla central.
+Ademï¿½s sabrï¿½ que almacï¿½n intermedio entregï¿½, a quien entrego permitiendo actualizar la informaciï¿½n al decisor.
+Es decir se sabrï¿½a quiï¿½n entregï¿½, quï¿½ entregï¿½, cuï¿½ndo y se actualiza el stock para no comprometer loque no existe.
+
+
+*IMPORTANTE:
+Es necesario que en las tablas almacen y area exista un elemento con id 0 y con
+valor en blanco ("") para mostrar la informaciÃ³n correctamente, de lo contrario
+pueden ocurrir errores duranto el listado de usuarios en el archivo 
+/Presentacion/ListarUsuarios.php.

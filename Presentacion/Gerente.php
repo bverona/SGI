@@ -32,7 +32,7 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">NavBar</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
             <a class="navbar-brand" href="#">Gestión de Módulos</a>
@@ -59,7 +59,7 @@
                           Nuevo Almacén
                         </a>
                         </li>
-                        <li><a  href="GestionarAlmacenes.php">Listar Almacenes</a></li>
+                        <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
                     </ul>
               </li>
                <li class="dropdown">
