@@ -11,7 +11,6 @@
         require_once '../util/funciones.php';
         $objusuario = new Usuario();
         $direccion;
-        echo $modulos."<br>";
         
         $permisos=4;//permiso para almacén
         if($rb==4)

@@ -9,16 +9,16 @@ insert into almacen (nombre_alm) values('Almacen Mediano');
 insert into almacen (nombre_alm) values('Almacen Pequeño');
 insert into almacen (nombre_alm) values('Almacen Obras');
 insert into almacen (nombre_alm) values('Almacen Oficina');
-insert into almacen (nombre_alm) values('XXXXXXXXXXXX');
-UPDATE almacen SET id_alm=0,nombre_alm="" WHERE id_alm='XXXXXXXXXXXX';
+insert into almacen (nombre_alm) values('');
+UPDATE almacen SET id_alm=0,nombre_alm="" WHERE nombre_alm='';
 
 -- areas ok
 insert into area(nombre_are) values('Area Catastro');
 insert into area(nombre_are) values('Area Gerencia');
 insert into area(nombre_are) values('Area Alcaldía');
 insert into area(nombre_are) values('Area Tesorería');
-insert into area(nombre_are) values('XXXXXXXXXXXXXX');
-UPDATE area SET id_are=0,nombre_are="" WHERE `id_are`='XXXXXXXXXXXXXX';
+insert into area(nombre_are) values('');
+UPDATE area SET id_are=0,nombre_are="" WHERE `nombre_are`='';
 
 -- Pedido ok
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(1,'2014/09/17',2);
@@ -26,11 +26,13 @@ insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(2,'2014/08/24',3);
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(3,'2014/12/18',3);
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(4,'2014/10/30',2);
 
+select * from articulo;
+
 -- Detalle Pedido FALTA
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lapiceros");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Papel Bond");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Tinta para impresora");
-insert into detalle_pedido(Pedido_id_ped,descripcion_det_ped)values(1,"Caja de lápices");
+insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,1,2);
+insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,2,4);
+insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,3,5);
+insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,4,3);
 
 /* FALTA
 Procedimientos para registrar en el kardex
@@ -61,6 +63,7 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
  -- almacen Oficina
  insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(0,5,'30/4/14');
  insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(1,1,'26/5/14');
+-- ok 
 
 -- tipo Artículo
 insert into tipoArticulo(nombre_tip)values
@@ -69,11 +72,18 @@ insert into tipoArticulo(nombre_tip)values
 ("Vehículos");
 
 /*
+CREATE TRIGGER Inserta_moviento_almacen before INSERT on almacen 
+for each row 
+insert into movimiento(tipo_mov, almacen_id_alm,fecha_det_mov)
+values(1,NEW.id_alm,Date('d-m-Y'));
+insert into movimiento(tipo_mov, almacen_id_alm,fecha_det_mov)
+values(2,NEW.id_alm,Date('d-m-Y'));
+
 2 si va a insertar uno nuevo artículo registrarlo, si ya existe , 
 toma el historial del artículo y trabaja con eso.
 */
 
-insert into articulo(nombre_art,unidad_art,cantidad_art,id_tip_art) values 
+insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art) values 
 ('Cemento rojo',' bolsas', 100,2),
 ('yeso','bolsas', 50,2),
 ('Pintura Roja','baldes', 60,2),
@@ -85,7 +95,7 @@ insert into articulo(nombre_art,unidad_art,cantidad_art,id_tip_art) values
 ('piedra de 1/2','volquetada', 10,2),
 ('alambre grueso','metros', 500,2),
 ('Papel bond','medio millar', 20,1),
-('Caja Lapiceros','Unidada', 8,1),
+('Caja Lapiceros','Unidad', 8,1),
 ('Engrapador','unidad', 10,1),
 ('perforador','unidad', 9,1),
 ('bujías','unidad', 6,3),
@@ -98,15 +108,15 @@ insert into detalle_movimiento
 	movimiento_id_mov,
 	descripcion_det_mov,
 	articulo_id_art,
-	cantidad_det_mov,
-	fecha_det_mov
+	cantidad_det_mov
  ) 
 values 
-(2,'compra reciente',1,20,'2014/10/10'),
-(4,'compra reciente',2,30,'2014/09/10'),
-(6,'compra reciente',3,50,'2014/03/11'),
-(8,'compra reciente',4,30,'2014/09/10'),
-(10,'compra antigua',5,200,'2014/12/12');
+(2,'compra reciente',1,20),
+(4,'compra reciente',2,30),
+(6,'compra reciente',3,50),
+(8,'compra reciente',4,30),
+(10,'compra antigua',5,200);
+
 
 
                                                                                 

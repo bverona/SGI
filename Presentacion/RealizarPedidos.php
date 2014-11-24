@@ -2,7 +2,7 @@
     session_name("SGI");
     session_start();
     
-    if ( ! isset($_SESSION["usuario"])){
+    if ( (!isset($_SESSION["usuario"])) || ($_SESSION["permisos"]!=2)){
         header("location:index.php");
     }
     ?>
@@ -24,7 +24,7 @@
 
   </head>
 
-  <body onload="creaArreglo();">
+  <body onload="llenarArticulo();" >
 
     <div class="container">
 
@@ -53,60 +53,162 @@
         </div><!--/.container-fluid -->
       </div>
 
-      <div class="jumbotron">
-            <div class="row">            
+      <div class="container">
+            <div class="row">
                 <div class="col-xs-12 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">		
-                    <form action="../Funciones/NuevoPedido.php" method="POST" role="form">
-                        <div class="form-group">
-                            <select class="form-control" id="cbtipo" name="cbtipo">
-                                
-                            </select>
+                    <form action="../Funciones/InsertaPedidos.php" method="POST" role="form">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cbtipo">Tipo Artículo</label>
+                                <select class="form-control" id="cbtipo" name="cbtipo" onchange="llenarArticulo();"onload="Unidad();" >
+                                    <?php
+                                        require_once '../Clases/clsTipo.php';
+                                        $objTipo = new TipoArticulo();
+                                        $objTipo->SelectTipoArticulo();
+                                    ?>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="cbarticulo" name="cbarticulo">
-                                
-                            </select>
+                        <div class="col-xs-12">                        
+                            <div class="form-group">
+                                <label for="cbarticulo">Artículo</label>
+
+                                <select class="form-control" id="cbarticulo" name="cbarticulo" onchange="Unidad()" >
+
+                                </select>
+                            </div>    
                         </div>    
                         <div class="form-group">
-                            <input type="" class="form-control"  >
-                        </div>    
+                            <div class="col-xs-8">
+                                <label for="cantidad">Cantidad</label>
+                                <input type="text" id="cantidad" data-toggle="tooltip" data-placement="bottom" title="Solo Números" name="cantidad" class="form-control">
+                            </div>    
+                            <div class="col-xs-4">
+                                <label for="unidad">Unidad</label>
+                                <input type="text" id="unidad" readonly name="unidad" class="form-control">
+                            </div>    
+                        </div>
+                        
                         <div class="form-group">
-                        <p><button class="btn btn-primary" type="button" value="Añadir Artículo" onclick="AñadeArreglo();">Añadir Pedido</button></p>
-                        <p><input type="button" class="btn btn-primary btn-success" onclick="EnviarArreglo();" value="Enviar Pedidos"></p>
+                            <div class="col-xs-12">    
+                                <div class="col-xs-5">
+                                <br>    
+                                <button class="btn btn-primary" type="button" id="añade" value="Añadir Artículo" onclick="AñadePedido();">Añadir Pedido</button>
+                                </div>
+                                <div class="col-xs-offset-3 col-xs-2 ">    
+                                <br>
+                                <input type="submit" class="btn btn-primary btn-success" value="Enviar Pedidos">
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
-            </div>          
+            </div>
       </div>
+      <br>
+            <div class="row">
+              <div class="table-responsive">          
+                <div class="col-xs-12 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">
+                    <table class="table table-striped table-condensed table-hover" id="tabla">
+			<thead>
+				<tr>
+					<th>Tipo Artículo</th>
+					<th>Artículo</th>
+					<th>Cantidad</th>
+				</tr>
+			</thead>
+			<tbody id="bodytabla">
+
+			</tbody>
+                    </table>
+
+                </div>
+              </div>
+            </div>
 
       <!-- Main component for a primary marketing message or call to action -->
 
     </div> <!-- /container -->
 
-
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../Jquery/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
-       var arreglo= new Array(); 
 
-        function AñadeArreglo()
+
+        $(document).ready(function (){
+          $('#cantidad').tooltip();
+          $('#cantidad').keyup(function (){
+            this.value =(this.value + '').replace(/[^0-9]/g,'');
+            Unidad();
+    });
+     });
+        function PedidoTabla(){
+
+        var html ="<tr><td>"+$("#cbtipo option:selected").html()+"</td><td>"+$("#cbarticulo option:selected").html()+"</td><td>"+$("#cantidad").val()+"</td><td>"+$("#unidad").val()+"</td></tr>";
+        $("#bodytabla").append(html);
+            $("#cbtipo").val("");
+            $("#cbarticulo").val("");
+            $("#cantidad").val("");
+        };
+
+        function AñadePedido()
         {
-         arreglo.push($("#elemento").val()); 
-         $("#elemento").val("");         
-        }
-
-        function EnviarArreglo()
+            var arreglo= new Array(); 
+            if(($("#cbtipo").val()===null))
+            {
+                $('#cbtipo').focus();
+                $('#cbtipo').tooltip('show');                
+            }
+            else 
+                if($("#cbarticulo").val()===null)
+                {
+                    $('#cbarticulo').focus();
+                    $('#cbarticulo').tooltip('show');                
+                }
+                else 
+                    if(($("#cantidad").val()==="")){
+                        $('#cantidad').focus();
+                        $('#cantidad').tooltip('show');
+                    }
+                    else 
+                    {
+                        arreglo.push([$("#cbarticulo").val(),$("#cantidad").val()]); //funciona
+                        PedidoTabla();
+                    }
+            //alert(arreglo[arreglo.length-1][0]+" "+arreglo[arreglo.length-1][1]+" "+arreglo[arreglo.length-1][2]);
+            
+    }    
+       
+        function Unidad()
         {
-
-            $.post("../Funciones/InsertaPedidos.php",{arreglo:arreglo})
-                    .done(function(data){
-                alert("funco!! "+data);
+            var id = $("#cbarticulo").val();
+            $.post("../Funciones/DatosArticulo.php",{id:id})
+            .done(function(data)
+            {
+     
+                data = $.parseJSON(data);
+                $("#unidad").val(data.unidad)
             });
     
         }
+        
+        function llenarArticulo(){
+        var tipoArticulo = $("#cbtipo").val();
+        $("#cbarticulo").html("");
+        
+        $.post("../Funciones/llenarArticulo.php",{tipo_articulo:tipoArticulo})
+            .done(function( data ) {
+                $("#cbarticulo").html(data);
+                Unidad();
+    });
+            
+        }
+        
+        
         
         
     </script>

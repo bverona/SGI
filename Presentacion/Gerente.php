@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
-
+s
     <title>Modulo Administrador</title>
 
     <!--Bootstrap-->

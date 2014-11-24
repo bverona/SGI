@@ -33,7 +33,7 @@ class Usuario {
                 "nombre_usu='" . $nombre . "', " .
                 "clave_usu='" . $contrasenha . "' " .
                 "where id_usu='" . $id . "';";
-        echo $sql;
+        
         if (($obj->Consultar($sql)) == !0) {
             $correcto = true;
         }
@@ -51,7 +51,7 @@ class Usuario {
                 "area_id_are=" . $area . ", " .
                 "clave_usu='" . $contrasenha . "' " .
                 "where id_usu=" . $id;
-        echo $sql . "<br>";
+        
         if (($obj->Consultar($sql)) == !0) {
             $correcto = true;
         }

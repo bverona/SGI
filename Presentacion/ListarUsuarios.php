@@ -24,8 +24,7 @@ if (!isset($_SESSION["usuario"])) {
 
     </head>
 
-    <body onload="ValorArea();
-          ValorAlmacen();
+    <body onload="ValorArea();ValorAlmacen();
           ">
 
         <div class="container">
