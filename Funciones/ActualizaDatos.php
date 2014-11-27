@@ -14,7 +14,6 @@
             $antiguo=1;
             }
         
-        echo "Antiguo".$antiguo."<br>";
         require_once '../Clases/ClsUsuario.php'; 
         require_once '../Clases/ClsSesion.php'; 
         require_once '../util/funciones.php';

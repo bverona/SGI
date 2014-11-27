@@ -5,7 +5,8 @@
     if ( ! isset($_SESSION["usuario"])){
         header("location:index.php");
     }
-?>
+    $almacen=($_SESSION["id_almacen"]);
+    ?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -89,7 +90,7 @@
           <!-- /container -->
 
             <!--Modal Movimiento Entrada -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -107,10 +108,12 @@
                                     <label for="cantidad">Cantidad</label>
                                     <input type="text" class="form-control" name="cantidad" id="nombre" required placeholder="Nombre Usuario">
                                 </div>
-                                <input type="hidden" name="saldo" id="saldo">
+                                <input type="hidden" name="saldo" id="saldo" value="">
+                                <input type="hidden" name="id" id="id" value="">
+                                <input type="hidden" name="almacen" id="almacen" <?php echo 'value="'.$almacen.'"'?> >
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger " aria-hidden="true">Registrar</button>
+                                <button type="submit"  class="btn btn-danger " aria-hidden="true">Registrar</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -120,7 +123,7 @@
             <!-- Fin Modal Movimiento Entrada-->
                     
             <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimienoSalida.php">
                 <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -131,30 +134,35 @@
                             <div class="modal-body">
 
                                 <div class="form-group">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
-                                </div>
-                                <div class="form-group">
-                                    <label for="pass">Contraseña</label>
-                                    <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
+                                    <label for="nombresalida">Artículo</label>
+                                    <input type="text" class="form-control" name="nombresalida" id="nombresalida" readonly>
                                 </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area"  onclick="ValorArea();LlenaSelect(2);"  value="2"> 
-                                        Área
+                                        <input type="radio" name="RadioInline" id="area"  onclick="DefineSalida(1);"  value="1"> 
+                                        Salida
                                     </label>
                                     <label class="radio-inline" required>
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> 
-                                        Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="2" onclick="DefineSalida(2);"> 
+                                        Transferencia
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" id="cbModulos" name="cbModulos">
-
+                                    <label for="cantidadsalida">Artículo</label>
+                                    <input type="text" class="form-control" name="cantidadsalida" id="cantidadsalida" required>
+                                </div>
+                                <div class="form-group" id="divmodulos" hidden="true">
+                                    <select class="form-control" id="cbModulos" name="cbModulos" >
+                                        <?php 
+                                            require_once '../Clases/clsAlmacen.php';
+                                            $objAlmacen= new Almacen();                                            
+                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                        ?>
                                     </select>
                                 </div>
-                                <input type="hidden" name="id" id="id">
-                            <input type="hidden" id="antiguo" name="antiguo" value=""> 
+                                <input type="hidden" name="saldosalida" id="saldosalida" value="">
+                                <input type="hidden" name="idsalida" id="idsalida" value="">
+                                <input type="hidden" name="almacensalida" id="almacensalida" <?php echo 'value="'.$almacen.'"'?> >
 
                             </div>
                             <div class="modal-footer">
@@ -253,49 +261,21 @@
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombre").val(data.nombre);
+                        $("#saldo").val(data.cantidad);
                         $("#id").val(data.id);
-                        if(data.idArea == '-' || data.idArea == '0') 
-                        {
-                            //alert("almacen "+data.idAlmacen);
-                            SelectAlmacen();
-                            $("#antiguo").val(data.idAlmacen);
-                            $("#cbModulos").val(data.idAlmacen);
-                        }else
-                        {
-                            //alert("area "+data.idArea);
-                            SelectArea();
-                            $("#antiguo").val(data.idArea);
-    
-                            $("#cbModulos").val(data.idArea);
-                        }
-                        
                     }, "json");                    
         }
-
-    function leerDatosSalida(id_) 
+       function leerDatosSalida(id_) 
         {
             $.post("../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
-                        $("#nombre").val(data.nombre);
-                        $("#id").val(data.id);
-                        if(data.idArea == '-' || data.idArea == '0') 
-                        {
-                            //alert("almacen "+data.idAlmacen);
-                            SelectAlmacen();
-                            $("#antiguo").val(data.idAlmacen);
-                            $("#cbModulos").val(data.idAlmacen);
-                        }else
-                        {
-                            //alert("area "+data.idArea);
-                            SelectArea();
-                            $("#antiguo").val(data.idArea);
-    
-                            $("#cbModulos").val(data.idArea);
-                        }
-                        
+                        $("#nombresalida").val(data.nombre);
+                        $("#saldosalida").val(data.cantidad);
+                        $("#idsalida").val(data.id);
                     }, "json");                    
         }
+
 
     
         function LlenaTipo() {
@@ -304,6 +284,22 @@
                          $("#cbTipo").append(data);
                     });
         }
+
+
+        function DefineSalida(val)
+        {
+            alert(val)
+            if (val===2)
+            {
+                $("#divmodulos").prop("hidden",false);
+            }else
+                {
+                    $("#divmodulos").prop("hidden",true);
+                }
+                
+        }
+
+
 
         function Filtro()
         {
@@ -314,6 +310,9 @@
                     });
             
         }
-        
+
+
+
+
     </script>
 </html>

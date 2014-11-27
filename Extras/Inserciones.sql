@@ -10,6 +10,7 @@ insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('are
 -- almacenes ok
 -- almacen generál no podrá ser eliminado o Modificado 
 insert into almacen (nombre_alm,general_alm) values('Almacén General',1);
+update usuario set almacen_id_alm=1 where nombre_usu='almacen';
 
 -- almacenes normales
 insert into almacen (nombre_alm) values('Almacen Mediano');
@@ -100,6 +101,9 @@ insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,4
  */
 
 
+select * from detalle_movimiento WHERE articulo_id_art=1;
+
+
 insert into detalle_movimiento (
                 movimiento_id_mov,
                 articulo_id_art,
@@ -122,6 +126,5 @@ values
 (10,'compra antigua',5,200);
 */
 
-
-
+select * from articulo;
                                                                                 
