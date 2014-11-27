@@ -52,6 +52,7 @@
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>
+      <!-- /Static navbar -->
 
       <div class="jumbotron">
         <h1>Sistema de Gestión De Inventario</h1>

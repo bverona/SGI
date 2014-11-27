@@ -187,14 +187,14 @@
                                     </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect();" value="2"> Área
+                                        <input type="radio" name="RadioInline" id="area" value="2" onclick="LlenaSelectNuevo(2);" > Área
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect();"> Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
                                     </label>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" id="cbModulos" name="cbModulos">
+                                        <select class="form-control" id="cbModulosNuevo" name="cbModulos">
 
                                         </select>
                                     </div>
@@ -204,7 +204,7 @@
                                 <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                           </div>
-
+                           
                         </div>
                       </div>
                     </div>
@@ -257,7 +257,8 @@
 
     //para implementar el eliminar primero se deben realizar los pedidos por 
     //las áreas y la gestión por parte de los almacenes
-    function eliminar(p_dni) {
+    function eliminar(p_dni) 
+    {
 
     alert("Antes de implementar ver Requerimientos para eliminar Áreas");
 //        if (confirm("Esta seguro de eliminar")) {
@@ -269,8 +270,57 @@
 //        }
 
     }
+    
+       function SelectAlmacen() {            
+         $("#area").prop("checked", false) ;
+         $("#almacen").prop("checked", true) ;
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 4})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        function SelectArea() {
+         $("#almacen").prop("checked", false);
+         $("#area").prop("checked", true);
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 2})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        function LlenaSelectNuevo(val) {
+
+        $.post("../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
+                        .done(function(data) {
+
+                            $("#cbModulosNuevo").html(data);
+                        });
+            }
 
         </script>
 
+    <script>
+    var valorrb;
+
+    function ValorArea() {
+        valorrb = $('#area').val();
+    }
+
+    function ValorAlmacen() {
+        valorrb = $('#almacen').val();
+    }
+    function LlenaSelect(val) {
+        //alert(valorrb);
+        $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
+                .done(function(data) {
+
+                    $("#cbModulos").html(data);
+                });
+    }
+
+    </script>
   </body>
 </html>

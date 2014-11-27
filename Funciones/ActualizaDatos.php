@@ -6,6 +6,15 @@
         $modulos=$_POST['cbModulos'];
         $id=$_POST['id'];
  
+        if(isset($_POST['antiguo']))
+        {
+           $antiguo=$_POST['antiguo'];            
+        }else
+            {
+            $antiguo=1;
+            }
+        
+        echo "Antiguo".$antiguo."<br>";
         require_once '../Clases/ClsUsuario.php'; 
         require_once '../Clases/ClsSesion.php'; 
         require_once '../util/funciones.php';
@@ -15,14 +24,14 @@
         $permisos=4;//permiso para almacén
         if($rb==4)
         {
-        if($objusuario->ActualizaUsuario($usuario,md5($pass),$modulos,0,$permisos,$id))
+        if($objusuario->ActualizaUsuario($usuario,md5($pass),$modulos,0,$permisos,$id,$antiguo))
             {
             $texto="Cambio Reailzado, satisfactoriamente";            
             }            
         }else
         {
             $permisos=2;
-            $objusuario->ActualizaUsuario($usuario,md5($pass),0,$modulos,$permisos,$id);
+            $objusuario->ActualizaUsuario($usuario,md5($pass),0,$modulos,$permisos,$id,$antiguo);
             $texto="Cambio Realizado, satisfactoriamente";
         }
         

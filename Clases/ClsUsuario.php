@@ -10,7 +10,8 @@ class Usuario {
     private $almacen;
 
  
-    public function AgregarUsuario($nombre, $contrasenha, $permisos) {
+    public function AgregarUsuario($nombre, $contrasenha, $permisos)
+    {
         $correcto = false;
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
@@ -26,7 +27,8 @@ class Usuario {
         return $correcto;
     }
 
-    public function EditarUsuario($id,$nombre, $contrasenha) {
+    public function EditarUsuario($id,$nombre, $contrasenha)
+    {
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
@@ -41,25 +43,53 @@ class Usuario {
         return $correcto;
     }
 
-    public function ActualizaUsuario($nombreNuevo, $contrasenha, $almacen, $area, $permisos, $id) {
+    public function ActualizaUsuario($nombreNuevo, $contrasenha, $almacen, $area, $permisos, $id,$antiguo)
+    {
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
-        $sql = "update usuario set " .
+        $correcto=false;
+        $sql1="";
+        $sql2="";
+        $sql3="";
+
+        
+        //si el flag almacén no es 0 entonces se asignó a un área
+        if($almacen!=0)
+        {
+            //se le cambia el estado al almacén a no asignado y podrá volver a mostrarse
+            $sql1="update almacen SET asignado_alm=0 where id_alm=".$antiguo;
+            //se le asigna el estado de asignado al nuevo almacén
+            $sql2="update almacen SET asignado_alm=1 where id_alm=".$almacen;                
+        }
+        
+        $sql3 = "update usuario set " .
                 "nombre_usu='" . $nombreNuevo . "', " .
                 "permisos_usu=" . $permisos . ", " .
                 "almacen_id_alm=" . $almacen . ", " .
                 "area_id_are=" . $area . ", " .
                 "clave_usu='" . $contrasenha . "' " .
-                "where id_usu=" . $id;
+                "where id_usu=" . $id;        
         
-        if (($obj->Consultar($sql)) == !0) {
-            $correcto = true;
+        if($sql1=="")
+        {
+            if (($obj->Consultar($sql3)) !=0) 
+            {
+                
+                echo "se modificó el area";
+                $correcto = true;
+        }            
+        }else{             
+            if ( (($obj->Consultar($sql1)) != 0) && (($obj->Consultar($sql2)) !=0) && (($obj->Consultar($sql3)) !=0) ) 
+            {
+                echo "se modificó el almacén";
+                $correcto = true;
+            }
         }
-
         return $correcto;
     }
 
-    public function EliminarUsuario($id) {
+    public function EliminarUsuario($id)
+    {
         $correcto = false;
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
@@ -72,7 +102,8 @@ class Usuario {
         return 0;
     }
 
-    public function AsignaArea($area, $nombre) {
+    public function AsignaArea($area, $nombre)
+    {
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
@@ -84,23 +115,27 @@ class Usuario {
         return $correcto;
     }
 
-    public function AsignaAlmacen($almacen, $nombre) {
+    public function AsignaAlmacen($almacen, $nombre) 
+    {
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
                 "almacen_id_alm=" . $almacen .
                 " where nombre_usu='" . $nombre . "'";
-        if (($obj->Consultar($sql)) == !0) {
+        $sql2="update almacen SET asignado_alm=1 where id_alm=".$almacen;
+        if ((($obj->Consultar($sql))!=0) && (($obj->Consultar($sql2))!=0))
+        {
             $correcto = true;
         }
         return $correcto;
     }
 
-    public function buscar($id) {
+    public function buscar($id)
+    {
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-') as almacen,coalesce(area_id_are,'-')as area 
-                 from usuario where id_usu=" . $id;
+        $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-') as almacen,coalesce(area_id_are,'-') as area 
+                 from usuario where id_usu=".$id;
 
         $resultdo = $objCon->consultar($sql);
         $registro = $resultdo->fetch();
@@ -112,10 +147,11 @@ class Usuario {
             "idArea" => $registro["area"]
         );
 
-        return ($retorno);
+        return $retorno;
     }
 
-    public function ListarUsuarios() {
+    public function ListarUsuarios()
+    {
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
 

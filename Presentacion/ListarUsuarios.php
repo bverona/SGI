@@ -34,7 +34,7 @@ if (!isset($_SESSION["usuario"])) {
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">NavBar</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
               <a class="navbar-brand" href="../Presentacion/Gerente.php">Gestión de Módulos</a>
@@ -135,12 +135,12 @@ if (!isset($_SESSION["usuario"])) {
                                 </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area"  onclick="ValorArea();
-                                        LlenaSelect();"  value="2"> Área
+                                        <input type="radio" name="RadioInline" id="area"  onclick="ValorArea();LlenaSelect(2);"  value="2"> 
+                                        Área
                                     </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();
-                                        LlenaSelect();"> Almacén
+                                    <label class="radio-inline" required>
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> 
+                                        Almacén
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -149,7 +149,7 @@ if (!isset($_SESSION["usuario"])) {
                                     </select>
                                 </div>
                                 <input type="hidden" name="id" id="id">
-
+                            <input type="hidden" id="antiguo" name="antiguo" value=""> 
 
                             </div>
                             <div class="modal-footer">
@@ -183,14 +183,14 @@ if (!isset($_SESSION["usuario"])) {
                                     </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" value="2" onclick="LlenaSelect(2);" > Área
+                                        <input type="radio" name="RadioInline" id="area" value="2" onclick="LlenaSelectNuevo(2);" > Área
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelect(4);"> Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
                                     </label>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" id="cbModulos" name="cbModulos">
+                                        <select class="form-control" id="cbModulosNuevo" name="cbModulos">
 
                                         </select>
                                     </div>
@@ -200,7 +200,7 @@ if (!isset($_SESSION["usuario"])) {
                                 <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                           </div>
-
+                           
                         </div>
                       </div>
                     </div>
@@ -266,25 +266,32 @@ if (!isset($_SESSION["usuario"])) {
         <script src="../bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript">
 
-        $('#myModal').on('shown.bs.modal', function() {
+
+        $('#myModal').on('shown.bs.modal', function()
+        {
             $('#nombre').focus();
         });
 
-        function leerDatos(id_) {
+        function leerDatos(id_) 
+        {
             $.post("../Funciones/BuscarUsuario.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombre").val(data.nombre);
                         $("#id").val(data.id);
-
-                        if(data.idArea == '-') 
+                        if(data.idArea == '-' || data.idArea == '0') 
                         {
                             //alert("almacen "+data.idAlmacen);
-                            SelectAlmacen(data.idAlmacen);
+                            SelectAlmacen();
+                            $("#antiguo").val(data.idAlmacen);
+                            $("#cbModulos").val(data.idAlmacen);
                         }else
                         {
                             //alert("area "+data.idArea);
-                            SelectArea(data.idArea);
+                            SelectArea();
+                            $("#antiguo").val(data.idArea);
+    
+                            $("#cbModulos").val(data.idArea);
                         }
                         
                     }, "json");
@@ -292,7 +299,8 @@ if (!isset($_SESSION["usuario"])) {
 
         }
 
-        function eliminar(p_dni) {
+        function eliminar(p_dni)
+        {
 
             if (confirm("Esta seguro de eliminar")) {
                 $.post("../Funciones/EliminaUsuario.php", {id_usu: p_dni})
@@ -304,9 +312,8 @@ if (!isset($_SESSION["usuario"])) {
 
         }
 
-        function SelectAlmacen(valor) {
-            
-            //alert(valor + " valor almacen");
+        function SelectAlmacen() 
+        {            
          $("#area").prop("checked", false) ;
          $("#almacen").prop("checked", true) ;
             $.post("../Funciones/llenarSelect.php", {valor_Rb: 4})
@@ -316,8 +323,8 @@ if (!isset($_SESSION["usuario"])) {
                     });
         }
 
-        function SelectArea(valor) {
-            //alert(valor+ " valor area");
+        function SelectArea() 
+        {
          $("#almacen").prop("checked", false);
          $("#area").prop("checked", true);
             $.post("../Funciones/llenarSelect.php", {valor_Rb: 2})
@@ -340,11 +347,18 @@ if (!isset($_SESSION["usuario"])) {
                 valorrb = $('#almacen').val();
             }
             function LlenaSelect(val) {
-                //alert(valorrb);
                 $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
                         .done(function(data) {
                            
                             $("#cbModulos").html(data);
+                        });
+            }
+            function LlenaSelectNuevo(val) {
+                    
+                $.post("../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
+                        .done(function(data) {
+
+                            $("#cbModulosNuevo").html(data);
                         });
             }
 

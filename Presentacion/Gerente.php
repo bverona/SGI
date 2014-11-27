@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
-s
+
     <title>Modulo Administrador</title>
 
     <!--Bootstrap-->
@@ -149,10 +149,10 @@ s
                             </div>
                         <div class="form-group" onclick="">
                             <label class="radio-inline">
-                                <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect();" value="2"> Área
+                                <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect(2);" value="2"> Área
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect();"> Almacén
+                                <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> Almacén
                             </label>
                             </div>
                             <div class="form-group">
@@ -207,25 +207,100 @@ s
 
     <script src="../Jquery/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript">        
-        var valorrb ;
-        
-        function ValorArea(){
-        valorrb = $('#area').val();
-        }        
-        
-        function ValorAlmacen(){
-        valorrb = $('#almacen').val();
-        }      
+        <script type="text/javascript">
 
-        function LlenaSelect(){
-        $.post( "../Funciones/llenarSelect.php", { valor_Rb: valorrb})
-        .done(function( data ) {
-            $("#cbModulos").html(data);
+
+        $('#myModal').on('shown.bs.modal', function()
+        {
+            $('#nombre').focus();
         });
 
-    }
-    </script>
+        function leerDatos(id_) 
+        {
+            $.post("../Funciones/BuscarUsuario.php", {id: id_})
+                    .done(function(data) {
+                        data = $.parseJSON(data);
+                        $("#nombre").val(data.nombre);
+                        $("#id").val(data.id);
+                        if(data.idArea == '-' || data.idArea == '0') 
+                        {
+                            //alert("almacen "+data.idAlmacen);
+                            SelectAlmacen();
+                            alert(data);
+                            $("#antiguo").val(data.idAlmacen);
+                            alert(data.id);
+                            $("#cbModulos").val(data.idAlmacen);
+                        }else
+                        {
+                            //alert("area "+data.idArea);
+                            SelectArea();
+                            $("#antiguo").val(data.idArea);
+                            alert(data.id);
+                            $("#cbModulos").val(data.idAlmacen);
+                        }
+                        
+                    }, "json");
+                    
 
+        }
+
+        function eliminar(p_dni)
+        {
+
+            if (confirm("Esta seguro de eliminar")) {
+                $.post("../Funciones/EliminaUsuario.php", {id_usu: p_dni})
+                        .done(function(data) {
+                            alert(data);
+                            document.location.href = "ListarUsuarios.php";
+                        });
+            }
+
+        }
+
+        function SelectAlmacen() 
+        {            
+         $("#area").prop("checked", false) ;
+         $("#almacen").prop("checked", true) ;
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 4})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        function SelectArea() 
+        {
+         $("#almacen").prop("checked", false);
+         $("#area").prop("checked", true);
+            $.post("../Funciones/llenarSelect.php", {valor_Rb: 2})
+                    .done(function(data) {
+                        alert(data);
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
+
+        </script>
+
+        <script type="text/javascript">
+            var valorrb;
+
+            function ValorArea() {
+                valorrb = $('#area').val();
+            }
+
+            function ValorAlmacen() {
+                valorrb = $('#almacen').val();
+            }
+            function LlenaSelect(val) {
+                alert(val);
+                $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
+                        .done(function(data) {
+                           
+                            $("#cbModulos").html(data);
+                        });
+            }
+
+        </script>
   </body>
 </html>

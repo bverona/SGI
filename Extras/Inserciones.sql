@@ -4,7 +4,7 @@ insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
 
 -- almacenes ok
-insert into almacen (nombre_alm) values('Almacén Grande');
+insert into almacen (nombre_alm,) values('Almacén Grande');
 insert into almacen (nombre_alm) values('Almacen Mediano');
 insert into almacen (nombre_alm) values('Almacen Pequeño');
 insert into almacen (nombre_alm) values('Almacen Obras');
@@ -20,13 +20,54 @@ insert into area(nombre_are) values('Area Tesorería');
 insert into area(nombre_are) values('');
 UPDATE area SET id_are=0,nombre_are="" WHERE `nombre_are`='';
 
+insert into tipoArticulo(nombre_tip)values
+("Oficina"),
+("Construccion"),
+("Vehículos");
+
+insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art) values 
+('Cemento rojo',' bolsas', 100,2),
+('yeso','bolsas', 50,2),
+('Pintura Roja','baldes', 60,2),
+('Pintura Amarilla','bolsas', 50,2),
+('piedra chancada','volquetadas', 9,2),
+('madera','unidades', 35,2),
+('Cemento azul',' bolsas', 120,2),
+('tecnopor',' planchas', 80,2),
+('piedra de 1/2','volquetada', 10,2),
+('alambre grueso','metros', 500,2),
+('Papel bond','medio millar', 20,1),
+('Caja Lapiceros','Unidad', 8,1),
+('Engrapador','unidad', 10,1),
+('perforador','unidad', 9,1),
+('bujías','unidad', 6,3),
+('mantenimiento','unidad', 3,3),
+('Gasolina','litros', 50,3),
+('Espejo retrovisor','unidad', 1,3);
+
+insert into detalle_movimiento 
+(
+	movimiento_id_mov,
+	descripcion_det_mov,
+	articulo_id_art,
+	cantidad_det_mov
+ ) 
+values 
+(2,'compra reciente',1,20),
+(4,'compra reciente',2,30),
+(6,'compra reciente',3,50),
+(8,'compra reciente',4,30),
+(10,'compra antigua',5,200);
+
 -- Pedido ok
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(1,'2014/09/17',2);
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(2,'2014/08/24',3);
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(3,'2014/12/18',3);
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(4,'2014/10/30',2);
 
-select * from articulo;
+
+insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)
+                    values(1,2,2);
 
 -- Detalle Pedido FALTA
 insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,1,2);
@@ -66,10 +107,6 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
 -- ok 
 
 -- tipo Artículo
-insert into tipoArticulo(nombre_tip)values
-("Oficina"),
-("Construccion"),
-("Vehículos");
 
 /*
 CREATE TRIGGER Inserta_moviento_almacen before INSERT on almacen 
@@ -83,39 +120,7 @@ values(2,NEW.id_alm,Date('d-m-Y'));
 toma el historial del artículo y trabaja con eso.
 */
 
-insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art) values 
-('Cemento rojo',' bolsas', 100,2),
-('yeso','bolsas', 50,2),
-('Pintura Roja','baldes', 60,2),
-('Pintura Amarilla','bolsas', 50,2),
-('piedra chancada','volquetadas', 9,2),
-('madera','unidades', 35,2),
-('Cemento azul',' bolsas', 120,2),
-('tecnopor',' planchas', 80,2),
-('piedra de 1/2','volquetada', 10,2),
-('alambre grueso','metros', 500,2),
-('Papel bond','medio millar', 20,1),
-('Caja Lapiceros','Unidad', 8,1),
-('Engrapador','unidad', 10,1),
-('perforador','unidad', 9,1),
-('bujías','unidad', 6,3),
-('mantenimiento','unidad', 3,3),
-('Gasolina','litros', 50,3),
-('Espejo retrovisor','unidad', 1,3);
 
-insert into detalle_movimiento 
-(
-	movimiento_id_mov,
-	descripcion_det_mov,
-	articulo_id_art,
-	cantidad_det_mov
- ) 
-values 
-(2,'compra reciente',1,20),
-(4,'compra reciente',2,30),
-(6,'compra reciente',3,50),
-(8,'compra reciente',4,30),
-(10,'compra antigua',5,200);
 
 
 

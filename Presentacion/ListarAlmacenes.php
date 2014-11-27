@@ -187,14 +187,14 @@
                                     </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" onclick="ValorArea();LlenaSelect(2);" value="2"> Área
+                                        <input type="radio" name="RadioInline" id="area" value="2" onclick="LlenaSelectNuevo(2);" > Área
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
                                     </label>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" id="cbModulos" name="cbModulos">
+                                        <select class="form-control" id="cbModulosNuevo" name="cbModulos">
 
                                         </select>
                                     </div>
@@ -204,7 +204,7 @@
                                 <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                           </div>
-
+                           
                         </div>
                       </div>
                     </div>
@@ -312,6 +312,14 @@
                 $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
                         .done(function(data) {
                             $("#cbModulos").html(data);
+                        });
+            }
+            function LlenaSelectNuevo(val) {
+                  
+                $.post("../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
+                        .done(function(data) {
+
+                            $("#cbModulosNuevo").html(data);
                         });
             }
 

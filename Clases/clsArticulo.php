@@ -26,13 +26,26 @@
         }
         
         
-        public  function AgregarArticulo($nombre,$unidad,$cantidad)
+        public  function AgregarArticulo($nombre,$unidad,$cantidad,$tipo,$codigo,$precio)
         {
             $correcto=false;
             require_once '../Clases/clsConexion.php';
             $obj= new Conexion();
-            $sql="insert into articulo(nombre_art,unidad_art,cantidad_art) 
-                    values('".$nombre."','".$unidad."',".$cantidad.")";
+            $sql="
+            insert into articulo(
+                nombre_art,
+                unidad_art,
+                cantidad_art,
+                TipoArticulo_id_tip_art,
+                codigo_art,
+                precio_art) 
+            values(
+                    '".$nombre."',".
+                    "'".$unidad."',".
+                    $cantidad.","
+                    .$tipo.","
+                    ."'".$codigo."',"
+                    .$precio.")";
             if(($obj->Consultar($sql))==!0)
             {
                 $correcto=true;
@@ -162,8 +175,8 @@
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
-            echo '<td><img src="../imagenes/editar.png"/></a></td>';
-            echo '<td><img src="../imagenes/eliminar.png"/></a></td>';
+            echo '<td><a><span class="glyphicon glyphicon-arrow-up"></span><img src="../imagenes/entrada.png"/></a></td>';
+            echo '<td><a><span class="glyphicon glyphicon-arrow-down"></span><img src="../imagenes/salida.png"/></a></td>';
             echo '<td>' . $registro["nombre"] . '</td>';
             echo '<td>' . $registro["unidad"] . '</td>';
             echo '<td>' . $registro["cantidad"] . '</td>';

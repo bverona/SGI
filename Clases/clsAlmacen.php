@@ -25,10 +25,23 @@ class Almacen {
         $correcto = false;
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
-        $sql = "insert into almacen(nombre_alm) values('" . $nombre . "')";
+        $sql1 = "insert into almacen(nombre_alm) values('" . $nombre . "')";
+        $sqlmax="select MAX(id_alm) as maximo from almacen";
+        
+        if ( (($obj->Consultar($sql1)) == !0)) 
+        {
+            $resultado=$obj->Consultar($sqlmax);
+            $registro=$resultado->fetch();
+            
+            //movimiento de entrada = 0
+            $sql2 = "insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(0,".$registro["maximo"] .",'".date('Y-m-d')."')";
 
-        if (($obj->Consultar($sql)) == !0) {
-            $correcto = true;
+            //movimiento de salida = 1
+            $sql3 = "insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(1,".$registro["maximo"] .",'".date('Y-m-d')."')";
+            if((($obj->Consultar($sql2)) == !0) && (($obj->Consultar($sql3)) == !0))
+            {
+                $correcto= true;
+            }
         }
 
         return $correcto;
@@ -75,12 +88,28 @@ class Almacen {
         return $retorno;
     }
 
-    //para agregar al select
-    public function ListarAlmacen() {
+    //para agregar al select cuando se hace un editar usuario
+    public function ListarAlmacenSinFiltro() {
 
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_alm, nombre_alm from almacen order by 1;";
+        $sql = "select id_alm, nombre_alm from almacen  order by 1;";
+        $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+
+            $almacenes .= '<option value="' . $registro["id_alm"] . '">' . $registro["nombre_alm"] . '</option>';
+        }
+
+        echo $almacenes;
+    }
+
+    //para agregar al select cuando se hace un nuevo usuario
+    public function ListarAlmacenConFiltro() {
+
+        require_once '../Clases/clsConexion.php';
+        $objCon = new Conexion();
+        $sql = "select id_alm, nombre_alm from almacen where asignado_alm=0 order by 1;";
         $resultado = $objCon->consultar($sql);
 
         while ($registro = $resultado->fetch()) {
@@ -92,7 +121,8 @@ class Almacen {
     }
 
     //para Listar todos los almacenes
-    public function ListarAlmacenes() {
+    public function ListarAlmacenes() 
+    {
 
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();

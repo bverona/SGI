@@ -13,7 +13,7 @@
     }
     else
         {
-            $objAlmacen->ListarAlmacenSinFiltro();        
+            $objAlmacen->ListarAlmacenConFiltro();        
         }
 
 ?>

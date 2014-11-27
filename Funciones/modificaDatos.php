@@ -10,7 +10,7 @@
     $usuario=$_POST['nombre'];
     $pass=$_POST['pass'];
     $pass2=$_POST['pass2'];
-    echo $_SESSION['id'] . "<br>";
+
     if($pass==$pass2)
     {
         require_once '../Clases/ClsUsuario.php'; 

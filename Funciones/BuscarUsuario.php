@@ -1,10 +1,10 @@
 <?php
      $id = $_POST['id'];
     
-    require_once '../Clases/clsArticulo.php';
-    $objArticulo = new Usuario();
+    require_once '../Clases/clsUsuario.php';
+    $objUsuario = new Usuario();
 
-    $resultado = $objArticulo->buscar($id);
+    $resultado = $objUsuario->buscar($id);
     
     echo json_encode($resultado);
     
