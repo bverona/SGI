@@ -88,6 +88,87 @@
         </div>
           <!-- /container -->
 
+            <!--Modal Movimiento Entrada -->
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
+                <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Movimiento Entrada </h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="nombre">Artículo</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cantidad">Cantidad</label>
+                                    <input type="text" class="form-control" name="cantidad" id="nombre" required placeholder="Nombre Usuario">
+                                </div>
+                                <input type="hidden" name="saldo" id="saldo">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger " aria-hidden="true">Registrar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+            <!-- Fin Modal Movimiento Entrada-->
+                    
+            <!--Modal Movimiento Salida -->
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/ActualizaDatos.php">
+                <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Movimiento Salida</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass">Contraseña</label>
+                                    <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
+                                </div>
+                                <div class="form-group" onclick="">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="RadioInline" id="area"  onclick="ValorArea();LlenaSelect(2);"  value="2"> 
+                                        Área
+                                    </label>
+                                    <label class="radio-inline" required>
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="ValorAlmacen();LlenaSelect(4);"> 
+                                        Almacén
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="cbModulos" name="cbModulos">
+
+                                    </select>
+                                </div>
+                                <input type="hidden" name="id" id="id">
+                            <input type="hidden" id="antiguo" name="antiguo" value=""> 
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger " aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+            <!-- Fin Modal Movimiento Salida -->
+          
+          
+          
         <!-- Modal Nuevo Artículo-->
             <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
                     <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -166,6 +247,57 @@
             });
      });
 
+       function leerDatosEntrada(id_) 
+        {
+            $.post("../Funciones/DatosArticulo.php", {id: id_})
+                    .done(function(data) {
+                        data = $.parseJSON(data);
+                        $("#nombre").val(data.nombre);
+                        $("#id").val(data.id);
+                        if(data.idArea == '-' || data.idArea == '0') 
+                        {
+                            //alert("almacen "+data.idAlmacen);
+                            SelectAlmacen();
+                            $("#antiguo").val(data.idAlmacen);
+                            $("#cbModulos").val(data.idAlmacen);
+                        }else
+                        {
+                            //alert("area "+data.idArea);
+                            SelectArea();
+                            $("#antiguo").val(data.idArea);
+    
+                            $("#cbModulos").val(data.idArea);
+                        }
+                        
+                    }, "json");                    
+        }
+
+    function leerDatosSalida(id_) 
+        {
+            $.post("../Funciones/DatosArticulo.php", {id: id_})
+                    .done(function(data) {
+                        data = $.parseJSON(data);
+                        $("#nombre").val(data.nombre);
+                        $("#id").val(data.id);
+                        if(data.idArea == '-' || data.idArea == '0') 
+                        {
+                            //alert("almacen "+data.idAlmacen);
+                            SelectAlmacen();
+                            $("#antiguo").val(data.idAlmacen);
+                            $("#cbModulos").val(data.idAlmacen);
+                        }else
+                        {
+                            //alert("area "+data.idArea);
+                            SelectArea();
+                            $("#antiguo").val(data.idArea);
+    
+                            $("#cbModulos").val(data.idArea);
+                        }
+                        
+                    }, "json");                    
+        }
+
+    
         function LlenaTipo() {
             $.post("../Funciones/llenarTipo.php")
                     .done(function(data) {

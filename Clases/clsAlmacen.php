@@ -78,7 +78,7 @@ class Almacen {
 
         require_once '../datos/accesodatos.php';
         $objCon = new Conexion();
-        $sql = "select  nombre_alm from almacen where id_alm=" . $id . "order by 1;";
+        $sql = "select  nombre_alm from almacen where id_alm=".$id." and  general_alm<>1 order by 1;";
 
         $resultado = $objCon->consultar($sql);
         $registro = $resulatdo->fetch();
@@ -93,7 +93,7 @@ class Almacen {
 
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_alm, nombre_alm from almacen  order by 1;";
+        $sql = "select id_alm, nombre_alm from almacen where general_alm=0  order by 1;";
         $resultado = $objCon->consultar($sql);
 
         while ($registro = $resultado->fetch()) {
@@ -109,7 +109,7 @@ class Almacen {
 
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_alm, nombre_alm from almacen where asignado_alm=0 order by 1;";
+        $sql = "select id_alm, nombre_alm from almacen where asignado_alm=0 and general_alm=0 order by 1;";
         $resultado = $objCon->consultar($sql);
 
         while ($registro = $resultado->fetch()) {
@@ -126,7 +126,7 @@ class Almacen {
 
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_alm, nombre_alm from almacen where id_alm <> 0 order by 1;";
+        $sql = "select id_alm, nombre_alm from almacen where id_alm <> 0 and general_alm=0 order by 1;";
         $resultado = $objCon->consultar($sql);
 
         echo '

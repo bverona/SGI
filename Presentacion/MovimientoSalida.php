@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Movimiento Salida</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -33,30 +33,36 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">NavBar</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
-            <a class="navbar-brand" href="#">Gestión de Módulos</a>
+            <a class="navbar-brand" href="#">Almacén General</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
+                    <li><a href="ListarArticulos.php">Listar Artículos</a></li>
+                </ul>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
+                    <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
+                
               </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>
-
+      <!--/Static navbar -->
+  
       <!-- Main component for a primary marketing message or call to action -->
       <div class="container">
 

@@ -15,9 +15,13 @@ if($objSesion->IniciaSesion($usuario,$pass))
     {
         header("location:../Presentacion/Gerente.php");
     }
-    else if($_SESSION["permisos"]==4)
+    else if($_SESSION["permisos"]==5)
     {
         header("location:../Presentacion/Almacen.php");
+    }
+    else if($_SESSION["permisos"]==4)
+    {
+        header("location:../Presentacion/SubAlmacen.php");
     }
     else 
     {

@@ -55,7 +55,7 @@
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
                     <li><a href="../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
-                <span class="glyphicon glyphicon-arrow-up"></span>
+                
               </li>
             </ul>
           </div><!--/.nav-collapse -->

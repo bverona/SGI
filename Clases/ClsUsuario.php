@@ -134,8 +134,9 @@ class Usuario {
     {
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
+        //Va a mostrar todos los usuarios a excepción de los que tienen privilegios
         $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-') as almacen,coalesce(area_id_are,'-') as area 
-                 from usuario where id_usu=".$id;
+                 from usuario where id_usu=".$id." and permisos_usu<=4";
 
         $resultdo = $objCon->consultar($sql);
         $registro = $resultdo->fetch();
@@ -154,7 +155,7 @@ class Usuario {
     {
         require_once '../Clases/clsConexion.php';
         $objCon = new Conexion();
-
+        //Va a mostrar todos los usuarios a excepción de los que tienen privilegios
         $sql = "select 
                         u.id_usu as id,
                         u.nombre_usu as usuario,
@@ -163,7 +164,7 @@ class Usuario {
                         u.permisos_usu 
                     from usuario u left outer join almacen a on a.id_alm=u.almacen_id_alm 
                         left outer join area ar on ar.id_are=u.area_id_are
-                    where permisos_usu<>8
+                    where permisos_usu<=4
                     order by 1";
 
         $resultado = $objCon->consultar($sql);

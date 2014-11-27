@@ -175,8 +175,8 @@
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
-            echo '<td><a><span class="glyphicon glyphicon-arrow-up"></span><img src="../imagenes/entrada.png"/></a></td>';
-            echo '<td><a><span class="glyphicon glyphicon-arrow-down"></span><img src="../imagenes/salida.png"/></a></td>';
+            echo '<td><a href="#" onclick="leerDatosEntrada(' . $registro["id"] . ')" data-toggle="modal" data-target="#ModalEntrada"><span class="glyphicon glyphicon-arrow-down"></span><img src="../imagenes/entrada.png"/></a></td>';
+            echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../imagenes/salida.png"/></a></td>';
             echo '<td>' . $registro["nombre"] . '</td>';
             echo '<td>' . $registro["unidad"] . '</td>';
             echo '<td>' . $registro["cantidad"] . '</td>';

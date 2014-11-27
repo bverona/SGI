@@ -1,10 +1,17 @@
 -- usuarios ok
+-- usuarios con privilegios,estos usuarios se crearán una vez y no podrán eliminarse
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('bruno'),8 );
+insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),5 );
+
+-- usuarios normales
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),4 );
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('area',md5('area'),2 );
 
 -- almacenes ok
-insert into almacen (nombre_alm,) values('Almacén Grande');
+-- almacen generál no podrá ser eliminado o Modificado 
+insert into almacen (nombre_alm,general_alm) values('Almacén General',1);
+
+-- almacenes normales
 insert into almacen (nombre_alm) values('Almacen Mediano');
 insert into almacen (nombre_alm) values('Almacen Pequeño');
 insert into almacen (nombre_alm) values('Almacen Obras');
@@ -19,6 +26,8 @@ insert into area(nombre_are) values('Area Alcaldía');
 insert into area(nombre_are) values('Area Tesorería');
 insert into area(nombre_are) values('');
 UPDATE area SET id_are=0,nombre_are="" WHERE `nombre_are`='';
+
+-- tipo Artículo
 
 insert into tipoArticulo(nombre_tip)values
 ("Oficina"),
@@ -45,19 +54,8 @@ insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art)
 ('Gasolina','litros', 50,3),
 ('Espejo retrovisor','unidad', 1,3);
 
-insert into detalle_movimiento 
-(
-	movimiento_id_mov,
-	descripcion_det_mov,
-	articulo_id_art,
-	cantidad_det_mov
- ) 
-values 
-(2,'compra reciente',1,20),
-(4,'compra reciente',2,30),
-(6,'compra reciente',3,50),
-(8,'compra reciente',4,30),
-(10,'compra antigua',5,200);
+
+
 
 -- Pedido ok
 insert into pedido (area_id_are,fecha_ped,id_usu_ped) values(1,'2014/09/17',2);
@@ -75,15 +73,6 @@ insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,2
 insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,3,5);
 insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)values(1,4,3);
 
-/* FALTA
-Procedimientos para registrar en el kardex
-TABLAS: Movimiento - Detalle Movimiento - Producto
-** 1
- lo ideal ser?a, que por cada almacen, se creen triggers que registren los movimientos
- de entrada y salida respectivamente, esto para que el registro de entradas y salidas se
- lleve a cabo en la tabla detalle movimiento.
- 1 entrada, 0 salida
- */
 
 -- almacen Grandemovimiento
  insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(0,1,'12/12/14');
@@ -106,21 +95,32 @@ TABLAS: Movimiento - Detalle Movimiento - Producto
  insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(1,1,'26/5/14');
 -- ok 
 
--- tipo Artículo
-
 /*
-CREATE TRIGGER Inserta_moviento_almacen before INSERT on almacen 
-for each row 
-insert into movimiento(tipo_mov, almacen_id_alm,fecha_det_mov)
-values(1,NEW.id_alm,Date('d-m-Y'));
-insert into movimiento(tipo_mov, almacen_id_alm,fecha_det_mov)
-values(2,NEW.id_alm,Date('d-m-Y'));
+ 0 entrada, 1 salida
+ */
 
-2 si va a insertar uno nuevo artículo registrarlo, si ya existe , 
-toma el historial del artículo y trabaja con eso.
+
+insert into detalle_movimiento (
+                movimiento_id_mov,
+                articulo_id_art,
+                cantidad_det_mov)
+            values(1,1,50);
+
+
+/*insert into detalle_movimiento 
+(
+	movimiento_id_mov,
+	descripcion_det_mov,
+	articulo_id_art,
+	cantidad_det_mov
+ ) 
+values 
+(2,'compra reciente',1,20),
+(4,'compra reciente',2,30),
+(6,'compra reciente',3,50),
+(8,'compra reciente',4,30),
+(10,'compra antigua',5,200);
 */
-
-
 
 
 

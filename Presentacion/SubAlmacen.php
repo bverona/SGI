@@ -33,16 +33,16 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only"></span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
             <a class="navbar-brand" href="#">Gestión de Módulos</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
+              <li><a href="">Movimientos</a></li>
+              <li><a href="">Pedidos</a></li>
+              <li><a href="">Reportes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
