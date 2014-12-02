@@ -2,7 +2,7 @@
     session_name("SGI");
     session_start();
     
-    $arreglo=$_POST["arreglo"];
+    $arreglo=  $_POST["arreglo"];
 
     require_once '../Clases/clsPedido.php';
     require_once '../util/funciones.php';
@@ -20,9 +20,9 @@
         {
             if(($objPed->AgregarDetallePedido($arreglo[$i][0],$arreglo[$i][1])))
                 {
-                    
+                    echo $arreglo[$i][0]."-".$arreglo[$i][1]."<br>";
                 }
         }        
-                Funciones::mensaje("Hecho", "../Presentacion/Area.php", "s");
+
      }
 ?>

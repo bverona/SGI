@@ -64,7 +64,7 @@ class Usuario {
         
         $sql3 = "update usuario set " .
                 "nombre_usu='" . $nombreNuevo . "', " .
-                "permisos_usu=" . $permisos . ", " .
+                "permisos_usu=" . $permisos . "," .
                 "almacen_id_alm=" . $almacen . ", " .
                 "area_id_are=" . $area . ", " .
                 "clave_usu='" . $contrasenha . "' " .

@@ -24,7 +24,6 @@
 
             //cadena para insertar en la tabla registro
             $sql2="insert into registro (id_usu_reg,fecha_reg,hora_reg) values(".$resultado["id"].",'". date("Y-m-d")."','". date("h:i:s")."')";
-            $objConexion->Consultar($sql2) ;  
 
             if( ($resultado['pass']==md5($pass)) )
             {

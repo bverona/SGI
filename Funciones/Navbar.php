@@ -42,7 +42,7 @@
                ';
        }        
        else 
-           if($_SESSION["permisos"]==4)
+           if($_SESSION["permisos"]==5)
            {
             echo'  
       <!-- Static navbar -->

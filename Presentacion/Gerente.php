@@ -71,17 +71,17 @@
                         </a> 
                         </li>
                         <li>
-                            <a  href="ListarAreas.php">Listar Almacenes</a>
+                            <a  href="ListarAreas.php">Listar Áreas</a>
                         </li>
                     </ul>
               </li>
-<!--               <li class="dropdown">
+              <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="">Reporte 1</a></li>
+                        <li><a href="PedidosArea.php">Listar Pedidos de Área</a></li>
                         <li><a href="">Reporte 2</a></li>
                     </ul>
-              </li>-->
+              </li>
 
               </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -226,16 +226,14 @@
                         {
                             //alert("almacen "+data.idAlmacen);
                             SelectAlmacen();
-                            alert(data);
+
                             $("#antiguo").val(data.idAlmacen);
-                            alert(data.id);
                             $("#cbModulos").val(data.idAlmacen);
                         }else
                         {
                             //alert("area "+data.idArea);
                             SelectArea();
                             $("#antiguo").val(data.idArea);
-                            alert(data.id);
                             $("#cbModulos").val(data.idAlmacen);
                         }
                         
@@ -250,7 +248,6 @@
             if (confirm("Esta seguro de eliminar")) {
                 $.post("../Funciones/EliminaUsuario.php", {id_usu: p_dni})
                         .done(function(data) {
-                            alert(data);
                             document.location.href = "ListarUsuarios.php";
                         });
             }
@@ -274,7 +271,6 @@
          $("#area").prop("checked", true);
             $.post("../Funciones/llenarSelect.php", {valor_Rb: 2})
                     .done(function(data) {
-                        alert(data);
                         $("#cbModulos").html(data);
                         $("#cbModulos").val(valor);
                     });
@@ -293,7 +289,6 @@
                 valorrb = $('#almacen').val();
             }
             function LlenaSelect(val) {
-                alert(val);
                 $.post("../Funciones/llenarSelect.php", {valor_Rb: val})
                         .done(function(data) {
                            

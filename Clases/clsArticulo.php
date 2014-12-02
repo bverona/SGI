@@ -139,7 +139,7 @@
         return $retorno;
         }
         
-   public function ListarArticulos($id) {
+        public function ListarArticulos($id) {
         require_once '../Clases/clsConexion.php';
         require_once '../Clases/clsTipo.php';
 

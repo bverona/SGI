@@ -26,22 +26,10 @@ class Almacen {
         require_once '../Clases/clsConexion.php';
         $obj = new Conexion();
         $sql1 = "insert into almacen(nombre_alm) values('" . $nombre . "')";
-        $sqlmax="select MAX(id_alm) as maximo from almacen";
         
         if ( (($obj->Consultar($sql1)) == !0)) 
-        {
-            $resultado=$obj->Consultar($sqlmax);
-            $registro=$resultado->fetch();
-            
-            //movimiento de entrada = 0
-            $sql2 = "insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(0,".$registro["maximo"] .",'".date('Y-m-d')."')";
-
-            //movimiento de salida = 1
-            $sql3 = "insert into movimiento (tipo_mov, almacen_id_alm,fecha_det_mov) values(1,".$registro["maximo"] .",'".date('Y-m-d')."')";
-            if((($obj->Consultar($sql2)) == !0) && (($obj->Consultar($sql3)) == !0))
-            {
-                $correcto= true;
-            }
+        {          
+             $correcto= true;   
         }
 
         return $correcto;
@@ -76,14 +64,14 @@ class Almacen {
 
     public function ObtenerAlmacen($id) {
 
-        require_once '../datos/accesodatos.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select  nombre_alm from almacen where id_alm=".$id." and  general_alm<>1 order by 1;";
+        $sql = "select  nombre_alm from almacen where id_alm=".$id;
 
         $resultado = $objCon->consultar($sql);
-        $registro = $resulatdo->fetch();
+        $registro = $resultado->fetch();
 
-        $retorno = $registro["nombre_alm"];
+        $retorno  = $registro["nombre_alm"];
 
         return $retorno;
     }
@@ -118,6 +106,21 @@ class Almacen {
         }
 
         echo $almacenes;
+    }
+
+    public function ListarTodosAlmacenes() {
+
+     require_once '../Clases/clsConexion.php';
+     $objCon = new Conexion();
+     $sql = "select id_alm, nombre_alm from almacen where id_alm>0 order by 1";
+     $resultado = $objCon->consultar($sql);
+
+     while ($registro = $resultado->fetch()) {
+
+         $almacenes .= '<option value="' . $registro["id_alm"] . '">' . $registro["nombre_alm"] . '</option>';
+     }
+
+     echo $almacenes;
     }
 
     //para Listar todos los almacenes

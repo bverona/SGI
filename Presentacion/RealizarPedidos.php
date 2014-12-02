@@ -97,8 +97,9 @@
                                 </div>
                                 <div class="col-xs-offset-3 col-xs-2 ">    
                                 <br>
-                                <input type="submit" class="btn btn-primary btn-success" value="Enviar Pedidos">
+                                <input type="button" class="btn btn-primary btn-success" onclick="EnviaPedido();"  value="Enviar Pedidos">
                                 </div>
+                                <input type="hidden" value="" name="arreglo" id="arreglo">
                             </div>
                         </div>
                     </form>
@@ -138,16 +139,17 @@
     <script src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
 
-
+ 
+        var arreglo= new Array(); 
         $(document).ready(function (){
           $('#cantidad').tooltip();
           $('#cantidad').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/g,'');
+            this.value =(this.value + '').replace(/[^0-9]/,'');
             Unidad();
-    });
-     });
+        });
+        });
+        
         function PedidoTabla(){
-
         var html ="<tr><td>"+$("#cbtipo option:selected").html()+"</td><td>"+$("#cbarticulo option:selected").html()+"</td><td>"+$("#cantidad").val()+"</td><td>"+$("#unidad").val()+"</td></tr>";
         $("#bodytabla").append(html);
             $("#cbtipo").val("");
@@ -155,9 +157,24 @@
             $("#cantidad").val("");
         };
 
+        function EnviaPedido()
+        {       
+            var texto =JSON.stringify(arreglo);
+            
+            $("#arreglo").val(texto);            
+            $.post("../Funciones/InsertaPedidos.php",{arreglo:arreglo})
+            .done(function(data)
+            {
+                $("#cbtipo").val("");
+                $("#cbarticulo").val("");
+                $("#cantidad").val("");
+                alert("Pedido Enviado");
+                arreglo=new Array();
+            });
+        }
         function AñadePedido()
         {
-            var arreglo= new Array(); 
+          
             if(($("#cbtipo").val()===null))
             {
                 $('#cbtipo').focus();

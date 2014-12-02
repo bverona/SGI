@@ -6,14 +6,18 @@
     require_once '../Clases/clsAlmacen.php';
     $objArea = new Area();
     $objAlmacen = new Almacen();
-        echo $valorRb;
+
     if($valorRb==2)
     {
         $objArea->ListarArea();
     }
-    else
+    else if($valorRb==5)
         {
-            $objAlmacen->ListarAlmacenSinFiltro();        
+            $objAlmacen->ListarTodosAlmacenes();        
         }
+        else 
+            {
+                $objAlmacen->ListarAlmacenSinFiltro();        
+            }
 
 ?>

@@ -39,7 +39,9 @@
               <a type="button" class="navbar-brand btn btn-default" href="RealizarPedidos.php">Realizar Pedido</a>
           </div>
           <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
+       
+
+              <ul class="nav navbar-nav navbar-right">                
                 <li class="navbar-brand"><?php echo date('d/m/Y'); ?></li>
                 <li class="dropdown">                
                 <a href="#" class="dropdown-toggle " data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>

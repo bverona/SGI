@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Reporte de Entradas al Almacén</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -36,12 +36,18 @@
               <span class="sr-only">Toggle navigation</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
-            <a class="navbar-brand" href="#">Gestión de Módulos</a>
+              <a class="navbar-brand" href="../Presentacion/Almacen.php">Gestión de Módulos</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="../Presentacion/ListadoEntradas.php">Listar Pedidos de Área</a></li>
+                        <li><a href="">Reporte 2</a></li>
+                    </ul>
+              </li>
               <li><a href="#"></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -58,9 +64,35 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="container">
+             <div class="container">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><b>Listado de Entradas</b>
+                        <div class="panel-body">
+                            <div class="table-responsive table-hover">
+                                <table class="table table-striped table-hover">
+                                  <thead>
+                                    <tr>
+                                        <th>Almacen</th>
+                                        <th>Fecha</th>
+                                        <th>Artículo</th>
+                                        <th>Cantidad</th>
+                                        <th>Saldo</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbody">
+                                  <?php
+                                  require_once '../Clases/clsMovimiento.php';
+                                   $objMov= new Movimiento();
+                                   $objMov->ListarSalidas();                                  
+                                  ?>
+                                  </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      </div>
+        </div>
 
     </div> <!-- /container -->
 

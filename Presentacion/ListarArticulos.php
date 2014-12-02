@@ -42,7 +42,13 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
-              <li><a href="#">Reportes</a></li>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="../Presentacion/ListadoEntradas.php">Listar Pedidos de Área</a></li>
+                        <li><a href="">Reporte 2</a></li>
+                    </ul>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -102,11 +108,11 @@
 
                                 <div class="form-group">
                                     <label for="nombre">Artículo</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
                                 </div>
                                 <div class="form-group">
                                     <label for="cantidad">Cantidad</label>
-                                    <input type="text" class="form-control" name="cantidad" id="nombre" required placeholder="Nombre Usuario">
+                                    <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Ingrese cantidad">
                                 </div>
                                 <input type="hidden" name="saldo" id="saldo" value="">
                                 <input type="hidden" name="id" id="id" value="">
@@ -123,7 +129,7 @@
             <!-- Fin Modal Movimiento Entrada-->
                     
             <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimienoSalida.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoSalida.php">
                 <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -148,10 +154,11 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cantidadsalida">Artículo</label>
+                                    <label for="cantidadsalida">Cantidad</label>
                                     <input type="text" class="form-control" name="cantidadsalida" id="cantidadsalida" required>
                                 </div>
                                 <div class="form-group" id="divmodulos" hidden="true">
+                                    <label>Almacen</label>
                                     <select class="form-control" id="cbModulos" name="cbModulos" >
                                         <?php 
                                             require_once '../Clases/clsAlmacen.php';
@@ -248,9 +255,12 @@
     });
 
     $(document).ready(function (){        
-        $('#cantidad').tooltip();
           $('#cantidad').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/g,'');
+            this.value =(this.value + '').replace(/[^0-9]/,'');
+           
+            });
+          $('#cantidadsalida').keyup(function (){
+            this.value =(this.value + '').replace(/[^0-9]/,'');
            
             });
      });
@@ -265,6 +275,7 @@
                         $("#id").val(data.id);
                     }, "json");                    
         }
+    
        function leerDatosSalida(id_) 
         {
             $.post("../Funciones/DatosArticulo.php", {id: id_})
@@ -275,8 +286,6 @@
                         $("#idsalida").val(data.id);
                     }, "json");                    
         }
-
-
     
         function LlenaTipo() {
             $.post("../Funciones/llenarTipo.php")
@@ -285,10 +294,9 @@
                     });
         }
 
-
         function DefineSalida(val)
         {
-            alert(val)
+
             if (val===2)
             {
                 $("#divmodulos").prop("hidden",false);
@@ -299,8 +307,6 @@
                 
         }
 
-
-
         function Filtro()
         {
             var id = $("#cbTipo").val();
@@ -308,11 +314,8 @@
                     .done(function(data) {
                         $("#tbody").html(data);
                     });
-            
+         
         }
-
-
-
 
     </script>
 </html>

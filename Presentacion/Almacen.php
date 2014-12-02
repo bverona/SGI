@@ -45,10 +45,23 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
                     <li><a href="ListarArticulos.php">Listar Artículos</a></li>
+                    
                 </ul>
               </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="ListadoEntradas.php">Listar Entradas</a></li>
+                        <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
+                        <li><a href="ListadoPorAlmacen.php">Listar Movimientos por Almacén</a></li>
+                    </ul>
+              </li>
+            </ul>                   
+              
+              <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">

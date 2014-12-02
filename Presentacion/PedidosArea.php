@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Pedidos Por Área</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -33,23 +33,64 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">NavBar</span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
             <a class="navbar-brand" href="#">Gestión de Módulos</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a data-toggle="modal" data-target="#NuevoUsuario" href="#">
+                          Nuevo Usuario
+                        </a> 
+                        </li>
+                        <li><a href="ListarUsuarios.php">Listar Usuario</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Almacenes<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>    
+                            <a data-toggle="modal" data-target="#NuevoAlmacen" href="#">
+                          Nuevo Almacén
+                        </a>
+                        </li>
+                        <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
+                    </ul>
+              </li>
+               <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                        <a data-toggle="modal" data-target="#NuevaArea" href="#">
+                        Nueva Area
+                        </a> 
+                        </li>
+                        <li>
+                            <a  href="ListarAreas.php">Listar Áreas</a>
+                        </li>
+                    </ul>
+              </li>
               <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="">Listar Pedidos de Área</a></li>
+                        <li><a href="">Reporte 2</a></li>
+                    </ul>
+              </li>
+
+              </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
+                        <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
               </li>
             </ul>
@@ -58,11 +99,38 @@
       </div>
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="container">
+             <div class="container">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><b>Listado de Pedidos</b>
+                        <div class="panel-body">
+                            <div class="table-responsive table-hover">
+                                <table class="table table-striped table-hover">
+                                  <thead>
+                                    <tr>
 
-      </div>
+                                        <th>Artículo</th>
+                                        <th>Cantidad</th>
+                                        <th>Usuario</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbody">
+                                  <?php 
+                                  require_once '../Clases/clsPedido.php';
+                                  $objPed= new Pedido("","");
+                                  $objPed->ListarPedidos();
+                                  ?>
+                                  </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
 
     </div> <!-- /container -->
+
 
             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
@@ -149,8 +217,8 @@
                     </div>
                 </div>
             </form>    
-            <!-- Fin Modal Movimiento Salida -->       
-          
+            <!-- Fin Modal Movimiento Salida -->
+                 
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -285,5 +353,5 @@
         }
 
     </script>
-  </body>
+ 
 </html>

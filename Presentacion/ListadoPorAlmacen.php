@@ -5,7 +5,8 @@
     if ( ! isset($_SESSION["usuario"])){
         header("location:index.php");
     }
-?>
+    $almacen=($_SESSION["id_almacen"]);
+    ?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -14,7 +15,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Listar Artículo</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
@@ -24,7 +25,7 @@
 
   </head>
 
-  <body>
+  <body onload="LlenaTipo();Filtro();">
 
     <div class="container">
 
@@ -33,16 +34,21 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">Navbar </span>
               <span class="glyphicon glyphicon-chevron-down"></span>
             </button>
-            <a class="navbar-brand" href="#">Gestión de Módulos</a>
+              <a class="navbar-brand" href="Almacen.php">Almacén General</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Reportes</a></li>
-              <li><a href="#"></a></li>
+              <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="../Presentacion/ListadoEntradas.php">Listar Pedidos de Área</a></li>
+                        <li><a href="">Reporte 2</a></li>
+                    </ul>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -57,12 +63,39 @@
         </div><!--/.container-fluid -->
       </div>
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="container">
+          <!-- Main component for a primary marketing message or call to action -->
+             <div class="container">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><b>Listado de Artículos</b>
+                        <div class="panel-body">
+                            <div class="table-responsive table-hover">
+                                <table class="table table-striped table-hover">
+                                  <thead>
+                                    <tr>
+                                        <th>Almacen</th>
+                                        <th>Fecha</th>
+                                        <th>Artículo</th>
+                                        <th>Unidad</th>
+                                        <th>Cantidad</th>
+                                        <th>Saldo</th>
+                                        <th>
+                                        <select class="form-control" id="cbTipo" name="cbTipo" onchange="Filtro();">
+                                            <option value="0">Todos</option>
+                                        </select>
+                                        </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbody">
+                                  
+                                  </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      </div>
-
-    </div> <!-- /container -->
+        </div>
+          <!-- /container -->
 
             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
@@ -149,7 +182,7 @@
                     </div>
                 </div>
             </form>    
-            <!-- Fin Modal Movimiento Salida -->       
+            <!-- Fin Modal Movimiento Salida -->
           
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
@@ -208,7 +241,6 @@
                 </form>        
             <!-- /Modal Nuevo Artículo-->
 
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -255,7 +287,7 @@
         }
     
         function LlenaTipo() {
-            $.post("../Funciones/llenarTipo.php")
+            $.post("../Funciones/llenarSelect.php",{valor_Rb:5})
                     .done(function(data) {
                          $("#cbTipo").append(data);
                     });
@@ -263,21 +295,19 @@
 
         function DefineSalida(val)
         {
-
             if (val===2)
             {
                 $("#divmodulos").prop("hidden",false);
             }else
                 {
                     $("#divmodulos").prop("hidden",true);
-                }
-                
+                }                
         }
 
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../Funciones/MuestraMovimientos.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);
                     });
@@ -285,5 +315,4 @@
         }
 
     </script>
-  </body>
 </html>
