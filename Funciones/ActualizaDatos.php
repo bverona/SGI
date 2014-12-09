@@ -34,7 +34,7 @@
             $texto="Cambio Realizado, satisfactoriamente";
         }
         
-        $direccion="../Presentacion/Gerente.php";
+        $direccion="../Presentacion/Gerente/Gerente.php";
  
          Funciones::mensaje($texto, $direccion, 's');
         

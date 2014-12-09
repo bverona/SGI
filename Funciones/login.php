@@ -13,19 +13,19 @@ if($objSesion->IniciaSesion($usuario,$pass))
 {
     if($_SESSION["permisos"]==8)
     {
-        header("location:../Presentacion/Gerente.php");
+        header("location:../Presentacion/Gerente/Gerente.php");
     }
     else if($_SESSION["permisos"]==5)
     {
-        header("location:../Presentacion/Almacen.php");
+        header("location:../Presentacion/Almacen/Almacen.php");
     }
     else if($_SESSION["permisos"]==4)
     {
-        header("location:../Presentacion/SubAlmacen.php");
+        header("location:../Presentacion/SubAlmacen/SubAlmacen.php");
     }
     else 
     {
-        header("location:../Presentacion/Area.php");
+        header("location:../Presentacion/Area/Area.php");
     }
 }  else {
         

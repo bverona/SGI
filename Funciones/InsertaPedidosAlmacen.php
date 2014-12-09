@@ -3,17 +3,16 @@
     session_start();
     
     $arreglo=  $_POST["arreglo"];
+    $descripcion=  $_POST["descripcion"];
 
     require_once '../Clases/clsPedido.php';
     require_once '../util/funciones.php';
 
     
-    $objPed= new Pedido($_SESSION["id_area"],0, date('Y-m-d'));
-//    Funciones::mensaje("naa", "#", "s");
-//    $qas=$_SESSION["id_area"];
-//    echo $qas."************".$_SESSION["id"];
+    $objPed= new Pedido(0,$_SESSION["id_almacen"], date('Y-m-d'));
+    $objPed->SetDescripcion($descripcion);
     
-    if(($objPed->AgregarPedido($_SESSION["id"],0)))
+    if(($objPed->AgregarPedido($_SESSION["id"],1)))
      {
 
         for($i=0;$i<count($arreglo);$i++)

@@ -7,8 +7,8 @@
         $descripcion=$_POST['descripcion'];
  
         
-        require_once '../Clases/clsMovimiento.php'; 
         require_once '../util/funciones.php';
+        require_once '../Clases/clsMovimiento.php'; 
         $objMovimiento = new Movimiento();
 
         if(($objMovimiento->AgregaMovimiento(0, $almacen,date('Y-m-d'))))
@@ -24,6 +24,6 @@
                 }
         }
                 
-         Funciones::mensaje($texto, "../Presentacion/ListarArticulos.php", 's');         
+         Funciones::mensaje($texto, "../Presentacion/Almacen/ListarArticulos.php", 's');         
          
 ?>

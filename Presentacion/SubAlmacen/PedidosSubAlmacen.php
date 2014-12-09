@@ -14,13 +14,12 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Navbar Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-
-    <!-- Custom styles for this template -->
-    <link href="../bootstrap/css/Jumbotron.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <!-- Personaliza este archivo -->
+        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
@@ -28,112 +27,24 @@
 
     <div class="container">
 
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">NavBar</span>
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-            <a class="navbar-brand" href="#">Gestión de Módulos</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a data-toggle="modal" data-target="#NuevoUsuario" href="#">
-                          Nuevo Usuario
-                        </a> 
-                        </li>
-                        <li><a href="ListarUsuarios.php">Listar Usuario</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Almacenes<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>    
-                            <a data-toggle="modal" data-target="#NuevoAlmacen" href="#">
-                          Nuevo Almacén
-                        </a>
-                        </li>
-                        <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
-                    </ul>
-              </li>
-               <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                        <a data-toggle="modal" data-target="#NuevaArea" href="#">
-                        Nueva Area
-                        </a> 
-                        </li>
-                        <li>
-                            <a  href="ListarAreas.php">Listar Áreas</a>
-                        </li>
-                    </ul>
-              </li>
-              <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="">Listar Pedidos de Área</a></li>
-                        <li><a href="">Reporte 2</a></li>
-                    </ul>
-              </li>
-
-              </ul>
-            <ul class="nav navbar-nav navbar-right">
-               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                        <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
-
+        <?php
+        /*
+         *  Define el Tipo de NavBar a Usar
+        */
+           require_once '../../Clases/clsNavbar.php';
+           $objNavBar= new NavBar();
+           $objNavBar->DefineNavBar();
+        ?>
+        
       <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
-                            <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover">
-                                  <thead>
-                                    <tr>
+      <div class="container">
 
-                                        <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Fecha</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tbody">
-                                  <?php 
-                                  require_once '../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","");
-                                  $objPed->ListarPedidos();
-                                  ?>
-                                  </tbody>
-                          </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        </div>
+      </div>
 
     </div> <!-- /container -->
 
-
             <!--Modal Movimiento Entrada -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -166,7 +77,7 @@
             <!-- Fin Modal Movimiento Entrada-->
                     
             <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoSalida.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
                 <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -198,7 +109,7 @@
                                     <label>Almacen</label>
                                     <select class="form-control" id="cbModulos" name="cbModulos" >
                                         <?php 
-                                            require_once '../Clases/clsAlmacen.php';
+                                            require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
                                             $objAlmacen->ListarAlmacenSinFiltro();
                                         ?>
@@ -217,10 +128,10 @@
                     </div>
                 </div>
             </form>    
-            <!-- Fin Modal Movimiento Salida -->
-                 
+            <!-- Fin Modal Movimiento Salida -->       
+          
             <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
+                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -247,7 +158,7 @@
                                             <select class="form-control" id="cbtipo" name="cbtipo">
     <!--                                            <option value="0">Seleccione Tipo</option>-->
                                                 <?php 
-                                                require_once '../Clases/clsTipo.php';
+                                                require_once '../../Clases/clsTipo.php';
                                                 $objTipo = new TipoArticulo();
                                                 $objTipo->SelectTipoArticulo();
                                                 ?>
@@ -281,8 +192,9 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
-    <script src="../Jquery/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../../Jquery/jquery.min.js"></script>
+    <script src="../../bootstrap/js/bootstrap.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
@@ -302,7 +214,7 @@
 
        function leerDatosEntrada(id_) 
         {
-            $.post("../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombre").val(data.nombre);
@@ -313,7 +225,7 @@
     
        function leerDatosSalida(id_) 
         {
-            $.post("../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombresalida").val(data.nombre);
@@ -323,7 +235,7 @@
         }
     
         function LlenaTipo() {
-            $.post("../Funciones/llenarTipo.php")
+            $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
                          $("#cbTipo").append(data);
                     });
@@ -345,7 +257,7 @@
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../../Funciones/MuestraArticulos.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);
                     });
@@ -353,5 +265,5 @@
         }
 
     </script>
- 
+  </body>
 </html>

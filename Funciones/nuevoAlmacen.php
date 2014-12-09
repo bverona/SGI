@@ -14,10 +14,10 @@
     
     if($objAlmacen->AgregarAlmacen($nombre))
       {
-        Funciones::mensaje("Operación Realizada Correctamente", "../Presentacion/Gerente.php", 's'); 
+        Funciones::mensaje("Operación Realizada Correctamente", "../Presentacion/Gerente/Gerente.php", 's'); 
       }else
           {
-            Funciones::mensaje("Operación Fallida Intente Nuevamente", "../Presentacion/Gerente.php", 'e'); 
+            Funciones::mensaje("Operación Fallida Intente Nuevamente", "../Presentacion/Gerente/Gerente.php", 'e'); 
           };
     
 

@@ -25,14 +25,17 @@
         //Esto por el momento
     if($_SESSION["permisos"]==8)
             {
-                $direccion="../Presentacion/Gerente.php";
+                $direccion="../Presentacion/Gerente/Gerente.php";
             }
+            else if($_SESSION["permisos"]==5)
+            {
+                $direccion="../Presentacion/Almacen/Almacen.php";            }
             else if($_SESSION["permisos"]==4)
             {
-                $direccion="../Presentacion/Almacen.php";            }
+                $direccion="../Presentacion/SubAlmacen/SubAlmacen.php";            }
             else 
             {
-                $direccion="../Presentacion/Area.php";
+                $direccion="../Presentacion/Area/Area.php";
             }
 
         Funciones::mensaje($texto, $direccion, 's');
@@ -41,17 +44,19 @@
     else {
      //esto tambien por el momento
         
-        if($_SESSION["permisos"]==8)
-        {
-            header("location:../Presentacion/Gerente.php");
-        }
-        else if($_SESSION["permisos"]==4)
-        {
-            header("location:../Presentacion/Almacen.php");
-        }
-        else 
-        {
-            header("location:../Presentacion/Area.php");
-        }
+    if($_SESSION["permisos"]==8)
+            {
+                $direccion="../Presentacion/Gerente/Gerente.php";
+            }
+            else if($_SESSION["permisos"]==5)
+            {
+                $direccion="../Presentacion/Almacen/Almacen.php";            }
+            else if($_SESSION["permisos"]==4)
+            {
+                $direccion="../Presentacion/SubAlmacen/SubAlmacen.php";            }
+            else 
+            {
+                $direccion="../Presentacion/Area/Area.php";
+            }
 }
 ?>

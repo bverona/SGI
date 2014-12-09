@@ -30,27 +30,48 @@ UPDATE area SET id_are=0,nombre_are="" WHERE `nombre_are`='';
 insert into tipoArticulo(nombre_tip)values
 ("Oficina"),
 ("Construccion"),
+("Construccion"),
 ("Vehículos");
 
-insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art) values 
-('Cemento rojo',' bolsas', 100,2),
-('yeso','bolsas', 50,2),
-('Pintura Roja','baldes', 60,2),
-('Pintura Amarilla','bolsas', 50,2),
-('piedra chancada','volquetadas', 9,2),
-('madera','unidades', 35,2),
-('Cemento azul',' bolsas', 120,2),
-('tecnopor',' planchas', 80,2),
-('piedra de 1/2','volquetada', 10,2),
-('alambre grueso','metros', 500,2),
-('Papel bond','medio millar', 20,1),
-('Caja Lapiceros','Unidad', 8,1),
-('Engrapador','unidad', 10,1),
-('perforador','unidad', 9,1),
-('bujías','unidad', 6,3),
-('mantenimiento','unidad', 3,3),
-('Gasolina','litros', 50,3),
-('Espejo retrovisor','unidad', 1,3);
+insert into articulo(nombre_art,unidad_art,TipoArticulo_id_tip_art) values 
+('Cemento rojo',' bolsas',2),
+('yeso','bolsas', 2),
+('Pintura Roja','baldes', 2),
+('Pintura Amarilla','bolsas', 2),
+('piedra chancada','volquetadas', 2),
+('madera','unidades', 2),
+('Cemento azul',' bolsas', 2),
+('tecnopor',' planchas', 2),
+('piedra de 1/2','volquetada', 2),
+('alambre grueso','metros', 2),
+('Papel bond','medio millar', 1),
+('Caja Lapiceros','Unidad', 1),
+('Engrapador','unidad', 1),
+('perforador','unidad', 1),
+('bujías','unidad', 3),
+('mantenimiento','unidad', 3),
+('Gasolina','litros', 3),
+('Espejo retrovisor','unidad', 3);
+
+-- insert into articulo(nombre_art,unidad_art,cantidad_art,TipoArticulo_id_tip_art) values 
+-- ('Cemento rojo',' bolsas', 100,2),
+-- ('yeso','bolsas', 50,2),
+-- ('Pintura Roja','baldes', 60,2),
+-- ('Pintura Amarilla','bolsas', 50,2),
+-- ('piedra chancada','volquetadas', 9,2),
+-- ('madera','unidades', 35,2),
+-- ('Cemento azul',' bolsas', 120,2),
+-- ('tecnopor',' planchas', 80,2),
+-- ('piedra de 1/2','volquetada', 10,2),
+-- ('alambre grueso','metros', 500,2),
+-- ('Papel bond','medio millar', 20,1),
+-- ('Caja Lapiceros','Unidad', 8,1),
+-- ('Engrapador','unidad', 10,1),
+-- ('perforador','unidad', 9,1),
+-- ('bujías','unidad', 6,3),
+-- ('mantenimiento','unidad', 3,3),
+-- ('Gasolina','litros', 50,3),
+-- ('Espejo retrovisor','unidad', 1,3);
 
 
 

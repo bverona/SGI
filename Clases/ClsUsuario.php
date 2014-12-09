@@ -13,7 +13,7 @@ class Usuario {
     public function AgregarUsuario($nombre, $contrasenha, $permisos)
     {
         $correcto = false;
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "insert into usuario (nombre_usu,clave_usu,permisos_usu) 
                   values(
@@ -29,7 +29,7 @@ class Usuario {
 
     public function EditarUsuario($id,$nombre, $contrasenha)
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
                 "nombre_usu='" . $nombre . "', " .
@@ -45,7 +45,7 @@ class Usuario {
 
     public function ActualizaUsuario($nombreNuevo, $contrasenha, $almacen, $area, $permisos, $id,$antiguo)
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $correcto=false;
         $sql1="";
@@ -91,7 +91,7 @@ class Usuario {
     public function EliminarUsuario($id)
     {
         $correcto = false;
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "delete from usuario where id_usu=" . $id;
 
@@ -104,7 +104,7 @@ class Usuario {
 
     public function AsignaArea($area, $nombre)
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
                 "area_id_are=" . $area .
@@ -117,7 +117,7 @@ class Usuario {
 
     public function AsignaAlmacen($almacen, $nombre) 
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "update usuario set " .
                 "almacen_id_alm=" . $almacen .
@@ -132,7 +132,7 @@ class Usuario {
 
     public function buscar($id)
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
         //Va a mostrar todos los usuarios a excepción de los que tienen privilegios
         $sql = "select id_usu, nombre_usu, coalesce(almacen_id_alm,'-') as almacen,coalesce(area_id_are,'-') as area 
@@ -153,7 +153,7 @@ class Usuario {
 
     public function ListarUsuarios()
     {
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
         //Va a mostrar todos los usuarios a excepción de los que tienen privilegios
         $sql = "select 
@@ -189,8 +189,8 @@ class Usuario {
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
-            echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#myModal"><img src="../imagenes/editar.png"/></a></td>';
-            echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../imagenes/eliminar.png"/></a></td>';
+            echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#myModal"><img src="../../imagenes/editar.png"/></a></td>';
+            echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
             echo '<td>' . $registro["usuario"] . '</td>';
             echo '<td>' . $registro["area"] . "" . $registro["almacen"] . '</td>';
             echo '</tr>';

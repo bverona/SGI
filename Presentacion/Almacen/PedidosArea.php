@@ -14,76 +14,51 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Reporte de Entradas al Almacén</title>
+    <title>Pedidos Por Área</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
-    <link href="../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <div class="container">
-
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-              <a class="navbar-brand" href="Almacen.php">Gestión de Módulos</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="#">Usuarios</a></li>
-              <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="ListadoEntradas.php">Listar Entradas</a></li>
-                        <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
-                    </ul>
-              </li>
-              <li><a href="#"></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
+  
+        <?php
+        /*
+         *  Define el Tipo de NavBar a Usar
+        */
+           require_once '../../Clases/clsNavbar.php';
+           $objNavBar= new NavBar();
+           $objNavBar->DefineNavBar();
+        ?>
 
       <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Entradas</b>
+                    <div class="panel-heading"><b>Listado de Pedidos</b>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped table-hover table-bordered table-condensed">
                                   <thead>
                                     <tr>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
+
                                         <th>Artículo</th>
                                         <th>Cantidad</th>
-                                        <th>Saldo</th>
+                                        <th>Usuario</th>
+                                        <th>Area</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-                                  <?php
-                                  require_once '../Clases/clsMovimiento.php';
-                                   $objMov= new Movimiento();
-                                   $objMov->ListarEntradas();                                  
+                                  <?php 
+                                  require_once '../../Clases/clsPedido.php';
+                                  $objPed= new Pedido("","","");
+                                  $objPed->ListarPedidosArea();
                                   ?>
                                   </tbody>
                           </table>
@@ -95,6 +70,7 @@
         </div>
 
     </div> <!-- /container -->
+
 
             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
@@ -162,7 +138,7 @@
                                     <label>Almacen</label>
                                     <select class="form-control" id="cbModulos" name="cbModulos" >
                                         <?php 
-                                            require_once '../Clases/clsAlmacen.php';
+                                            require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
                                             $objAlmacen->ListarAlmacenSinFiltro();
                                         ?>
@@ -181,8 +157,8 @@
                     </div>
                 </div>
             </form>    
-            <!-- Fin Modal Movimiento Salida -->       
-          
+            <!-- Fin Modal Movimiento Salida -->
+                 
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -211,7 +187,7 @@
                                             <select class="form-control" id="cbtipo" name="cbtipo">
     <!--                                            <option value="0">Seleccione Tipo</option>-->
                                                 <?php 
-                                                require_once '../Clases/clsTipo.php';
+                                                require_once '../../Clases/clsTipo.php';
                                                 $objTipo = new TipoArticulo();
                                                 $objTipo->SelectTipoArticulo();
                                                 ?>
@@ -245,8 +221,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
-    <script src="../Jquery/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../../Jquery/jquery.min.js"></script>
+    <script src="../../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
@@ -317,5 +293,5 @@
         }
 
     </script>
-  </body>
+ 
 </html>

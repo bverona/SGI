@@ -23,7 +23,7 @@
         public  function AgregarArea($nombre)
         {
             $correcto=false;
-            require_once '../Clases/clsConexion.php';
+            require_once 'clsConexion.php';
             $obj= new Conexion();
             $sql="insert into area(nombre_are) values('".$nombre."')";
 
@@ -38,7 +38,7 @@
         public  function EditarArea($id,$nombreNuevo)
         {
             $correcto=false;
-            require_once '../Clases/clsConexion.php';
+            require_once 'clsConexion.php';
             $obj= new Conexion();
             $sql="update area set nombre_are='".$nombreNuevo."' where id_are=".$id;
 
@@ -53,7 +53,7 @@
         public  function EliminarArea($nombre)
         {
             $correcto=false;
-            require_once '../Clases/clsConexion.php';
+            require_once 'clsConexion.php';
             $obj= new Conexion();
             $sql="delete from area where nombre_are='".$nombre."'";
 
@@ -81,7 +81,7 @@
         
         public function ListarArea(){
             
-            require_once '../Clases/clsConexion.php';
+            require_once 'clsConexion.php';
             $objCon = new Conexion();
             $sql = "select id_are, nombre_are from area order by 1;";
             $resultado = $objCon->consultar($sql);
@@ -96,7 +96,7 @@
 
         public function ListarAreas(){
             
-            require_once '../Clases/clsConexion.php';
+            require_once 'clsConexion.php';
             $objCon = new Conexion();
             $sql = "select id_are as id, nombre_are as nombre from area where id_are <> 0 order by 1;";
             $resultado = $objCon->consultar($sql);
@@ -120,8 +120,8 @@
             while ($registro = $resultado->fetch()) {
 
                 echo '<tr>';
-                echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../imagenes/editar.png"/></a></td>';
-                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../imagenes/eliminar.png"/></a></td>';
+                echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../../imagenes/editar.png"/></a></td>';
+                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '</tr>';
             }

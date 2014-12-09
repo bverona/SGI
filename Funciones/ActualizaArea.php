@@ -9,11 +9,11 @@
 
     if($objArea->EditarArea($id, $nombre))
     {
-        Funciones::mensaje("Operacion Realizada Correctamente", "../Presentacion/ListarAreas.php", 's');
+        Funciones::mensaje("Operacion Realizada Correctamente", "../Presentacion/Gerente/ListarAreas.php", 's');
     } 
     else
     {        
-        Funciones::mensaje("Operacion Incorrecta", "../Presentacion/ListarAreas.php", 'e');
+        Funciones::mensaje("Operacion Incorrecta", "../Presentacion/Gerente/ListarAreas.php", 'e');
     }
     
     

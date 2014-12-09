@@ -17,10 +17,9 @@
     <title>Realizar Pedido</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-
-    <!-- Custom styles for this template -->
-    <link href="../bootstrap/css/Jumbotron.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <!-- Personaliza este archivo -->
+        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
@@ -28,41 +27,25 @@
 
     <div class="container">
 
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"></span>
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-              <a type="button" class="navbar-brand btn btn-default" href="RealizarPedidos.php">Realizar Pedido</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-brand"><?php echo date('d/m/Y'); ?></li>
-                <li class="dropdown">                
-                <a href="#" class="dropdown-toggle " data-toggle="dropdown"><?php echo $_SESSION['usuario'];?><span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
-
+        <?php
+        /*
+         *  Define el Tipo de NavBar a Usar
+        */
+           require_once '../../Clases/clsNavbar.php';
+           $objNavBar= new NavBar();
+           $objNavBar->DefineNavBar();
+        ?>
+        
       <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6">		
-                    <form action="../Funciones/InsertaPedidos.php" method="POST" role="form">
+                    <form action="../../Funciones/InsertaPedidos.php" method="POST" role="form">
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for="cbtipo">Tipo Artículo</label>
                                 <select class="form-control" id="cbtipo" name="cbtipo" onchange="llenarArticulo();"onload="Unidad();" >
                                     <?php
-                                        require_once '../Clases/clsTipo.php';
+                                        require_once '../../Clases/clsTipo.php';
                                         $objTipo = new TipoArticulo();
                                         $objTipo->SelectTipoArticulo();
                                     ?>
@@ -122,7 +105,7 @@
 
 			</tbody>
                     </table>
-
+                    <textarea class="form-control"></textarea>
                 </div>
               </div>
             </div>
@@ -135,8 +118,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../Jquery/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../../Jquery/jquery.min.js"></script>
+    <script src="../../bootstrap/js/bootstrap.js"></script>
+
     <script type="text/javascript">
 
  
@@ -162,7 +146,7 @@
             var texto =JSON.stringify(arreglo);
             
             $("#arreglo").val(texto);            
-            $.post("../Funciones/InsertaPedidos.php",{arreglo:arreglo})
+            $.post("../../Funciones/InsertaPedidos.php",{arreglo:arreglo})
             .done(function(data)
             {
                 $("#cbtipo").val("");
@@ -203,7 +187,7 @@
         function Unidad()
         {
             var id = $("#cbarticulo").val();
-            $.post("../Funciones/DatosArticulo.php",{id:id})
+            $.post("../../Funciones/DatosArticulo.php",{id:id})
             .done(function(data)
             {
      
@@ -217,7 +201,7 @@
         var tipoArticulo = $("#cbtipo").val();
         $("#cbarticulo").html("");
         
-        $.post("../Funciones/llenarArticulo.php",{tipo_articulo:tipoArticulo})
+        $.post("../../Funciones/llenarArticulo.php",{tipo_articulo:tipoArticulo})
             .done(function( data ) {
                 $("#cbarticulo").html(data);
                 Unidad();

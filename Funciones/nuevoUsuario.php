@@ -14,11 +14,11 @@
             //asigna área o Almacen según sea
             $permisos==2?$objusuario->AsignaArea($modulo,$nombre):$objusuario->AsignaAlmacen($modulo, $nombre);
             
-            Funciones::mensaje("Operación Realizasa con éxito", "../Presentacion/Gerente.php", 's');
+            Funciones::mensaje("Operación Realizada con éxito", "../Presentacion/Gerente/Gerente.php", 's');
         }
         else
         {
-            Funciones::mensaje("Operación fallida, intente nuevamente", "../Presentacion/Gerente.php", 'e');
+            Funciones::mensaje("Operación fallida, intente nuevamente", "../Presentacion/Gerente/Gerente.php", 'e');
         }
     
 

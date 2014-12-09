@@ -23,7 +23,7 @@ class Almacen {
 
     public function AgregarAlmacen($nombre) {
         $correcto = false;
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql1 = "insert into almacen(nombre_alm) values('" . $nombre . "')";
         
@@ -37,7 +37,7 @@ class Almacen {
 
     public function EditarAlmacen($id, $nombreNuevo) {
         $correcto = false;
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         $sql = "update almacen set nombre_alm='" . $nombreNuevo . "' where id_alm=" . $id ;
 
@@ -50,7 +50,7 @@ class Almacen {
 
     public function EliminarAlmacen($nombre) {
         $correcto = false;
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $obj = new Conexion();
         //antes de eliminar tiene que verificarse que no tenga ningún artículo
         //$sql = "delete from almacen where nombre_alm='" . $nombre . "'";
@@ -79,7 +79,7 @@ class Almacen {
     //para agregar al select cuando se hace un editar usuario
     public function ListarAlmacenSinFiltro() {
 
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
         $sql = "select id_alm, nombre_alm from almacen where general_alm=0  order by 1;";
         $resultado = $objCon->consultar($sql);
@@ -95,7 +95,7 @@ class Almacen {
     //para agregar al select cuando se hace un nuevo usuario
     public function ListarAlmacenConFiltro() {
 
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
         $sql = "select id_alm, nombre_alm from almacen where asignado_alm=0 and general_alm=0 order by 1;";
         $resultado = $objCon->consultar($sql);
@@ -110,7 +110,7 @@ class Almacen {
 
     public function ListarTodosAlmacenes() {
 
-     require_once '../Clases/clsConexion.php';
+     require_once 'clsConexion.php';
      $objCon = new Conexion();
      $sql = "select id_alm, nombre_alm from almacen where id_alm>0 order by 1";
      $resultado = $objCon->consultar($sql);
@@ -127,11 +127,10 @@ class Almacen {
     public function ListarAlmacenes() 
     {
 
-        require_once '../Clases/clsConexion.php';
+        require_once 'clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_alm, nombre_alm from almacen where id_alm <> 0 and general_alm=0 order by 1;";
+        $sql = "select id_alm, nombre_alm, asignado_alm as asignado from almacen where id_alm <> 0 and general_alm=0 order by 1";
         $resultado = $objCon->consultar($sql);
-
         echo '
                 <div class="panel panel-success">
                     <div class="panel-heading"><b>Listado de Almacenes</b></div>
@@ -145,22 +144,20 @@ class Almacen {
                                       <th>Almacén</th>
                                     </tr>
                                   </thead>
-                                  <tbody>
-                ';
-
+                                  <tbody>';
                             while ($registro = $resultado->fetch()) {
-
                                 echo '<tr>';
-                                echo '<td><a href="#" onclick="leerDatos(' . $registro["id_alm"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../imagenes/editar.png"/></a></td>';
-                                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id_alm"] . '\')"><img src="../imagenes/eliminar.png"/></a></td>';
+                                echo '<td><a href="#" onclick="leerDatos(' . $registro["id_alm"] . ' )" data-toggle="modal" data-target="#myModal"><img src="../../imagenes/editar.png"/></a></td>';
+                                echo '<td><a href="#" onclick="eliminar(\'' . $registro["id_alm"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
                                 echo '<td>' . $registro["nombre_alm"] . '</td>';
                                 echo '</tr>';
                             }
-                        echo '</tbody>
-                          </table>
+                            echo '</tbody>
+                              </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
                 ';
     }
 

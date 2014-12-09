@@ -1,3 +1,3 @@
 <?php
-header("location:/SGI/Presentacion/index.php");
+header("location:Presentacion/index.php");
 ?>

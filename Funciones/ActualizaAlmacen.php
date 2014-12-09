@@ -8,6 +8,6 @@
     $objAlmacen=new Almacen();
     $objAlmacen->EditarAlmacen($id, $nombre);
             
-    Funciones::mensaje("Operación Realizada con éxito","../Presentacion/ListarAlmacenes.php", "s");
+    Funciones::mensaje("Operación Realizada con éxito","../Presentacion/Gerente/ListarAlmacenes.php", "s");
 
     ?>

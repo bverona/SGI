@@ -22,7 +22,7 @@
     public function SelectTipoArticulo() 
     {
 
-    require_once '../Clases/clsConexion.php';
+    require_once 'clsConexion.php';
     $objCon = new Conexion();
     $sql = "select idTipoArticulo,  nombre_tip from tipoarticulo order by 1";
     $resultado = $objCon->consultar($sql);
