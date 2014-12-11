@@ -24,7 +24,7 @@
 
   </head>
 
-  <body onload="LlenaTipo();Filtro();">
+  <body onload="LlenaTipo();LlenaArticulo();Filtro();">
 
     <div class="container">
 
@@ -35,7 +35,7 @@
            require_once '../../Clases/clsNavbar.php';
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
-        ?>
+?>
         
           <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
@@ -43,13 +43,19 @@
                     <div class="panel-heading">
                         <div class="row">                            
                             <div class=" col-xs-12 ">
-                                <div class="col-xs-12 col-sm-4">
+                                <div class="col-xs-12 col-sm-3">
                                     <br><b>Listado de Artículos</b>
                                 </div>
-                                <div class="col-xs-12 col-sm-4">
+                                <div class="col-xs-12 col-sm-3">
                                     <br>
                                     <select class="form-control" id="cbTipo" name="cbTipo" onchange="Filtro();">
-                                    <option value="0">Todos</option>
+                                    <option value="0">Todos Almacenes</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-3">
+                                    <br>
+                                    <select class="form-control" id="cbArticulo" name="cbArticulo" onchange="Filtro();">
+                                    <option value="0">Todos Articulo</option>
                                     </select>
                                 </div>
                             </div>
@@ -275,6 +281,13 @@
                          $("#cbTipo").append(data);
                     });
         }
+        
+        function LlenaArticulo() {
+            $.post("../../Funciones/llenarArticulo.php",{tipo_articulo:0})
+                    .done(function(data) {
+                         $("#cbArticulo").append(data);
+                    });
+        }
 
         function DefineSalida(val)
         {
@@ -290,7 +303,8 @@
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraMovimientos.php",{id:id})
+            var art = $("#cbArticulo").val();
+            $.post("../../Funciones/MuestraMovimientos.php",{id:id,articulo:art})
                     .done(function(data) {
                         $("#tbody").html(data);
                     });

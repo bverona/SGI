@@ -24,24 +24,23 @@
 
   </head>
 
-  <body onload="LlenaTipo();Filtro();">
+  <body onload="LlenaTipo();LlenaAlmacen();Filtro();">
 
-    <div class="container">
-
-         <?php
-        /*
-         *  Define el Tipo de NavBar a Usar
-        */
-           require_once '../../Clases/clsNavbar.php';
-           $objNavBar= new NavBar();
-           $objNavBar->DefineNavBar();
-        ?>
         
+
           <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
-                <div class="panel panel-success">
+                <?php
+               /*
+                *  Define el Tipo de NavBar a Usar
+               */
+                  require_once '../../Clases/clsNavbar.php';
+                  $objNavBar= new NavBar();
+                  $objNavBar->DefineNavBar();
+               ?>
+                <div class="panel panel-info">
                     <div class="panel-heading"><b>Listado de Artículos</b>
-                        <div class="panel-body">
+                        <div class="panel-body panel-success">
                             <div class="table-responsive table-hover">
                                 <table class="table table-striped table-hover">
                                   <thead>
@@ -51,8 +50,13 @@
                                         <th>Unidad</th>
                                         <th>Cantidad</th>
                                         <th>
-                                        <select class="form-control" id="cbTipo" name="cbTipo" onchange="Filtro();">
-                                                <option value=0>Todos</option>
+                                        <select class="  form-control" id="cbTipo" name="cbTipo" onchange="Filtro();">
+                                                <option value=0>Todos los Tipos</option>
+                                        </select>
+                                        </th>
+                                        <th>
+                                        <select class="  form-control" id="cbAlmacen" name="cbAlmacen" onchange="Filtro();">
+                                                <option value=0>Todos los Almacenes</option>
                                         </select>
                                         </th>
                                     </tr>
@@ -155,65 +159,63 @@
                 </div>
             </form>    
             <!-- Fin Modal Movimiento Salida -->
-          
-          
-          
-        <!-- Modal Nuevo Artículo-->
-            <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                    <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
+               
+            <!-- Modal Nuevo Artículo-->
+                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h4>Nuevo Artículo</h4>
+                                <div class="modal-header">
+                                    <h4>Nuevo Artículo</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="unidad">Unidad</label>
+                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cbtipo">Tipo</label>
+                                            <select class="form-control" id="cbtipo" name="cbtipo">
+    <!--                                            <option value="0">Seleccione Tipo</option>-->
+                                                <?php 
+                                                require_once '../../Clases/clsTipo.php';
+                                                $objTipo = new TipoArticulo();
+                                                $objTipo->SelectTipoArticulo();
+                                                ?>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="codigo">Código </label>
+                                                <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="precio">Precio </label>
+                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
+                                        </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                              </div>
+
                             </div>
-
-                            <div class="modal-body">
-                                    <div class="form-group">
-                                            <label for="nombre">Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="unidad">Unidad</label>
-                                            <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="cantidad">Cantidad</label>
-                                            <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cbtipo">Tipo</label>
-                                        <select class="form-control" id="cbtipo" name="cbtipo">
-<!--                                            <option value="0">Seleccione Tipo</option>-->
-                                            <?php 
-                                            require_once '../../Clases/clsTipo.php';
-                                            $objTipo = new TipoArticulo();
-                                            $objTipo->SelectTipoArticulo();
-                                            ?>
-                                        </select>
- 
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="codigo">Código </label>
-                                            <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="precio">Precio </label>
-                                            <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                    </div>
-                                
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                           </div>
-
                         </div>
-                      </div>
-                    </div>
-            </form>        
-        <!-- /Modal Nuevo Artículo-->
+                </form>        
+            <!-- /Modal Nuevo Artículo-->
 
 
     <!-- Bootstrap core JavaScript
@@ -268,6 +270,12 @@
                     });
         }
 
+        function LlenaAlmacen() {
+            $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
+                    .done(function(data) {
+                         $("#cbAlmacen").append(data);
+                    });        }
+
         function DefineSalida(val)
         {
 
@@ -283,11 +291,22 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-                    });
+            var tipo = $("#cbTipo").val();
+            var almacen = $("#cbAlmacen").val();
+            $.post("../../Funciones/MuestraArticulos.php",{tipo:tipo,almacen:almacen})
+                    .done(function(data) 
+            {
+                if(data=="")
+                {
+                $("#tbody").html(
+                "<label class='lead'>No Hay ningún artículo de este tipo en este almacen</label>");
+                }
+                else
+                {
+                    $("#tbody").html(data);
+                }   
+
+            });
          
         }
 

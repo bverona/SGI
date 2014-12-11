@@ -7,13 +7,11 @@
     }
 
     
-    $tipo=$_POST['tipo'];
-    $almacen=$_POST['almacen'];
-    
+
     require_once '../Clases/clsArticulo.php';
     
     $objArticulo= new Articulo();
-    $objArticulo->ListarArticulos($tipo,$almacen);
+    $objArticulo->ListarTodosArticulos();
     
     
         

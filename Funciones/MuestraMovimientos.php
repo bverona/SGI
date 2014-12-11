@@ -6,6 +6,12 @@
     
     $objMovimiento= new Movimiento();
     
-    $objMovimiento->ListarMovimientos($id);
+    if(($_POST["articulo"])==0)
+    {
+        $objMovimiento->ListarMovimientos($id);
+    }else
+        {
+            $objMovimiento->ListarMovimientosPorAlmacen($id,$_POST["articulo"]);
+        }
  //   $objTipo->
 ?>

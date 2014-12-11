@@ -23,7 +23,7 @@
 
   </head>
 
-  <body>
+  <body onload="LlenaTipo();Filtro();">
 
     <div class="container">
 
@@ -38,13 +38,18 @@
       <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Entradas</b>
+                    <div class="panel-heading"><b>Listado de Entradas a Almacén </b>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover">
+                                <div class="col-xs-12 form-group">
+                                <table class="table table-striped table-hover table-bordered">
                                   <thead>
                                     <tr>
-                                        <th>Almacen</th>
+                                        <th>
+                                            <select class="form-control col-xs-2" id="cbTipo" name="cbTipo" onchange="Filtro();">
+                                            <option value=0>Todos</option>
+                                        </select>
+                                        </th>
                                         <th>Fecha</th>
                                         <th>Artículo</th>
                                         <th>Cantidad</th>
@@ -52,14 +57,11 @@
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-                                  <?php
-                                  require_once '../../Clases/clsMovimiento.php';
-                                   $objMov= new Movimiento();
-                                   $objMov->ListarEntradas();                                  
-                                  ?>
+
                                   </tbody>
-                          </table>
-                    </div>
+                                </table>
+                                </div>    
+                            </div>
                 </div>
             </div>
         </div>
@@ -237,7 +239,7 @@
 
        function leerDatosEntrada(id_) 
         {
-            $.post("../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombre").val(data.nombre);
@@ -248,7 +250,7 @@
     
        function leerDatosSalida(id_) 
         {
-            $.post("../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombresalida").val(data.nombre);
@@ -257,11 +259,12 @@
                     }, "json");                    
         }
     
-        function LlenaTipo() {
-            $.post("../Funciones/llenarTipo.php")
-                    .done(function(data) {
-                         $("#cbTipo").append(data);
-                    });
+        function LlenaTipo() 
+        {
+        $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
+                .done(function(data) {
+                     $("#cbTipo").append(data);
+                });
         }
 
         function DefineSalida(val)
@@ -280,7 +283,7 @@
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../../Funciones/MuestraEntradas.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);
                     });

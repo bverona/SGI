@@ -1,29 +1,31 @@
 <?php
+    session_name("SGI");
+    session_start();
+    
+    if ( ! isset($_SESSION["usuario"])){
+        header("location:index.php");
+    }
    
-        $id_art=$_POST['id'];
+        $articulo=$_POST['id'];
         $cantidad=$_POST['cantidad'];
-        $saldo=$_POST['saldo'];
-        $almacen=$_POST['almacen'];
-        $descripcion=$_POST['descripcion'];
- 
+        $descripcion="";
+        
+        if(isset($_POST['descripcion']))
+        {
+            $descripcion=$_POST['descripcion'];
+        }
         
         require_once '../util/funciones.php';
         require_once '../Clases/clsMovimiento.php'; 
         $objMovimiento = new Movimiento();
-
-        if(($objMovimiento->AgregaMovimiento(0, $almacen,date('Y-m-d'))))
+      
+        if(($objMovimiento->AgregaMovimientoEntrada($cantidad,"", $_SESSION["id_almacen"], $articulo)))
         {
-
-            if($objMovimiento->AgregaDetalleMovimientoEntrada($id_art, $cantidad, $saldo,$descripcion))
-            {
-                $texto="Operación Realizada";            
-            }
-            else
-                {
-                    $texto="Operación No Realizada";
-                }
+            Funciones::mensaje("Operación exitosa", "../Presentacion/Almacen/ListarArticulos.php", 's');
         }
-                
-         Funciones::mensaje($texto, "../Presentacion/Almacen/ListarArticulos.php", 's');         
+        else
+            {
+            Funciones::mensaje("Error al realizar operación", "../Presentacion/Almacen/ListarArticulos.php", 'e');
+            }
          
 ?>

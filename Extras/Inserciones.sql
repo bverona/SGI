@@ -30,8 +30,8 @@ UPDATE area SET id_are=0,nombre_are="" WHERE `nombre_are`='';
 insert into tipoArticulo(nombre_tip)values
 ("Oficina"),
 ("Construccion"),
-("Construccion"),
-("Vehículos");
+("Vehículos"),
+("Otros");
 
 insert into articulo(nombre_art,unidad_art,TipoArticulo_id_tip_art) values 
 ('Cemento rojo',' bolsas',2),

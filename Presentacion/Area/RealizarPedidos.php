@@ -101,7 +101,7 @@
 					<th>Cantidad</th>
 				</tr>
 			</thead>
-			<tbody id="bodytabla">
+			<tbody id="tbody">
 
 			</tbody>
                     </table>
@@ -135,7 +135,7 @@
         
         function PedidoTabla(){
         var html ="<tr><td>"+$("#cbtipo option:selected").html()+"</td><td>"+$("#cbarticulo option:selected").html()+"</td><td>"+$("#cantidad").val()+"</td><td>"+$("#unidad").val()+"</td></tr>";
-        $("#bodytabla").append(html);
+        $("#tbody").append(html);
             $("#cbtipo").val("");
             $("#cbarticulo").val("");
             $("#cantidad").val("");
@@ -152,6 +152,7 @@
                 $("#cbtipo").val("");
                 $("#cbarticulo").val("");
                 $("#cantidad").val("");
+                $("#tbody").html("");
                 alert("Pedido Enviado");
                 arreglo=new Array();
             });

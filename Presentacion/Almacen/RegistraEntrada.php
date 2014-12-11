@@ -14,16 +14,16 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Reporte de Entradas al Almacén</title>
+    <title>Registra Entrada</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <!-- Personaliza este archivo -->
+        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
-  <body onload="LlenaTipo();Filtro();">
+  <body onload="Filtro();">
 
     <div class="container">
 
@@ -35,42 +35,38 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-      <!-- Main component for a primary marketing message or call to action -->
-            <div class="container">
+        
+          <!-- Main component for a primary marketing message or call to action -->
+             <div class="container">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Salidas de Almacén </b>
-                        <div class="panel-body">
+                    <div class="panel-heading"><b>Listado de Artículos</b>
+                        <div class="panel-body panel-success">
                             <div class="table-responsive table-hover">
-                                <div class="col-xs-12 form-group">
-                                <table class="table table-striped table-hover table-bordered">
+                                <table class="table table-striped table-hover">
                                   <thead>
                                     <tr>
-                                        <th>
-                                        <select class="form-control col-xs-2" id="cbTipo" name="cbTipo" onchange="Filtro();">
-                                            <option value=0>Todos</option>
-                                        </select>
-                                        </th>
-                                        <th>Fecha</th>
+                                        <th>Entrada</th>
                                         <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Saldo</th>
+                                        <th>Unidad</th>
+                                        <th>Codigo</th>
+                                        <th>Tipo</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-
+                                  
                                   </tbody>
-                                </table>
-                                </div>    
-                            </div>
+                          </table>
+                    </div>
                 </div>
             </div>
         </div>
 
         </div>
 
+
     </div> <!-- /container -->
 
-            <!--Modal Movimiento Entrada -->
+             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -155,8 +151,8 @@
                     </div>
                 </div>
             </form>    
-            <!-- Fin Modal Movimiento Salida -->       
-          
+            <!-- Fin Modal Movimiento Salida -->
+               
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -215,12 +211,14 @@
             <!-- /Modal Nuevo Artículo-->
 
 
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
@@ -260,13 +258,13 @@
                     }, "json");                    
         }
     
-        function LlenaTipo() 
-        {
-        $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
-                .done(function(data) {
-                     $("#cbTipo").append(data);
-                });
+        function LlenaTipo() {
+            $.post("../../Funciones/llenarTipo.php")
+                    .done(function(data) {
+                         $("#cbTipo").append(data);
+                    });
         }
+
         function DefineSalida(val)
         {
 
@@ -282,11 +280,20 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraSalidas.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-                    });
+            $.post("../../Funciones/MuestraTodosArticulos.php")
+                    .done(function(data) 
+            {   
+                if(data=="")
+                {
+                $("#tbody").html(
+                "<label class='lead'>No Hay ningún artículo, por favor registre lo artículos</label>");
+                }
+                else
+                {
+                    $("#tbody").html(data);
+                }   
+
+            });
          
         }
 

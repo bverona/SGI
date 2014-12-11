@@ -30,7 +30,7 @@
         /*
          *  Define el Tipo de NavBar a Usar
         */
-           require_once '../Clases/clsNavbar.php';
+           require_once '../../Clases/clsNavbar.php';
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>

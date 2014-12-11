@@ -115,8 +115,27 @@
                         <li><a href="ListadoEntradas.php"> Listar Entradas</a></li>
                         <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
                         <li><a href="PedidosArea.php">Listar Pedidos de Áreas</a></li>
-                        <li><a href="PedidosAlmacen.php">Listar Pedidos de Almacenes</a></li>
                         <li><a href="MovimientosPorAlmacen.php">Listar Movimientos por Almacén</a></li>
+               <!--     <li><a href="StockPorAlmacen.php">Listar Movimientos por Artículo</a></li> -->         
+                    </ul>
+              </li>
+            </ul>                   
+
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movimientos<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="RegistraEntrada.php">Registra Entrada</a></li>
+                        <li><a href="RegistraSalida.php">Registra Salida</a></li>
+                    </ul>
+              </li>
+            </ul>                   
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="PedidosAlmacen.php">Listar Pedidos de Almacenes</a></li>
+                        <li><a href="RegistraSalida.php">Registra Salida</a></li>
                     </ul>
               </li>
             </ul>                   
