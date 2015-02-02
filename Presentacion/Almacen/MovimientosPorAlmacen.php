@@ -69,9 +69,10 @@
                                         <th>Fecha</th>
                                         <th>Artículo</th>
                                         <th>Unidad</th>
-                                        <th>Cantidad</th>
+                                        <th>Entrada</th>
+                                        <th>Salida</th>
                                         <th>Saldo</th>
-                                        <th>Tipo </th>
+
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
@@ -199,7 +200,7 @@
                                         <div class="form-group">
                                             <label for="cbtipo">Tipo</label>
                                             <select class="form-control" id="cbtipo" name="cbtipo">
-    <!--                                            <option value="0">Seleccione Tipo</option>-->
+    <!--                                            <option value="0">Seleccione Tipo</option>          -->
                                                 <?php 
                                                 require_once '../../Clases/clsTipo.php';
                                                 $objTipo = new TipoArticulo();
@@ -305,8 +306,17 @@
             var id = $("#cbTipo").val();
             var art = $("#cbArticulo").val();
             $.post("../../Funciones/MuestraMovimientos.php",{id:id,articulo:art})
-                    .done(function(data) {
-                        $("#tbody").html(data);
+                    .done(function(data) 
+                    {
+                        if(data=="")
+                        {
+                        $("#tbody").html(
+                        "<label class='lead'>No Hay ningún Movimiento de este artículo </label>");
+                        }
+                        else
+                        {
+                            $("#tbody").html(data);
+                        }  
                     });
          
         }

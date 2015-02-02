@@ -14,12 +14,12 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Pedidos de Almacen atendidos</title>
 
     <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Personaliza este archivo -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
@@ -58,15 +58,14 @@
                                   <?php 
                                   require_once '../../Clases/clsPedido.php';
                                   $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
+                                  $objPed->ListarPedidosAlmacenAtendidos();
                                   ?>
                                   </tbody>
-                          </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+                                </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
         </div>
 
     </div> <!-- /container -->

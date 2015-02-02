@@ -37,10 +37,36 @@
         ?>
         
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="container">
+<div class="container">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><b>Listado de Pedidos</b>
+                        <div class="panel-body">
+                            <div class="table-responsive table-hover">
+                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                  <thead>
+                                    <tr>
 
-      </div>
-
+                                        <th>Artículo</th>
+                                        <th>Cantidad</th>
+                                        <th>Usuario</th>
+                                        <th>Almacen</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tbody">
+                                  <?php 
+                                  require_once '../../Clases/clsPedido.php';
+                                  $objPed= new Pedido("","","");
+                                  $objPed->ListarPedidosSubAlmacen($_SESSION["id_almacen"]);
+                                  ?>
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
     </div> <!-- /container -->
 
             <!--Modal Movimiento Entrada -->
@@ -257,8 +283,9 @@
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../../Funciones/MuestraPedidosSubAlmacen.php")
                     .done(function(data) {
+                        alert(data);
                         $("#tbody").html(data);
                     });
          

@@ -1,9 +1,16 @@
+
+insert INTO soluciones_det_ped 
+            (
+                detalle_pedido_id_det_ped,
+                soluciones_alm_pro
+            )    
+            VALUES (10, 5);
 select 
-                        art.id_art,
-                        (art.nombre_art) as nombre,
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
                         art.unidad_art as unidad,
-                        t.nombre_tip as tipo,
-                        a.nombre_alm as almacen
+                        a.nombre_alm as nombre_almacen,
+                        a.id_alm as almacen
                    from 
                         almacen a 
                         inner join 
@@ -13,7 +20,106 @@ select
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
-                        group by art.nombre_art, almacen;
+                        group by art.nombre_art, almacen
+                        order by 5;
+
+
+select 
+                        dp.id_det_ped as id_dp,
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
+                        a.id_alm as almacen,
+                        dp.cantidad_art as cantidad
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                        where dp.atendido_det_ped=0;
+
+
+ select 
+                        art.id_art as articulo,
+                        a.id_alm as almacen
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by  almacen;
+
+select 
+                        art.id_art as id_articulo,
+                        art.nombre_art as articulo,
+                        dp.cantidad_art as cantidad,
+                        p.fecha_ped as fecha,
+                        case
+                        when dp.atendido_det_ped = 0 then 'No atendido'
+                        when dp.atendido_det_ped = 1 then 'Atendido' 
+                        end
+                        as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                        where p.almacen_id_alm<>0 
+                        and
+                        dp.atendido_det_ped=0;
+
+select 
+                        a.nombre_alm as almacen,
+                        art.nombre_art as articulo,
+                        dp.cantidad_art as cantidad,
+                        u.nombre_usu as usuario,
+                        p.fecha_ped as fecha,
+                        dp.atendido_det_ped as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                        where p.almacen_id_alm<>0
+
+
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by art.nombre_art, almacen
+                        order by 5
 
 select 
                         a.id_art,

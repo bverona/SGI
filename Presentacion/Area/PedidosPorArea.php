@@ -17,16 +17,16 @@
     <title>Pedidos Por Área</title>
 
     <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Personaliza este archivo -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
   <body>
 
     <div class="container">
-
+  
         <?php
         /*
          *  Define el Tipo de NavBar a Usar
@@ -35,7 +35,7 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-        
+
       <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
                 <div class="panel panel-success">
@@ -49,7 +49,7 @@
                                         <th>Artículo</th>
                                         <th>Cantidad</th>
                                         <th>Usuario</th>
-                                        <th>Almacen</th>
+                                        <th>Area</th>
                                         <th>Fecha</th>
                                         <th>Estado</th>
                                     </tr>
@@ -58,7 +58,7 @@
                                   <?php 
                                   require_once '../../Clases/clsPedido.php';
                                   $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
+                                  $objPed->ListarPedidosArea();
                                   ?>
                                   </tbody>
                           </table>
@@ -73,7 +73,7 @@
 
 
             <!--Modal Movimiento Entrada -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -106,7 +106,7 @@
             <!-- Fin Modal Movimiento Entrada-->
                     
             <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
+            <form name="frmgrabar" id="frmgrabar" method="post" action="../Funciones/RegistraMovimientoSalida.php">
                 <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -160,7 +160,7 @@
             <!-- Fin Modal Movimiento Salida -->
                  
             <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -242,7 +242,7 @@
 
        function leerDatosEntrada(id_) 
         {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombre").val(data.nombre);
@@ -253,7 +253,7 @@
     
        function leerDatosSalida(id_) 
         {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
                         $("#nombresalida").val(data.nombre);
@@ -263,7 +263,7 @@
         }
     
         function LlenaTipo() {
-            $.post("../../Funciones/llenarTipo.php")
+            $.post("../Funciones/llenarTipo.php")
                     .done(function(data) {
                          $("#cbTipo").append(data);
                     });
@@ -285,10 +285,9 @@
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../Funciones/MuestraArticulos.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);
-              
                     });
          
         }

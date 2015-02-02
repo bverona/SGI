@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Pedidos Por Almacen</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
@@ -35,23 +35,22 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-        
+        <div class="col-xs-12">
       <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
+                <div class="panel panel-info">
                     <div class="panel-heading"><b>Listado de Pedidos</b>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                <table class="table table-striped table-hover table-bordered">
                                   <thead>
                                     <tr>
-
                                         <th>Artículo</th>
                                         <th>Cantidad</th>
                                         <th>Usuario</th>
                                         <th>Almacen</th>
                                         <th>Fecha</th>
                                         <th>Estado</th>
+                                        <th>Soluciones</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
@@ -61,15 +60,14 @@
                                   $objPed->ListarPedidosAlmacen();
                                   ?>
                                   </tbody>
-                          </table>
-                    </div>
-                </div>
-            </div>
+                                </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
         </div>
 
-        </div>
-
-    </div> <!-- /container -->
 
 
             <!--Modal Movimiento Entrada -->

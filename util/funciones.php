@@ -34,7 +34,7 @@
                         <html>
                             <head>
                                 <title>Mensaje del sistema</title>
-                                <meta HTTP-EQUIV="refresh" CONTENT="44444; URL='.$direccion.'">
+                                <meta HTTP-EQUIV="refresh" CONTENT="2; URL='.$direccion.'">
                                 <meta charset="utf-8">
                                 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
                             </head>

@@ -1,17 +1,11 @@
 <?php
     
     $id=$_POST['id'];
-    
+    $articulo=$_POST["articulo"];
     require_once '../Clases/clsMovimiento.php';
     
     $objMovimiento= new Movimiento();
-    
-    if(($_POST["articulo"])==0)
-    {
-        $objMovimiento->ListarMovimientos($id);
-    }else
-        {
-            $objMovimiento->ListarMovimientosPorAlmacen($id,$_POST["articulo"]);
-        }
- //   $objTipo->
-?>
+
+    $objMovimiento->ListarMovimientosPorAlmacen($id,$articulo);
+
+    ?>

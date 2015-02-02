@@ -102,8 +102,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
-                    <li><a href="ListarArticulos.php">Listar Artículos</a></li>
-                    
+                    <li><a href="ListarArticulos.php">Listar Artículos</a></li>                   
                 </ul>
               </li>
             </ul>
@@ -132,10 +131,10 @@
             </ul>                   
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos Almacen<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="PedidosAlmacen.php">Listar Pedidos de Almacenes</a></li>
-                        <li><a href="RegistraSalida.php">Registra Salida</a></li>
+                        <li><a href="PedidosAlmacen.php">Pedidos de Almacenes No Atendidos</a></li>
+                        <li><a href="PedidosAlmacenAtendidos.php">Pedidos de Almacenes Atendidos</a></li>
                     </ul>
               </li>
             </ul>                   
@@ -173,27 +172,35 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<span class="caret"></span></a>
+                <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                          <li><a href="RealizaPedidosAlmacen.php">Realiza Pedidos</a></li>
+                      </ul>
+                </li>              
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                  <li><a href="ListarArticulosSubAlmacen.php">Listar Artículos</a></li>
+                  </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movimientos<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="RealizaPedidosAlmacen.php">Realiza Pedidos</a></li>
+                        <li><a href="RegistraEntrada.php">Registra Entrada</a></li>
+                        <li><a href="RegistraSalida.php">Registra Salida</a></li>
                     </ul>
-              </li>              
+                </li>
+                
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                      <li><a href="PedidosSubAlmacen.php">Pedidos Realizados</a></li>
 
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                <li><a href="ListarArticulosSubAlmacen.php">Listar Artículos</a></li>
-                </ul>
-              </li>
-
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="PedidosSubAlmacen.php">Pedidos Realizados</a></li>
-                    
-                </ul>
-              </li>
+                  </ul>
+                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -243,14 +250,14 @@
             </ul>
             
             <ul class="nav navbar-nav navbar-right">                
-                <li class="navbar-brand">'.date('d/m/Y').'</li>
+
                 <li class="dropdown">                
                 <a href="#" class="dropdown-toggle " data-toggle="dropdown">'.$_SESSION['usuario'].'<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
                     <li><a href="../../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
                 </ul>
-              </li>
+                </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

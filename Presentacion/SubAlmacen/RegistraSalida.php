@@ -5,7 +5,8 @@
     if ( ! isset($_SESSION["usuario"])){
         header("location:index.php");
     }
-?>
+    $almacen=($_SESSION["id_almacen"]);
+    ?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -14,52 +15,46 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Listar Artículo</title>
 
     <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Personaliza este archivo -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
   </head>
 
-  <body>
+  <body onload="Filtro();">
 
-    <div class="container">
-
-        <?php
-        /*
-         *  Define el Tipo de NavBar a Usar
-        */
-           require_once '../../Clases/clsNavbar.php';
-           $objNavBar= new NavBar();
-           $objNavBar->DefineNavBar();
-        ?>
         
-      <!-- Main component for a primary marketing message or call to action -->
+
+          <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
+                <?php
+               /*
+                *  Define el Tipo de NavBar a Usar
+               */
+                  require_once '../../Clases/clsNavbar.php';
+                  $objNavBar= new NavBar();
+                  $objNavBar->DefineNavBar();
+               ?>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><b>Listado de Artículos</b>
+                        <div class="panel-body panel-success">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                <table class="table table-striped table-hover">
                                   <thead>
                                     <tr>
-
+                                        <th>Salida</th>
                                         <th>Artículo</th>
+                                        <th>Unidad</th>
                                         <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th>Tipo</th>
+                                        <th>Almacén</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-                                  <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
-                                  ?>
+                                  
                                   </tbody>
                           </table>
                     </div>
@@ -68,9 +63,7 @@
         </div>
 
         </div>
-
-    </div> <!-- /container -->
-
+          <!-- /container -->
 
             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
@@ -158,7 +151,7 @@
                 </div>
             </form>    
             <!-- Fin Modal Movimiento Salida -->
-                 
+               
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -269,6 +262,12 @@
                     });
         }
 
+        function LlenaAlmacen() {
+            $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
+                    .done(function(data) {
+                         $("#cbAlmacen").append(data);
+                    });        }
+
         function DefineSalida(val)
         {
 
@@ -284,15 +283,23 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-              
-                    });
+            $.post("../../Funciones/MuestraArticulos.php")
+                    .done(function(data) 
+            {
+
+                if(data=="")
+                {
+                $("#tbody").html(
+                "<label class='lead'>No Hay ningún artículo de este tipo en este almacen</label>");
+                }
+                else
+                {
+                    $("#tbody").html(data);
+                }   
+
+            });
          
         }
 
     </script>
- 
 </html>

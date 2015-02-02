@@ -24,7 +24,7 @@
 
   </head>
 
-  <body onload="LlenaTipo();LlenaAlmacen();Filtro();">
+  <body onload="LlenarSelect();Filtro();">
 
         
 
@@ -45,19 +45,14 @@
                                 <table class="table table-striped table-hover">
                                   <thead>
                                     <tr>
-                                        <th colspan="2">Movimientos</th>
                                         <th>Artículo</th>
                                         <th>Unidad</th>
                                         <th>Cantidad</th>
+                                        <th>Tipo</th>
                                         <th>
-                                        <select class="  form-control" id="cbTipo" name="cbTipo" onchange="Filtro();">
-                                                <option value=0>Todos los Tipos</option>
-                                        </select>
-                                        </th>
-                                        <th>
-                                        <select class="  form-control" id="cbAlmacen" name="cbAlmacen" onchange="Filtro();">
-                                                <option value=0>Todos los Almacenes</option>
-                                        </select>
+                                            <select class="form-control" id="cbAlmacen" onchange="Filtro()">
+                                                <option value="0">Todos los Almacenes</option>
+                                            </select>
                                         </th>
                                     </tr>
                                   </thead>
@@ -270,7 +265,7 @@
                     });
         }
 
-        function LlenaAlmacen() {
+        function LlenarSelect() {
             $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
                     .done(function(data) {
                          $("#cbAlmacen").append(data);
@@ -291,15 +286,14 @@
 
         function Filtro()
         {
-            var tipo = $("#cbTipo").val();
             var almacen = $("#cbAlmacen").val();
-            $.post("../../Funciones/MuestraArticulos.php",{tipo:tipo,almacen:almacen})
+            $.post("../../Funciones/MuestraArticulosAlmacen.php",{almacen:almacen})
                     .done(function(data) 
             {
                 if(data=="")
                 {
                 $("#tbody").html(
-                "<label class='lead'>No Hay ningún artículo de este tipo en este almacen</label>");
+                "<label class='lead'>No Hay ningún artículo en este almacen</label>");
                 }
                 else
                 {

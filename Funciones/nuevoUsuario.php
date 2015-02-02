@@ -1,5 +1,7 @@
 <?php
-
+    session_name("SGI");
+    session_start();
+    
     $nombre=$_POST['nombre'];
     $pass=$_POST['pass'];
     $permisos=$_POST['RadioInline'];

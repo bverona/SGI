@@ -17,8 +17,8 @@
     <title>Actualiza Datos Personales</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../bootstrap/css/Jumbotron.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bootstrap/css/Jumbotron.css">
 
   </head>
 
@@ -33,7 +33,7 @@
       * esto se justifica porque un usuario con menores privilegios
       * podría acceder a funciones que no le corresponden
      */
-        require_once '../Clases/clsNavbar.php';
+        require_once '../../Clases/clsNavbar.php';
         $objNavBar= new NavBar();
         $objNavBar->DefineNavBar();
      ?>

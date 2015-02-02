@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Registra Entrada</title>
 
     <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
 
   </head>
 
-  <body>
+  <body onload="Filtro();">
 
     <div class="container">
 
@@ -36,30 +36,24 @@
            $objNavBar->DefineNavBar();
         ?>
         
-      <!-- Main component for a primary marketing message or call to action -->
+          <!-- Main component for a primary marketing message or call to action -->
              <div class="container">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
+                    <div class="panel-heading"><b>Listado de Artículos</b>
+                        <div class="panel-body panel-success">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                <table class="table table-striped table-hover">
                                   <thead>
                                     <tr>
-
+                                        <th>Entrada</th>
                                         <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th>Unidad</th>
+                                        <th>Codigo</th>
+                                        <th>Tipo</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-                                  <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
-                                  ?>
+                                  
                                   </tbody>
                           </table>
                     </div>
@@ -69,10 +63,10 @@
 
         </div>
 
+
     </div> <!-- /container -->
 
-
-            <!--Modal Movimiento Entrada -->
+             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -158,7 +152,7 @@
                 </div>
             </form>    
             <!-- Fin Modal Movimiento Salida -->
-                 
+               
             <!-- Modal Nuevo Artículo-->
                 <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
                         <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -217,12 +211,14 @@
             <!-- /Modal Nuevo Artículo-->
 
 
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
@@ -284,15 +280,23 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-              
-                    });
+            $.post("../../Funciones/MuestraTodosArticulos.php")
+                    .done(function(data) 
+            {   
+                if(data=="")
+                {
+                $("#tbody").html(
+                "<label class='lead'>No Hay ningún artículo, por favor registre lo artículos</label>");
+                }
+                else
+                {
+                    $("#tbody").html(data);
+                }   
+
+            });
          
         }
 
     </script>
- 
+  </body>
 </html>

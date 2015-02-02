@@ -33,7 +33,7 @@
       * esto se justifica porque un usuario con menores privilegios
       * podría acceder a funciones que no le corresponden
      */
-        require_once '../Clases/clsNavbar.php';
+        require_once '../../Clases/clsNavbar.php';
         $objNavBar= new NavBar();
         $objNavBar->DefineNavBar();
      ?>

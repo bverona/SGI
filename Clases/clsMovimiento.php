@@ -336,8 +336,8 @@ class Movimiento {
                     order by 1";
 
         ($almacen != 0) ?
-                        $resultado = $objCon->consultar($sql) :
-                        $resultado = $objCon->consultar($sql2);
+        $resultado = $objCon->consultar($sql) :
+        $resultado = $objCon->consultar($sql2);
 
 
         while ($registro = $resultado->fetch()) {
@@ -384,7 +384,89 @@ class Movimiento {
                         and art.id_art=" . $articulo . " 
                     order by 2";
 
-        $resultado = $objCon->consultar($sql);
+        $sql2 = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        case
+                        when m.tipo_mov=0 then 'Entrada' 
+                        when m.tipo_mov=1 then 'Salida' 
+                        end as movimiento, 
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=" . $almacen . "  
+                    order by 2";
+
+        $sql3 = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        case
+                        when m.tipo_mov=0 then 'Entrada' 
+                        when m.tipo_mov=1 then 'Salida' 
+                        end as movimiento, 
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        art.id_art=" . $articulo . " 
+                    order by 2";
+
+        $sql4 = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        case
+                        when m.tipo_mov=0 then 'Entrada' 
+                        when m.tipo_mov=1 then 'Salida' 
+                        end as movimiento, 
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                    order by 2";
+        
+        
+        if($articulo!=0 && $almacen!=0)
+        {
+            $resultado = $objCon->consultar($sql);
+        }else
+            if($articulo==0 && $almacen!=0)
+            {
+                $resultado = $objCon->consultar($sql2);
+                
+            }else if($articulo!=0 && $almacen==0)
+                {            
+                    $resultado = $objCon->consultar($sql3);
+                }else
+                    {
+                        $resultado = $objCon->consultar($sql4);
+                    }
 
 
         while ($registro = $resultado->fetch()) {
@@ -395,9 +477,17 @@ class Movimiento {
             echo '<td>' . $registro["fecha"] . '</td>';
             echo '<td>' . $registro["articulo"] . '</td>';
             echo '<td>' . $registro["unidad"] . '</td>';
-            echo '<td>' . $registro["cantidad"] . '</td>';
+            if($registro["movimiento"]=="Entrada")
+            {
+                echo '<td>' . $registro["cantidad"] . '</td>';
+                echo '<td>' ."---". '</td>';
+            }else
+                {
+                echo '<td>' ."---". '</td>';
+                echo '<td>' . $registro["cantidad"] . '</td>';
+                }
+            
             echo '<td>' . $registro["saldo"] . '</td>';
-            echo '<td>' . $registro["movimiento"] . '</td>';
             echo '</tr>';
         }
     }

@@ -2,12 +2,12 @@
     session_name("SGI");
     session_start();
 
-    $id=$_POST['id'];
+    $almacen= $_POST["almacen"];
     
     require_once '../Clases/clsArticulo.php';
     
     $objArticulo= new Articulo();
     
-    $objArticulo->ListarArticulosxSubAlmacen($id,$_SESSION["id_almacen"]);
+    $objArticulo->ListarArticulosxSubAlmacen($almacen);
  //   $objTipo->
 ?>

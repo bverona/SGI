@@ -141,7 +141,173 @@ class Articulo {
         return $retorno;
     }
 
-    public function ListarArticulos($tipo, $almacen) {
+    public function ArregloArticulos() {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
+                        art.unidad_art as unidad,
+                        a.nombre_alm as nombre_almacen,
+                        a.id_alm as almacen
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by art.nombre_art, almacen
+                        order by 5";
+
+        $resultado = $objCon->consultar($sql);
+        $retorno=null;
+        $i = 0;
+        while ($registro = $resultado->fetch()) {
+            $retorno[$i]["articulo"] = $registro["articulo"];
+            $retorno[$i]["cantidad"] = $this->SaldoArticulo($registro["articulo"], $registro["almacen"]);
+            $retorno[$i]["almacen"] = $registro["almacen"];
+            $retorno[$i]["nombre_almacen"] = $registro["nombre_almacen"];
+            $i++;
+        }
+        return $retorno;
+    }
+
+    public function ListarArticulosPorAlmacen($almacen)
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where m.almacen_id_alm=" . $almacen . "
+                        group by art.nombre_art
+                   order by 1;";
+
+        $sql2 = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by art.nombre_art, almacen
+                        order by 5";
+
+        if ($almacen != 0) {
+            $resultado = $objCon->consultar($sql);
+        } else {
+            $resultado = $objCon->consultar($sql2);
+        }
+
+        while ($registro = $resultado->fetch()) {
+            if ($registro != null) {
+                echo '<tr>';
+                if ($almacen != 0) {
+                    echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
+                }
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td>' . $registro["unidad"] . '</td>';
+                echo '<td>' . $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]) . '</td>';
+                echo '<td>' . $registro["tipo"] . '</td>';
+                echo '<td>' . $registro["almacen"] . '</td>';
+                echo '</tr>';
+            }
+        }
+    }
+
+    public function ListarArticulosxSubAlmacen($almacen)
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where m.almacen_id_alm=" . $almacen . "
+                        group by art.nombre_art
+                   order by 1;";
+
+        $sql2 = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by art.nombre_art, almacen
+                        order by 5";
+
+        if ($almacen != 0) {
+            $resultado = $objCon->consultar($sql);
+        } else {
+            $resultado = $objCon->consultar($sql2);
+        }
+
+        while ($registro = $resultado->fetch()) {
+            if ($registro != null) {
+                echo '<tr>';
+
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td>' . $registro["unidad"] . '</td>';
+                echo '<td>' . $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]) . '</td>';
+                echo '<td>' . $registro["tipo"] . '</td>';
+                echo '<td>' . $registro["almacen"] . '</td>';
+                echo '</tr>';
+            }
+        }
+    }
+
+    public function ListarArticulosPorTipo($tipo, $almacen) 
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
@@ -239,7 +405,6 @@ class Articulo {
         while ($registro = $resultado->fetch()) {
             if ($registro != null) {
                 echo '<tr>';
-                echo '<td><a href="#" onclick="leerDatosEntrada(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalEntrada"><span class="glyphicon glyphicon-arrow-down"></span><img src="../../imagenes/entrada.png"/></a></td>';
                 echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
@@ -251,7 +416,8 @@ class Articulo {
         }
     }
 
-    public function ListarTodosArticulos() {
+    public function ListarTodosArticulos()
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
@@ -269,7 +435,8 @@ class Articulo {
         $resultado = $objCon->consultar($sql);
 
         while ($registro = $resultado->fetch()) {
-            if ($registro != null) {
+            if ($registro != null) 
+            {
                 echo '<tr>';
                 echo '<td><a href="#" onclick="leerDatosEntrada(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalEntrada"><span class="glyphicon glyphicon-arrow-down"></span><img src="../../imagenes/entrada.png"/></a></td>';
                 echo '<td>' . $registro["nombre"] . '</td>';
@@ -281,7 +448,8 @@ class Articulo {
         }
     }
 
-    public function SaldoArticulo($articulo, $almacen) {
+    public function SaldoArticulo($articulo, $almacen) 
+    {
         require_once 'clsConexion.php';
         $obj = new Conexion();
 
