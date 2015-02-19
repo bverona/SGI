@@ -231,7 +231,9 @@
 
     $(document).ready(function (){        
           $('#cantidad').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/,'');
+        
+                this.value =(this.value + '').replace(/[^0-9]/,'');
+              alert(this.value);
            
             });
           $('#cantidadsalida').keyup(function (){
@@ -240,6 +242,7 @@
             });
      });
 
+     
        function leerDatosEntrada(id_) 
         {
             $.post("../Funciones/DatosArticulo.php", {id: id_})

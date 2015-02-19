@@ -5968,7 +5968,19 @@ button.close {
 .modal-dialog {
   position: relative;
   z-index: 1050;
-  width: auto;
+  width: 600;
+  margin: 10px;
+}
+.modal-dialogo {
+  position: relative;
+  z-index: 1050;
+  width: 600;
+  margin: 10px;
+}
+.modal-dialog-prov {
+  position: relative;
+  z-index: 1050;
+  width: 600;
   margin: 10px;
 }
 
@@ -6067,6 +6079,14 @@ button.close {
 @media screen and (min-width: 768px) {
   .modal-dialog {
     width: 600px;
+    margin: 30px auto;
+  }
+  .modal-dialogo {
+    width: 1000px;
+    margin: 30px auto;
+  }
+  .modal-dialog-prov {
+    width: 650px;
     margin: 30px auto;
   }
   .modal-content {

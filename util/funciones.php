@@ -38,7 +38,7 @@
                                 <meta charset="utf-8">
                                 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
                             </head>
-                            <body>
+                            <body>                                
                                  <div class="'.$tipoMensaje.'">
                                      '.$texto.' 
                                      <a href="'.$direccion.'" class="alert-link">&nbsp;Regresar</a>

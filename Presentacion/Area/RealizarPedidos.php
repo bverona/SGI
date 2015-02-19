@@ -96,7 +96,7 @@
                     <table class="table table-striped table-condensed table-hover" id="tabla">
 			<thead>
 				<tr>
-					<th>Tipo Artículo</th>
+                                        <th>Tipo Artículo</th>
 					<th>Artículo</th>
 					<th>Cantidad</th>
 				</tr>
@@ -130,6 +130,7 @@
           $('#cantidad').keyup(function (){
             this.value =(this.value + '').replace(/[^0-9]/,'');
             Unidad();
+            this.value
         });
         });
         

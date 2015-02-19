@@ -1,3 +1,28 @@
+insert into 
+    articulo_proveedor 
+        (
+            articulo_id_art,
+            proveedor_id_proveedor,
+            articulo_proveedor_cant,
+            articulo_proveedor_pre
+        )
+values 
+        (16,3,20,4.5);
+
+select  
+                        ap.proveedor_id_proveedor as id, 
+                        a.nombre_art as articulo, 
+                        ap.articulo_proveedor_pre as precio, 
+                        p.nombre_proveedor as proveedor, 
+                        ap.articulo_proveedor_cant 
+                from    
+                        articulo_proveedor ap  inner join
+                        proveedor p on ap.proveedor_id_proveedor=p.id_proveedor
+                        inner join articulo a on a.id_art=ap.articulo_id_art
+                where a.id_art=1;
+
+select * from soluciones_det_ped;
+
 
 insert INTO soluciones_det_ped 
             (

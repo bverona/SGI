@@ -10,7 +10,8 @@
     require_once '../Clases/ClsUsuario.php';
     require_once '../util/funciones.php';
     $objusuario= new Usuario();
-    
+        echo $permisos;    
+        
         if(($objusuario->AgregarUsuario($nombre, $pass, $permisos)) )
         {
             //asigna área o Almacen según sea

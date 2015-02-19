@@ -12,9 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Bruno Verona">
-    <link rel="icon" href="../../Imagenes/logo muni motupe.png">
+    <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Navbar Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
@@ -25,6 +25,7 @@
 
   <body>
 
+    <!-- container -->
     <div class="container">
 
         <?php
@@ -36,57 +37,62 @@
            $objNavBar->DefineNavBar();
         ?>
 
+        <div class="col-xs-12">
       <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <p><b>Orden de Compra : </b></p>
+                    <p><b>Fecha &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></p>
+                    <p><b>Hora &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></p>
+                    <div class="panel-body">
+                        <form role="form" action="ProcesaPedido.php" method="POST">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                <table class="table table-striped table-hover table-bordered">
                                   <thead>
                                     <tr>
-
-                                        <th>Artículo</th>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
                                         <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Area</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th>Proveedor</th>
+                                        <th>Prioridad</th>
+
+                                        <th>Observación</th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
                                   <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosArea();
+                                  
                                   ?>
                                   </tbody>
-                          </table>
+                                </table>
+                           </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
 
-        </div>
-
-    </div> <!-- /container -->
-
-
-
-
+    </div> 
+      <!-- /container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-  </body>
+  
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
-   <script type="text/javascript">
+
+    <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
         $('#nombre').focus();
     });
 
+
+    
+
+    // solo números
     $(document).ready(function (){        
           $('#cantidad').keyup(function (){
             this.value =(this.value + '').replace(/[^0-9]/,'');
@@ -151,5 +157,5 @@
         }
 
     </script>
- 
+  </body>
 </html>

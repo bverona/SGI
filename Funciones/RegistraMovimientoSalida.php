@@ -18,7 +18,7 @@
         
        if($radio==2)
         {
-            $objMovimiento->AgregaMovimientoTrasferencia($id_art, $cantidad, $descripcion, $almacenOrigen, $almacenDestino);           
+            $objMovimiento->AgregaMovimientoTrasferencia($id_art, $cantidad, $descripcion, $almacenOrigen, $almacenDestino);
             $texto="Realizado Correctamente";
         }
          else 

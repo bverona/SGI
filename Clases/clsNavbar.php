@@ -64,7 +64,17 @@
                                     <li><a href="PedidosPorArea.php">Pedidos por Área</a></li>
                                 </ul>
                             </li>
-
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proveedores<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a data-toggle="modal" data-target="#NuevoProveedor" href="#">
+                                            Nuevo Proveedor
+                                        </a> 
+                                    </li>
+                                    <li><a href="ListarProveedores.php">Listar Proveedores</a></li>
+                                    </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
@@ -79,7 +89,126 @@
                 </div><!--/.container-fluid -->
             </div>
             <!-- Static navbar -->
+            <!-- Modal Nuevo Almacén-->
+            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
+                <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
 
+                            <div class="modal-header">
+                                <h4>Nuevo Almacén!</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p><input type="text" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>        
+            <!-- /Modal Nuevo Almacén-->
+
+            <!-- Modal Nuevo Usuario-->
+            <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
+                <div class="modal fade" id="NuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nuevo Usuario</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass">Contraseña</label>
+                                    <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
+                                </div>
+                                <div class="form-group" onclick="">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="RadioInline" id="area" onclick="LlenaSelectNuevo(2);" value="2"> Área
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>        
+            <!-- /Modal Nuevo Usuario-->
+
+            <!-- Modal Nueva Área-->
+            <form name="frmgrabarArea" id="frmgrabarArea" method="post" action="../../Funciones/NuevaArea.php">
+                <div class="modal fade" id="NuevaArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nueva Área</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p><input type="text" class="form-control" name="txtnombrearea" id="txtnombrearea" required placeholder="Nombre Área"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>        
+            <!-- /Modal Nuevo Área-->
+
+            <!-- Modal Nuevo Proveedor-->
+            <form name="frmgrabarProveedor" id="frmgrabarProveedor" method="post" action="../../Funciones/NuevoProveedor.php">
+                <div class="modal fade" id="NuevoProveedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nuevo Proveedor!</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p><input type="text" class="form-control" name="txtnombreproveedor" id="txtnombreproveedor" required placeholder="Nombre Proveedor"></p>
+                                <p><input type="text" class="form-control" name="txtdireccionproveedor" id="txtdireccionproveedor" required placeholder="Dirección Proveedor"></p>
+                                <p><input type="text" class="form-control" name="txtrucproveedor" maxlength="10" id="txtrucproveedor" required placeholder="RUC Proveedor"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>        
+            <!-- /Modal Nuevo Proveedor-->            
+            
                ';
        }        
        else //navbar almacén General
@@ -129,6 +258,7 @@
                     </ul>
               </li>
             </ul>                   
+
             <ul class="nav navbar-nav">
               <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos Almacen<span class="caret"></span></a>
@@ -138,15 +268,25 @@
                     </ul>
               </li>
             </ul>                   
-              
-              <ul class="nav navbar-nav navbar-right">
+
+            <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$_SESSION['usuario'].'<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
-                </ul>
-                
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Órdenes de Compra<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="ListaOrdenesCompra.php">Órdenes de Compra Realizadas</a></li>
+
+                    </ul>
+              </li>
+            </ul>                   
+
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$_SESSION['usuario'].'<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                  <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
+                  <li><a href="../../Funciones/cerrarSesion.php">Cerrar Sesión</a></li>
+              </ul>
+
               </li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -219,7 +359,7 @@
                 
     ';                   
                    }
-           else //navbar area
+           else  if($_SESSION["permisos"]==2)//navbar area
                {
                echo '
       <!-- Static navbar -->

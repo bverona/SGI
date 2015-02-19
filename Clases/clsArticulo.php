@@ -142,6 +142,7 @@ class Articulo {
     }
 
     public function ArregloArticulos() {
+    //  Lista todos los artículos disponibles en todos los almacenes 
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
@@ -288,7 +289,8 @@ class Articulo {
 
         if ($almacen != 0) {
             $resultado = $objCon->consultar($sql);
-        } else {
+
+            } else {
             $resultado = $objCon->consultar($sql2);
         }
 
@@ -306,6 +308,36 @@ class Articulo {
         }
     }
 
+    public function ListarArticulosModal()
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        id_art as id,
+                        nombre_art as nombre
+                from 
+                        articulo;
+";
+
+            $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+            if ($registro != null) {
+                echo '<tr>';
+
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td><input type="text" class="form-control" id="cantidad'.$id.'"></td>';
+                echo '<td><input type="text" class="form-control" id="precio'.$id.'"></td>';
+                echo '<td><button class="btn btn-success" type="text" onclick="Actualiza()">Actualizar</button></td>';
+                echo '</tr>';
+            }
+        }
+    }
+    
+    
+    
+    
     public function ListarArticulosPorTipo($tipo, $almacen) 
     {
         require_once 'clsConexion.php';

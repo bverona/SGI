@@ -1,244 +1,270 @@
-<?php   
-    session_name("SGI");
-    session_start();
-    
-    if ( ! isset($_SESSION["usuario"])){
-        header("location:index.php");
-    }
+<?php
+session_name("SGI");
+session_start();
+
+if (!isset($_SESSION["usuario"])) {
+    header("location:index.php");
+}
 ?>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Bruno Verona">
-    <link rel="icon" href="../Imagenes/logo muni motupe.png">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Bruno Verona">
+        <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Almacen</title>
+        <title>Pedidos Por Almacen</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+        <!-- Custom styles for this template -->
+        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
-  </head>
+    </head>
 
-  <body>
+    <body>
 
-    <div class="container">
+        <div class="container">
 
-        <?php
-        /*
-         *  Define el Tipo de NavBar a Usar
-        */
-           require_once '../../Clases/clsNavbar.php';
-           $objNavBar= new NavBar();
-           $objNavBar->DefineNavBar();
-        ?>
-        <div class="col-xs-12">
-      <!-- Main component for a primary marketing message or call to action -->
+            <?php
+            /*
+             *  Define el Tipo de NavBar a Usar
+             */
+            require_once '../../Clases/clsNavbar.php';
+            require_once '../../Clases/clsPedido.php';
+
+            $objNavBar = new NavBar();
+            $objPed = new Pedido(0, 0, 0);
+
+            $objNavBar->DefineNavBar();
+            $objPed->ProcesaPedidos();
+            ?>
+            <div class="col-xs-12">
+                <!-- Main component for a primary marketing message or call to action -->
                 <div class="panel panel-info">
                     <div class="panel-heading"><b>Listado de Pedidos</b>
                         <div class="panel-body">
+                            <form role="form" action="ProcesaPedido.php" method="POST">
+                                <div class="table-responsive table-hover">
+                                    <table class="table table-striped table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Artículo</th>
+                                                <th>Cantidad</th>
+                                                <th>Usuario</th>
+                                                <th>Almacen</th>
+                                                <th>Fecha</th>
+                                                <th>Estado</th>
+                                                <th>Soluciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            <?php
+                                            require_once '../../Clases/clsPedido.php';
+                                            $objPed = new Pedido("", "", "");
+                                            $objPed->ListarPedidosAlmacen();
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Orden Compra-->
+        <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GeneraOrdenCompra.php">
+            <div class="modal fade" id="OrdenCompra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialogo">
+                    <div class="modal-content">                                 
+                        <div class="modal-header">
+                            <p><b>Orden de Compra : </b></p>
+                            <p><b>Fecha &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></p>
+                            <p><b>Hora &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b></p>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <!-- Main component for a primary marketing message or call to action -->
+
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered">
-                                  <thead>
-                                    <tr>
-                                        <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
-                                        <th>Soluciones</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tbody">
-                                  <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
-                                  ?>
-                                  </tbody>
-                                </table>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-        </div>
-        </div>
+                                <table class="table table-striped table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Proveedor</th>
+                                            <th>Prioridad</th>
+                                            <th>Observación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        <tr>
+                                            <td><input class="form-control" type="text" readonly="" id="producto" name="producto" value="Producto"></td>
+                                            <td>
+                                                <input class="form-control" type="text" id="precio" name="Precio" readonly="true" value="0"></td>
+                                            <td>
 
-
-
-            <!--Modal Movimiento Entrada -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
-                <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Movimiento Entrada </h4>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="form-group">
-                                    <label for="nombre">Artículo</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cantidad">Cantidad</label>
-                                    <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Ingrese cantidad">
-                                </div>
-                                <input type="hidden" name="saldo" id="saldo" value="">
-                                <input type="hidden" name="id" id="id" value="">
-                                <input type="hidden" name="almacen" id="almacen" <?php echo 'value="'.$almacen.'"'?> >
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit"  class="btn btn-danger " aria-hidden="true">Registrar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            </div>
+                                                <input class="form-control" type="text" id="cantidad" readonly="true" name="cantidad" value="0">
+                                            </td>
+                                            <td>
+                                                <button class="form-control btn btn-default btn-sm" data-toggle="modal"  id="btnProveedor" onclick="ListarProveedores()"  data-target="#ModalProveedores" value="">Seleccione Proveedor</button>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" name="prioridad" id="prioridad">                                                    
+                                                    <option value="1"> 
+                                                        Baja
+                                                    </option>
+                                                    <option value="2"> 
+                                                        Media
+                                                    </option>
+                                                    <option value="3"> 
+                                                        Alta
+                                                    </option>
+                                                </select>
+                                            </td>   
+                                            <td>
+                                                <textarea class="form-control" id="observacion" name="observacion" placeholder="Observación"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                      
+                            </div>        
+                            <input type="hidden" id="id_art" name="id_art" value="">
+                            <input type="hidden" id="det_ped" name="det_ped" value="">
                         </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                            <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+
                     </div>
                 </div>
-            </form>    
-            <!-- Fin Modal Movimiento Entrada-->
-                    
-            <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
-                <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Movimiento Salida</h4>
-                            </div>
-                            <div class="modal-body">
+            </div>
+        </form>       
+        <!-- /Modal Orden Compra-->
 
-                                <div class="form-group">
-                                    <label for="nombresalida">Artículo</label>
-                                    <input type="text" class="form-control" name="nombresalida" id="nombresalida" readonly>
-                                </div>
-                                <div class="form-group" onclick="">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area"  onclick="DefineSalida(1);"  value="1"> 
-                                        Salida
-                                    </label>
-                                    <label class="radio-inline" required>
-                                        <input type="radio" name="RadioInline" id="almacen" value="2" onclick="DefineSalida(2);"> 
-                                        Transferencia
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cantidadsalida">Cantidad</label>
-                                    <input type="text" class="form-control" name="cantidadsalida" id="cantidadsalida" required>
-                                </div>
-                                <div class="form-group" id="divmodulos" hidden="true">
-                                    <label>Almacen</label>
-                                    <select class="form-control" id="cbModulos" name="cbModulos" >
-                                        <?php 
-                                            require_once '../../Clases/clsAlmacen.php';
-                                            $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
-                                        ?>
-                                    </select>
-                                </div>
-                                <input type="hidden" name="saldosalida" id="saldosalida" value="">
-                                <input type="hidden" name="idsalida" id="idsalida" value="">
-                                <input type="hidden" name="almacensalida" id="almacensalida" <?php echo 'value="'.$almacen.'"'?> >
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger " aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            </div>
+        <!--Modal Proveedores -->           
+        <div class="modal fade" id="ModalProveedores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog-prov">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Lista de Proveedores</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><b>Listado de Proveedores</b></div>
+                                <div class="panel-body">
+                                    <div class="table-responsive table-hover">
+                                        <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th>Nombre</th>
+                                              <th>Artículo</th>
+                                              <th>Cantidad</th>
+                                              <th>Precio</th>
+                                              <th>Requerido</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody id="bodytablaproveedores">
+
+                                              
+                                          </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
+                    </div>  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
-            </form>    
-            <!-- Fin Modal Movimiento Salida -->
-                 
-            <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <div class="modal-header">
-                                    <h4>Nuevo Artículo</h4>
-                                </div>
-
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="unidad">Unidad</label>
-                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbtipo">Tipo</label>
-                                            <select class="form-control" id="cbtipo" name="cbtipo">
-    <!--                                            <option value="0">Seleccione Tipo</option>-->
-                                                <?php 
-                                                require_once '../../Clases/clsTipo.php';
-                                                $objTipo = new TipoArticulo();
-                                                $objTipo->SelectTipoArticulo();
-                                                ?>
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="codigo">Código </label>
-                                                <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="precio">Precio </label>
-                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                        </div>
-
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                </form>        
-            <!-- /Modal Nuevo Artículo-->
+            </div>
+        </div>
+        <!-- /Modal Proveedores-->            
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
+    </body>
+    
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
 
-    $('#NuevoArticulo').on('shown.bs.modal', function () {
-        $('#nombre').focus();
-    });
+        $('#NuevoArticulo').on('shown.bs.modal', function() {
+            $('#nombre').focus();
+        });
+              
+         
+         function VerificaCantidad(cantidad)
+         {
+            var aux=$("#cantidadreq").val();
+            aux =(aux+'').replace(/[^0-9]/,'');
+            $("#cantidadreq").val(aux);    
+            
+        if( $("#cantidadreq").val() > cantidad )
+            {
+                $("#cantidadreq").val(cantidad);
+            }
+    }
 
-    $(document).ready(function (){        
-          $('#cantidad').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/,'');
-           
-            });
-          $('#cantidadsalida').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/,'');
-           
-            });
-     });
 
-       function leerDatosEntrada(id_) 
+        function ParametrosModal(dp, id_prod, nombre, precio, almacen)
+        {
+            $("#producto").val(nombre);
+            $("#det_ped").val(dp);
+            $("#precio").val(0);
+            $("#cantidad").val(0);
+            $("#id_art").val(id_prod);
+            $("#btnProveedor").html('Seleccione Proveedor');
+    }
+
+        function ListarProveedores()
+        {
+            var articulo = $("#id_art").val();
+        
+            $.post("../../Funciones/MuestraProveedores.php",{articulo:articulo})
+                    .done(function(data){
+                       $("#bodytablaproveedores").html(data); 
+                    });
+        }
+
+    function AsignaArticulo(precio,proveedor)
+        {
+            if(precio===-1)
+            {
+                $("#precio").val(0.0);
+                $("#cantidad").val(0);
+                $("#btnProveedor").html('No Proveedor');
+            }else
+            {
+                $("#precio").val(precio);
+                $("#btnProveedor").html(proveedor);
+                $("#cantidad").val($("#cantidadreq").val());
+            }
+        }
+
+        function ProcesaPedido(prov, dest, articulo, cantidad, dp)
+        {
+            var id = $("#cbTipo").val();
+            $.post("../../Funciones/ProcesaPedidos.php", {
+                prov: prov, dest: dest, articulo: articulo, cantidad: cantidad, dp: dp})
+                    .done(function(data)
+                    {
+                        alert('Pedido Procesado');
+                    });
+        }
+
+        function leerDatosEntrada(id_)
         {
             $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
@@ -246,10 +272,10 @@
                         $("#nombre").val(data.nombre);
                         $("#saldo").val(data.cantidad);
                         $("#id").val(data.id);
-                    }, "json");                    
+                    }, "json");
         }
-    
-       function leerDatosSalida(id_) 
+
+        function leerDatosSalida(id_)
         {
             $.post("../../Funciones/DatosArticulo.php", {id: id_})
                     .done(function(data) {
@@ -257,40 +283,40 @@
                         $("#nombresalida").val(data.nombre);
                         $("#saldosalida").val(data.cantidad);
                         $("#idsalida").val(data.id);
-                    }, "json");                    
+                    }, "json");
         }
-    
+
         function LlenaTipo() {
             $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
-                         $("#cbTipo").append(data);
+                        $("#cbTipo").append(data);
                     });
         }
 
         function DefineSalida(val)
         {
 
-            if (val===2)
+            if (val === 2)
             {
-                $("#divmodulos").prop("hidden",false);
-            }else
-                {
-                    $("#divmodulos").prop("hidden",true);
-                }
-                
+                $("#divmodulos").prop("hidden", false);
+            } else
+            {
+                $("#divmodulos").prop("hidden", true);
+            }
+
         }
 
         function Filtro()
         {
             var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
+            $.post("../../Funciones/MuestraArticulos.php", {id: id})
                     .done(function(data) {
                         $("#tbody").html(data);
-              
+
                     });
-         
+
         }
 
     </script>
- 
+
 </html>

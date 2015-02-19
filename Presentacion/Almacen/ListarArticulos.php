@@ -59,11 +59,11 @@
                                   <tbody id="tbody">
                                   
                                   </tbody>
-                          </table>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
         </div>
           <!-- /container -->

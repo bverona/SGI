@@ -200,7 +200,7 @@
     $('#NuevoArticulo').on('shown.bs.modal', function () {
         $('#nombre').focus();
     });
-
+    // solo números
     $(document).ready(function (){        
           $('#cantidad').keyup(function (){
             this.value =(this.value + '').replace(/[^0-9]/,'');

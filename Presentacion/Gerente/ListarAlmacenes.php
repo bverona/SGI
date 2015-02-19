@@ -38,32 +38,6 @@
         ?>
 
         
-           <!-- Modal Nuevo Almacén-->
-          <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/ActualizaAlmacen.php">
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Editar Datos</h4>
-                                          
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nombre">Nuevo Nombre </label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Almacén">
-                        </div>
-                        <input type="hidden" name="id" id="id">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger" aria-hidden="true">Aceptar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>    
-           <!-- Modal Nuevo Almacén-->      
       
       
       <!-- Main component for a primary marketing message or call to action -->
@@ -79,100 +53,8 @@
             </div>
           </div>          
       </div>
-
-           <!-- Modal Nuevo Almacén-->
-            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
-                    <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nuevo Almacén!</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-            </form>        
-            <!-- /Modal Nuevo Almacén-->
-
-            <!-- Modal Nuevo Usuario-->
-            <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
-                    <div class="modal fade" id="NuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nuevo Usuario</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                    <div class="form-group">
-                                            <label for="nombre">Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="pass">Contraseña</label>
-                                            <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
-                                    </div>
-                                <div class="form-group" onclick="">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" value="2" onclick="LlenaSelectNuevo(2);" > Área
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
-                                    </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" id="cbModulosNuevo" name="cbModulos">
-
-                                        </select>
-                                    </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                          </div>
-                           
-                        </div>
-                      </div>
-                    </div>
-            </form>        
-            <!-- /Modal Nuevo Usuario-->
-
-            <!-- Modal Nueva Área-->
-            <form name="frmgrabarArea" id="frmgrabarArea" method="post" action="../../Funciones/NuevaArea.php">
-                    <div class="modal fade" id="NuevaArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nueva Área</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrearea" id="txtnombrearea" required placeholder="Nombre Área"></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-
-                        </div>
-                      </div>
-                    </div>
-            </form>        
-            <!-- /Modal Nuevo Área-->      
+      
+    
       
       
     </div> <!-- /container -->
