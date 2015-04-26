@@ -76,7 +76,7 @@
                             <div class="col-xs-12">    
                                 <div class="col-xs-5">
                                 <br>    
-                                <button class="btn btn-primary" type="button" id="añade" value="Añadir Artículo" onclick="AñadePedido();">Añadir Pedido</button>
+                                <button class="btn btn-primary" type="button" id="añade" value="Añadir Artículo" onclick="AñadePedido();">Añadir Articulo</button>
                                 </div>
                                 <div class="col-xs-offset-3 col-xs-2 ">    
                                 <br>

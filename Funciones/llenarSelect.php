@@ -1,6 +1,7 @@
 <?php
 
     $valorRb = $_POST["valor_Rb"];
+    $antiguo = $_POST["antiguo"];
     
     require_once '../Clases/clsArea.php';
     require_once '../Clases/clsAlmacen.php';
@@ -17,7 +18,7 @@
         }
         else 
             {
-                $objAlmacen->ListarAlmacenSinFiltro();        
+                $objAlmacen->ListarAlmacenSinFiltro($antiguo);        
             }
 
 ?>

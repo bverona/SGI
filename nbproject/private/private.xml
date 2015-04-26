@@ -12,14 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/AppServ/www/SGI/Clases/clsArticulo.php</file>
+            <file>file:/C:/AppServ/www/SGI/Extras/pruebas.sql</file>
             <file>file:/C:/AppServ/www/SGI/Clases/clsProveedor.php</file>
-            <file>file:/C:/AppServ/www/SGI/Clases/clsPedido.php</file>
-            <file>file:/C:/AppServ/www/SGI/Presentacion/Almacen/ListaOrdenesCompra.php</file>
             <file>file:/C:/AppServ/www/SGI/Presentacion/Gerente/ListarProveedores.php</file>
-            <file>file:/C:/AppServ/www/SGI/Presentacion/Almacen/PedidosAlmacen.php</file>
-            <file>file:/C:/AppServ/www/SGI/Funciones/MuestraArticulosAlmacen.php</file>
-            <file>file:/C:/AppServ/www/SGI/Presentacion/Gerente/Gerente.php</file>
+            <file>file:/C:/AppServ/www/SGI/Presentacion/Gerente/ArticuloProveedor.php</file>
         </group>
     </open-files>
 </project-private>

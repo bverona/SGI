@@ -126,10 +126,30 @@
                     }, "json");                    
         }
     
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
         function LlenaTipo() {
             $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
                          $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
                     });
         }
 
@@ -146,15 +166,6 @@
                 
         }
 
-        function Filtro()
-        {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-                    });
-         
-        }
 
     </script>
   </body>

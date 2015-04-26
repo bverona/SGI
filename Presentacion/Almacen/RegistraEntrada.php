@@ -134,7 +134,7 @@
                                         <?php 
                                             require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                            $objAlmacen->ListarAlmacenOption();
                                         ?>
                                     </select>
                                 </div>
@@ -258,10 +258,30 @@
                     }, "json");                    
         }
     
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
         function LlenaTipo() {
             $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
                          $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
                     });
         }
 

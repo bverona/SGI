@@ -3,7 +3,7 @@
     session_start();
     
     if ( ! isset($_SESSION["usuario"])){
-        header("location:index.php");
+        header("location:../../index.php");
     }
     class NavBar{
 
@@ -24,6 +24,7 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
+                        
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -35,6 +36,7 @@
                                     <li><a href="ListarUsuarios.php">Listar Usuario</a></li>
                                 </ul>
                             </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Almacenes<span class="caret"></span>
                                 </a>
@@ -43,6 +45,7 @@
                                     <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
                                 </ul>
                             </li>
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -56,6 +59,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -64,6 +68,7 @@
                                     <li><a href="PedidosPorArea.php">Pedidos por Área</a></li>
                                 </ul>
                             </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proveedores<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -72,10 +77,22 @@
                                             Nuevo Proveedor
                                         </a> 
                                     </li>
-                                    <li><a href="ListarProveedores.php">Listar Proveedores</a></li>
-                                    </ul>
+                                    
+                                    <li>
+                                        <a href="ListarProveedores.php">
+                                            Listar Proveedores
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="ArticuloProveedor.php">
+                                            Agrega artículo Proveedor
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
+                        
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">' .$_SESSION['usuario']. '<span class="caret"></span></a>
@@ -89,7 +106,8 @@
                 </div><!--/.container-fluid -->
             </div>
             <!-- Static navbar -->
-            <!-- Modal Nuevo Almacén-->
+            
+    <!-- Modal Nuevo Almacén-->
             <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
                 <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -100,7 +118,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                                <p><input type="text" maxlength="32" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
                             </div>
 
                             <div class="modal-footer">
@@ -111,9 +129,9 @@
                     </div>
                 </div>
             </form>        
-            <!-- /Modal Nuevo Almacén-->
+    <!-- /Modal Nuevo Almacén-->
 
-            <!-- Modal Nuevo Usuario-->
+    <!-- Modal Nuevo Usuario-->
             <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
                 <div class="modal fade" id="NuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -126,29 +144,29 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                    <input type="text" maxlength="32" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
                                 </div>
                                 <div class="form-group">
                                     <label for="pass">Contraseña</label>
-                                    <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
+                                    <input type="password" maxlength="32" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
                                 </div>
                                 <div class="form-group" onclick="">
                                     <label class="radio-inline">
                                         <input type="radio" name="RadioInline" id="area" onclick="LlenaSelectNuevo(2);" value="2"> Área
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
+                                        <input type="radio" name="RadioInline" id="almacen" value="4"  onclick="LlenaSelectNuevo(4);"> Almacén
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos">
+                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos" onchange="Verifica()">
 
                                     </select>
                                 </div>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="submit" class="btn btn-primary btn-success" id="btnNuevoUsuario" disabled="true" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                             </div>
 
@@ -156,9 +174,55 @@
                     </div>
                 </div>
             </form>        
-            <!-- /Modal Nuevo Usuario-->
+    <!-- /Modal Nuevo Usuario-->
 
-            <!-- Modal Nueva Área-->
+    <!-- Modal Editar Usuario-->
+            <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
+                <div class="modal fade" id="EditarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nuevo Usuario</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" maxlength="32" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass">Contraseña</label>
+                                    <input type="password" maxlength="32" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
+                                </div>
+                                <div class="form-group" onclick="">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="RadioInline" id="area" onclick="LlenaSelectNuevo(2);" value="2"> Área
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="RadioInline" id="almacen" value="4"  onclick="LlenaSelectNuevo(4);"> Almacén
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos" onchange="Verifica()">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" id="btnNuevoUsuario" disabled="true" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>        
+    <!-- /Modal Editar Usuario-->
+
+
+    <!-- Modal Nueva Área-->
             <form name="frmgrabarArea" id="frmgrabarArea" method="post" action="../../Funciones/NuevaArea.php">
                 <div class="modal fade" id="NuevaArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -169,7 +233,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrearea" id="txtnombrearea" required placeholder="Nombre Área"></p>
+                                <p><input type="text" maxlength="32" class="form-control" name="txtnombrearea" id="txtnombrearea" required placeholder="Nombre Área"></p>
                             </div>
 
                             <div class="modal-footer">
@@ -181,9 +245,9 @@
                     </div>
                 </div>
             </form>        
-            <!-- /Modal Nuevo Área-->
+    <!-- /Modal Nuevo Área-->
 
-            <!-- Modal Nuevo Proveedor-->
+    <!-- Modal Nuevo Proveedor-->
             <form name="frmgrabarProveedor" id="frmgrabarProveedor" method="post" action="../../Funciones/NuevoProveedor.php">
                 <div class="modal fade" id="NuevoProveedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -194,8 +258,8 @@
                             </div>
 
                             <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombreproveedor" id="txtnombreproveedor" required placeholder="Nombre Proveedor"></p>
-                                <p><input type="text" class="form-control" name="txtdireccionproveedor" id="txtdireccionproveedor" required placeholder="Dirección Proveedor"></p>
+                                <p><input type="text" maxlength="100" class="form-control" name="txtnombreproveedor" id="txtnombreproveedor" required placeholder="Nombre Proveedor"></p>
+                                <p><input type="text" maxlength="40" class="form-control" name="txtdireccionproveedor" id="txtdireccionproveedor" required placeholder="Dirección Proveedor"></p>
                                 <p><input type="text" class="form-control" name="txtrucproveedor" maxlength="10" id="txtrucproveedor" required placeholder="RUC Proveedor"></p>
                             </div>
 
@@ -207,14 +271,14 @@
                     </div>
                 </div>
             </form>        
-            <!-- /Modal Nuevo Proveedor-->            
+    <!-- /Modal Nuevo Proveedor-->            
             
                ';
        }        
        else //navbar almacén General
            if($_SESSION["permisos"]==5)
            {
-            echo'  
+            echo'
       <!-- Static navbar -->
       <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -230,8 +294,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo">Nuevo Artículo</a></li>
-                    <li><a href="ListarArticulos.php">Listar Artículos</a></li>                   
+                    <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo" onclick="PosibleCodigo();LlenaTipo()">Nuevo Artículo</a></li>                                       
                 </ul>
               </li>
             </ul>
@@ -244,6 +307,7 @@
                         <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
                         <li><a href="PedidosArea.php">Listar Pedidos de Áreas</a></li>
                         <li><a href="MovimientosPorAlmacen.php">Listar Movimientos por Almacén</a></li>
+                        <li><a href="ListarArticulos.php">Existencias</a></li>
                <!--     <li><a href="StockPorAlmacen.php">Listar Movimientos por Artículo</a></li> -->         
                     </ul>
               </li>
@@ -293,6 +357,81 @@
         </div><!--/.container-fluid -->
       </div>
       <!--/Static navbar -->
+
+            <!-- Modal Nuevo Artículo-->
+                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Nuevo Artículo</h4>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="unidad">Unidad</label>
+                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cbtipo">Tipo</label>
+                                            <select class="form-control" id="cbTipo" name="cbtipo">
+                                             <option value="0">Seleccione Tipo</option> 
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                                <input type="button" class="btn btn-primary btn-success" data-target="#NuevoTipo" data-toggle="modal" aria-hidden="true" value="Nuevo Tipo">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="codigo">Código </label>
+                                                <input type="text" class="form-control" name="codigo" readonly id="codigo" required placeholder="codigo">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="precio">Precio </label>
+                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                </form>        
+            <!-- /Modal Nuevo Artículo-->
+
+            <!-- Modal Nuevo Tipo-->
+                <form name="frmgrabarTipo" id="frmgrabarTipo" method="post" action="">
+                        <div class="modal fade" id="NuevoTipo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Nuevo Tipo</h4>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control" name="nombreTipo" id="nombreTipo" required placeholder="Nombre Tipo" required>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" aria-hidden="true" onclick="RegistraTipo()">Aceptar</button>
+                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                              </div>
+                            </div>
+                          </div>
+|                        </div>
+                </form>        
+            <!-- /Modal Nuevo Tipo-->
 
                 ';
            }

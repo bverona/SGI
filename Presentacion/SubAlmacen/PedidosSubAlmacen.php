@@ -137,7 +137,7 @@
                                         <?php 
                                             require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                            $objAlmacen->ListarAlmacenOption();
                                         ?>
                                     </select>
                                 </div>

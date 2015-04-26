@@ -110,14 +110,18 @@ class Movimiento {
 
         $correcto = false;
         
-        
         if (
                 ($this->AgregaMovimientoSalida($cantidad, $descripcion, $almacenOrigen, $id_art)) 
                     && 
                 ($this->AgregaMovimientoEntrada($cantidad, $descripcion, $almacenDestino, $id_art))
            ) 
-            {         
+            {
+                    echo"trasferencia Realizado Correctamente \n";
                     $correcto = true;
+            }
+            else
+                {
+                    echo "trasferencia No Realizado \n";
             }
         return $correcto;
     }
@@ -133,7 +137,7 @@ class Movimiento {
                         on mov.id_mov=det.id_det_mov
                         where mov.almacen_id_alm=" . $almacen . " and "
                 . "det.articulo_id_art=" . $articulo;
-
+        
         $resultado = $objCon->consultar($sql);
         $i = 0;
         while ($registro = $resultado->fetch()) {
@@ -299,6 +303,7 @@ class Movimiento {
                         when m.tipo_mov=1 then 'Salida' 
                         end as movimiento, 
                         art.nombre_art as articulo,
+                        art.unidad_art as unidad,
                         m.cantidad_mov as cantidad,
                         m.saldo_movimiento as saldo
                     from 
@@ -320,7 +325,8 @@ class Movimiento {
                         case
                         when m.tipo_mov=0 then 'Entrada' 
                         when m.tipo_mov=1 then 'Salida' 
-                        end as movimiento, 
+                        end as movimiento,
+                        art.unidad_art as unidad, 
                         art.nombre_art as articulo,
                         m.cantidad_mov as cantidad,
                         m.saldo_movimiento as saldo
@@ -476,7 +482,6 @@ class Movimiento {
             echo '<td>' . $registro["almacen"] . '</td>';
             echo '<td>' . $registro["fecha"] . '</td>';
             echo '<td>' . $registro["articulo"] . '</td>';
-            echo '<td>' . $registro["unidad"] . '</td>';
             if($registro["movimiento"]=="Entrada")
             {
                 echo '<td>' . $registro["cantidad"] . '</td>';

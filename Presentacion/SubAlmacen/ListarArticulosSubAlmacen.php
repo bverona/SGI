@@ -38,11 +38,11 @@
                   $objNavBar= new NavBar();
                   $objNavBar->DefineNavBar();
                ?>
-                <div class="panel panel-info">
+                <div class="panel panel-success">
                     <div class="panel-heading"><b>Listado de Artículos</b>
-                        <div class="panel-body panel-success">
+                        <div class="panel-body panel-default">
                             <div class="table-responsive table-hover">
-                                <table class="table table-bordered table-striped table-hover">
+                                <table class="table table-bordered table-condensed table-hover">
                                   <thead>
                                     <tr>
                                         <th>Salida</th>
@@ -133,7 +133,7 @@
                                         <?php 
                                             require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                            $objAlmacen->ListarAlmacenOption();
                                         ?>
                                     </select>
                                 </div>

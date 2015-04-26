@@ -64,99 +64,58 @@
       </div>
       <!-- /container -->
       
-          <!-- Modal Nuevo Almacén-->
-            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
-                <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+      <!-- Modal Nuevo Artículo-->
+            <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                    <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h4>Nuevo Almacén!</h4>
+                                <h4>Nuevo Artículo</h4>
                             </div>
 
                             <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                                    <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="unidad">Unidad</label>
+                                            <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cbtipo">Tipo</label>
+                                        <select class="form-control" id="cbtipo" name="cbtipo">
+<!--                                            <option value="0">Seleccione Tipo</option>-->
+                                            <?php 
+                                            require_once '../../Clases/clsTipo.php';
+                                            $objTipo = new TipoArticulo();
+                                            $objTipo->SelectTipoArticulo();
+                                            ?>
+                                        </select>
+ 
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="codigo">Código </label>
+                                            <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="precio">Precio </label>
+                                            <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
+                                    </div>
+                                
                             </div>
 
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>        
-            <!-- /Modal Nuevo Almacén-->
-
-            <!-- Modal Nuevo Usuario-->
-            <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
-                <div class="modal fade" id="NuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nuevo Usuario</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
-                                </div>
-                                <div class="form-group">
-                                    <label for="pass">Contraseña</label>
-                                    <input type="password" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
-                                </div>
-                                <div class="form-group" onclick="">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" onclick="LlenaSelectNuevo(2);" value="2"> Área
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4" onclick="LlenaSelectNuevo(4);"> Almacén
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos">
-
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
+                          </div>
 
                         </div>
+                      </div>
                     </div>
-                </div>
             </form>        
-            <!-- /Modal Nuevo Usuario-->
-
-            <!-- Modal Nueva Área-->
-            <form name="frmgrabarArea" id="frmgrabarArea" method="post" action="../../Funciones/NuevaArea.php">
-                <div class="modal fade" id="NuevaArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nueva Área</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombrearea" id="txtnombrearea" required placeholder="Nombre Área"></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </form>        
-            <!-- /Modal Nuevo Área-->
+      <!-- /Modal Nuevo Artículo-->
 
 
     <!-- Bootstrap core JavaScript
@@ -164,102 +123,129 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-                                            var valorrb;
+        var valorrb;
 
-                                            $('#myModal').on('shown.bs.modal', function()
-                                            {
-                                                $('#nombre').focus();
-                                            });
+        $('#myModal').on('shown.bs.modal', function()
+        {
+            $('#nombre').focus();
+        });
 
-                                            function leerDatos(id_)
-                                            {
-                                                $.post("../../Funciones/BuscarUsuario.php", {id: id_})
-                                                        .done(function(data) {
-                                                            data = $.parseJSON(data);
-                                                            $("#nombre").val(data.nombre);
-                                                            $("#id").val(data.id);
-                                                            if (data.idArea == '-' || data.idArea == '0')
-                                                            {
-                                                                //alert("almacen "+data.idAlmacen);
-                                                                SelectAlmacen();
+        function leerDatos(id_)
+        {
+            $.post("../../Funciones/BuscarUsuario.php", {id: id_})
+                    .done(function(data) {
+                        data = $.parseJSON(data);
+                        $("#nombre").val(data.nombre);
+                        $("#id").val(data.id);
+                        if (data.idArea == '-' || data.idArea == '0')
+                        {
+                            //alert("almacen "+data.idAlmacen);
+                            SelectAlmacen();
 
-                                                                $("#antiguo").val(data.idAlmacen);
-                                                                $("#cbModulos").val(data.idAlmacen);
-                                                            } else
-                                                            {
-                                                                //alert("area "+data.idArea);
-                                                                SelectArea();
-                                                                $("#antiguo").val(data.idArea);
-                                                                $("#cbModulos").val(data.idAlmacen);
-                                                            }
+                            $("#antiguo").val(data.idAlmacen);
+                            $("#cbModulos").val(data.idAlmacen);
+                        } else
+                        {
+                            //alert("area "+data.idArea);
+                            SelectArea();
+                            $("#antiguo").val(data.idArea);
+                            $("#cbModulos").val(data.idAlmacen);
+                        }
 
-                                                        }, "json");
-
-
-                                            }
-
-                                            function eliminar(p_dni)
-                                            {
-
-                                                if (confirm("Esta seguro de eliminar")) {
-                                                    $.post("../../Funciones/EliminaUsuario.php", {id_usu: p_dni})
-                                                            .done(function(data) {
-                                                                document.location.href = "/Gerente/ListarUsuarios.php";
-                                                            });
-                                                }
-
-                                            }
-
-                                            function SelectAlmacen()
-                                            {
-                                                $("#area").prop("checked", false);
-                                                $("#almacen").prop("checked", true);
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: 4})
-                                                        .done(function(data) {
-                                                            $("#cbModulos").html(data);
-                                                            $("#cbModulos").val(valor);
-                                                        });
-                                            }
-
-                                            function SelectArea()
-                                            {
-                                                $("#almacen").prop("checked", false);
-                                                $("#area").prop("checked", true);
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: 2})
-                                                        .done(function(data) {
-                                                            $("#cbModulos").html(data);
-                                                            $("#cbModulos").val(valor);
-                                                        });
-                                            }
+                    }, "json");
 
 
-                                            function ValorArea() {
-                                                valorrb = $('#area').val();
-                                            }
+        }
 
-                                            function ValorAlmacen() {
-                                                valorrb = $('#almacen').val();
-                                            }
+        function eliminar(p_dni)
+        {
 
-                                            function LlenaSelect(val) {
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: val})
-                                                        .done(function(data) {
+            if (confirm("Esta seguro de eliminar")) {
+                $.post("../../Funciones/EliminaUsuario.php", {id_usu: p_dni})
+                        .done(function(data) {
+                            document.location.href = "/Gerente/ListarUsuarios.php";
+                        });
+            }
 
-                                                            $("#cbModulos").html(data);
-                                                        });
-                                            }
+        }
 
-                                            function LlenaSelectNuevo(val) {
+        function SelectAlmacen()
+        {
+            $("#area").prop("checked", false);
+            $("#almacen").prop("checked", true);
+            $.post("../../Funciones/llenarSelect.php", {valor_Rb: 4})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
 
-                                                $.post("../../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
-                                                        .done(function(data) {
+        function SelectArea()
+        {
+            $("#almacen").prop("checked", false);
+            $("#area").prop("checked", true);
+            $.post("../../Funciones/llenarSelect.php", {valor_Rb: 2})
+                    .done(function(data) {
+                        $("#cbModulos").html(data);
+                        $("#cbModulos").val(valor);
+                    });
+        }
 
-                                                            $("#cbModulosNuevo").html(data);
-                                                        });
-                                            }
-        </script>
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
+        function LlenaTipo() {
+            $.post("../../Funciones/llenarTipo.php")
+                    .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                         $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
+                    });
+        }
+
+
+        function ValorArea() {
+            valorrb = $('#area').val();
+        }
+
+        function ValorAlmacen() {
+            valorrb = $('#almacen').val();
+        }
+
+        function LlenaSelect(val) {
+            $.post("../../Funciones/llenarSelect.php", {valor_Rb: val})
+                    .done(function(data) {
+
+                        $("#cbModulos").html(data);
+                    });
+        }
+
+        function LlenaSelectNuevo(val) {
+
+            $.post("../../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
+                    .done(function(data) {
+
+                        $("#cbModulosNuevo").html(data);
+                    });
+        }
+    </script>
 
   </body>
 </html>

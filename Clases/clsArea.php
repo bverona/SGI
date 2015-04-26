@@ -50,14 +50,22 @@
             return $correcto;
         }
         
-        public  function EliminarArea($nombre)
+        public  function EliminarArea($id)
         {
             $correcto=false;
             require_once 'clsConexion.php';
             $obj= new Conexion();
-            $sql="delete from area where nombre_are='".$nombre."'";
+            
+            $sql="update usuario 
+                    set 
+                        area_id_are = null,
+                            permisos_usu=0
+                    where
+                        area_id_are =".$id;
+            $sql2="delete from area where id_are=".$id;
 
-            if(($obj->Consultar($sql))==!0)
+            
+            if(($obj->Consultar($sql))==!0 && ($obj->Consultar($sql2))==!0)
             {
                 $correcto=true;
             }
@@ -72,7 +80,7 @@
             $sql = "select  nombre_are from area where id_are=".$id."order by 1;";
             
             $resultado = $objCon->consultar($sql);
-            $registro = $resulatdo->fetch();
+            $registro = $resultado->fetch();
             
             $retorno = $registro["nombre_are"];
             

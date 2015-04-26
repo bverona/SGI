@@ -1,3 +1,75 @@
+
+select  
+                        ap.proveedor_id_proveedor as id, 
+                        a.nombre_art as articulo, 
+                        ap.articulo_proveedor_pre as precio, 
+                        p.nombre_proveedor as proveedor, 
+                        ap.articulo_proveedor_cant as cantidad
+                from    
+                        articulo_proveedor ap  inner join
+                        proveedor p on ap.proveedor_id_proveedor=p.id_proveedor
+                        inner join articulo a on a.id_art=ap.articulo_id_art;
+
+
+insert into orden_de_compra 
+            ( 
+                prioridad_orden_de_compra,
+                atendido_orden_de_compra,
+                almacen_id_alm,
+                fecha_orden_de_compra,
+                hora_orden_de_compra,
+                cantidad_orden_de_compra,
+                observacion_orden_de_compra,
+                articulo_id_art,
+                articulo_proveedor_id_art,
+                articulo_proveedor_id_prov
+            )
+            values
+            (
+                
+            )
+
+select * from orden_de_compra;
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where m.almacen_id_alm=5 
+                        group by art.nombre_art
+                   order by 1;
+
+select 
+                    id_alm,
+                    nombre_alm,
+                    asignado_alm as asignado,
+                    case
+                    when estado_alm = 1 then  'Activo' 
+                    when estado_alm = 0 then 'Inactivo'
+                    end as estado
+                from
+                    almacen
+                where
+                    id_alm <> 0 and general_alm = 0
+                order by 1;
+
+update almacen set estado_alm=0 where id_alm= ;
+
+select * from almacen;
+
+
 insert into 
     articulo_proveedor 
         (

@@ -67,10 +67,10 @@
                           <tbody>
                           ';
 
-            while ($registro = $resultado->fetch()) {
-
+            while ($registro = $resultado->fetch()) 
+            {
                 echo '<tr>';
-                echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ' )" data-toggle="modal" data-target="#ActualizaProveedor"><img src="../../imagenes/editar.png"/></a></td>';
+                echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#ActualizaProveedor"><img src="../../imagenes/editar.png"/></a></td>';
                 echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["direccion"] . '</td>';
@@ -115,7 +115,7 @@
                 $resul.= '<td>' . $registro["cantidad"] . '</td>';
                 $resul.= '<td>' . $registro["precio"] . '</td>';
                 $resul.= '<td> <input type="text" id="cantidadreq" onKeyUp="VerificaCantidad('.$registro["cantidad"].')"  class="form-control"> </td>';
-                $resul.= '<td> <button class="btn btn-success" data-dismiss="modal" onclick="AsignaArticulo('.$registro["precio"].",'".$registro["proveedor"].'\');">Gestionar</button></td>';                
+                $resul.= '<td> <button class="btn btn-success" data-dismiss="modal" onclick="AsignaArticulo('.$registro["precio"].",'".$registro["proveedor"].'\','.$registro["id"].');">Gestionar</button></td>';                
                 $resul.= '</tr>';
             }
             if($resul!='')
@@ -124,8 +124,8 @@
             }else
             {
                 $resul.='<tr><td colspan="3">No existen Proveedores para este artículo</td>';
-                $resul.= '<td> <button class="btn btn-success" onclick="AsignaArticulo(-1,-1);" data-dismiss="modal" >Gestionar</button></td></tr>';                
-                echo $resul;                
+                $resul.= '<td><button class="btn btn-success" onclick="AsignaArticulo(-1,-1);" data-dismiss="modal" >Gestionar</button></td></tr>';                
+                echo $resul;
             }
         }
         

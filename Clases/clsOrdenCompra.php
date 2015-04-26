@@ -4,7 +4,7 @@ class OrdenCompra {
     
 
 
-    public function NuevaOrdenCompra($prioridad,$almacen,$cantidad,$observacion,$articulo,$id_prov,$id_art)
+    public function NuevaOrdenCompra($prioridad,$almacen,$cantidad,$observacion,$id_prov,$id_art)
     {
         $correcto=false;
         require_once 'clsConexion.php';
@@ -26,16 +26,16 @@ class OrdenCompra {
             (
                 ".$prioridad.",".
                  0 .",".
-                 $almacen.",".
-                 date("Y-m-d").",".
-                 date("h:i:s").",".
-                 $cantidad.",".
-                 $observacion.",".
-                 $articulo.",".
+                 $almacen.",'".
+                 date("Y-m-d")."','".
+                 date("h:i:s")."',".
+                 $cantidad.",'".
+                 $observacion."','".
+                 $id_art."',".
                  $id_art.",".
                  $id_prov.
              ")";
-    
+        echo "<br>".$sql."<br>";
         if($objCon->Consultar($sql))
             {
                 $correcto=true;

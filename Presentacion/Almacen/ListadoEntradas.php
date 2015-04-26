@@ -23,7 +23,7 @@
 
   </head>
 
-  <body onload="LlenaTipo();Filtro();">
+  <body onload="LlenaSelect();Filtro();">
 
     <div class="container">
 
@@ -46,7 +46,7 @@
                                   <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-control col-xs-2" id="cbTipo" name="cbTipo" onchange="Filtro();">
+                                            <select class="form-control col-xs-2" id="cbTipoArticulo" name="cbTipoArticulo" onchange="Filtro();">
                                             <option value=0>Todos</option>
                                         </select>
                                         </th>
@@ -137,7 +137,7 @@
                                         <?php 
                                             require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                            $objAlmacen->ListarAlmacenOption();
                                         ?>
                                     </select>
                                 </div>
@@ -156,62 +156,6 @@
             </form>    
             <!-- Fin Modal Movimiento Salida -->       
           
-            <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../Funciones/NuevoArticulo.php">
-                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <div class="modal-header">
-                                    <h4>Nuevo Artículo</h4>
-                                </div>
-
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="unidad">Unidad</label>
-                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbtipo">Tipo</label>
-                                            <select class="form-control" id="cbtipo" name="cbtipo">
-    <!--                                            <option value="0">Seleccione Tipo</option>-->
-                                                <?php 
-                                                require_once '../../Clases/clsTipo.php';
-                                                $objTipo = new TipoArticulo();
-                                                $objTipo->SelectTipoArticulo();
-                                                ?>
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="codigo">Código </label>
-                                                <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="precio">Precio </label>
-                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                        </div>
-
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                </form>        
-            <!-- /Modal Nuevo Artículo-->
 
 
     <!-- Bootstrap core JavaScript
@@ -259,12 +203,38 @@
                     }, "json");                    
         }
     
-        function LlenaTipo() 
+        function LlenaSelect() 
         {
         $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
                 .done(function(data) {
-                     $("#cbTipo").append(data);
+                     $("#cbTipoArticulo").append(data);
                 });
+        }
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
+        function LlenaTipo() {
+            $.post("../../Funciones/llenarTipo.php")
+                    .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                         $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
+                    });
         }
 
         function DefineSalida(val)
@@ -282,7 +252,7 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
+            var id = $("#cbTipoArticulo").val();
             $.post("../../Funciones/MuestraEntradas.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);

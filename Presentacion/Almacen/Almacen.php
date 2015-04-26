@@ -23,7 +23,7 @@
 
   </head>
 
-  <body>
+  <body onload="LlenarSelect();">
 
     <div class="container">
 
@@ -41,58 +41,6 @@
           <p>Módulo desarrollado para Gestionar el almacén de la Municipalidad Distrital de Motupe</p>
       </div>
 
-      <!-- Modal Nuevo Artículo-->
-            <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                    <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nuevo Artículo</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                    <div class="form-group">
-                                            <label for="nombre">Nombre</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="unidad">Unidad</label>
-                                            <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cbtipo">Tipo</label>
-                                        <select class="form-control" id="cbtipo" name="cbtipo">
-<!--                                            <option value="0">Seleccione Tipo</option>-->
-                                            <?php 
-                                            require_once '../../Clases/clsTipo.php';
-                                            $objTipo = new TipoArticulo();
-                                            $objTipo->SelectTipoArticulo();
-                                            ?>
-                                        </select>
- 
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="codigo">Código </label>
-                                            <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                    </div>
-                                    <div class="form-group">
-                                            <label for="precio">Precio </label>
-                                            <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                    </div>
-                                
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-            </form>        
-      <!-- /Modal Nuevo Artículo-->
  
       
       
@@ -104,6 +52,33 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+    <script>
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
 
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+        function LlenarSelect(){
+            $.post("../../Funciones/llenarTipo.php")
+                    .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                         $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
+                    });
+        }
+
+    </script>
   </body>
 </html>

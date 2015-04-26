@@ -23,7 +23,7 @@
 
   </head>
 
-  <body onload="LlenaTipo();Filtro();">
+  <body onload="LlenaSelect();Filtro();">
 
     <div class="container">
 
@@ -46,7 +46,7 @@
                                   <thead>
                                     <tr>
                                         <th>
-                                        <select class="form-control col-xs-2" id="cbTipo" name="cbTipo" onchange="Filtro();">
+                                        <select class="form-control col-xs-2" id="cbTipoArticulo" name="cbTipoArticulo" onchange="Filtro();">
                                             <option value=0>Todos</option>
                                         </select>
                                         </th>
@@ -138,7 +138,7 @@
                                         <?php 
                                             require_once '../../Clases/clsAlmacen.php';
                                             $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenSinFiltro();
+                                            $objAlmacen->ListarAlmacenOption();
                                         ?>
                                     </select>
                                 </div>
@@ -214,11 +214,11 @@
                 </form>        
             <!-- /Modal Nuevo Artículo-->
 
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
+
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
@@ -260,11 +260,11 @@
                     }, "json");                    
         }
     
-        function LlenaTipo() 
+        function LlenaSelect() 
         {
         $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
                 .done(function(data) {
-                     $("#cbTipo").append(data);
+                     $("#cbTipoArticulo").append(data);
                 });
         }
         function DefineSalida(val)
@@ -280,9 +280,36 @@
                 
         }
 
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
+        function LlenaTipo() {
+            $.post("../../Funciones/llenarTipo.php")
+                    .done(function(data) {
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                         $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
+                    });
+        }
+
         function Filtro()
         {
-            var id = $("#cbTipo").val();
+            var id = $("#cbTipoArticulo").val();
             $.post("../../Funciones/MuestraSalidas.php",{id:id})
                     .done(function(data) {
                         $("#tbody").html(data);

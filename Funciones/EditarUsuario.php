@@ -6,7 +6,7 @@
     $pass=$_POST['pass'];
     $permisos=$_POST['RadioInline'];
     $modulo=$_POST['cbModulos'];
-
+    
     require_once '../Clases/ClsUsuario.php';
     require_once '../util/funciones.php';
     $objusuario= new Usuario();

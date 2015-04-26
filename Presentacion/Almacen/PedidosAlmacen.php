@@ -135,7 +135,8 @@ if (!isset($_SESSION["usuario"])) {
                                 </table>                                      
                             </div>        
                             <input type="hidden" id="id_art" name="id_art" value="">
-                            <input type="hidden" id="det_ped" name="det_ped" value="">
+                            <input type="hidden" id="id_alm" name="id_alm" value="">
+                            <input type="hidden" id="id_prov" name="id_prov" value="">
                         </div>
 
                         <div class="modal-footer">
@@ -221,10 +222,11 @@ if (!isset($_SESSION["usuario"])) {
         function ParametrosModal(dp, id_prod, nombre, precio, almacen)
         {
             $("#producto").val(nombre);
-            $("#det_ped").val(dp);
+            $("#id_alm").val(almacen);
             $("#precio").val(0);
             $("#cantidad").val(0);
             $("#id_art").val(id_prod);
+            $("#id_prov").val();
             $("#btnProveedor").html('Seleccione Proveedor');
     }
 
@@ -238,17 +240,19 @@ if (!isset($_SESSION["usuario"])) {
                     });
         }
 
-    function AsignaArticulo(precio,proveedor)
+    function AsignaArticulo(precio,proveedor,id_prov)
         {
             if(precio===-1)
             {
                 $("#precio").val(0.0);
                 $("#cantidad").val(0);
+                $("#id_prov").val(0);
                 $("#btnProveedor").html('No Proveedor');
             }else
             {
                 $("#precio").val(precio);
                 $("#btnProveedor").html(proveedor);
+                $("#id_prov").val(id_prov);
                 $("#cantidad").val($("#cantidadreq").val());
             }
         }
@@ -286,10 +290,30 @@ if (!isset($_SESSION["usuario"])) {
                     }, "json");
         }
 
+        //llena el textarea #codigo con el POSIBLE código a generar
+       function PosibleCodigo(){
+            $.post("../../Funciones/PosibleId.php")
+                    .done(function (data){
+                        $("#codigo").val(data);
+            });
+        }
+
+        function RegistraTipo()
+        {
+            var nombre = $("#nombreTipo").val();
+            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaTipo();
+                    });
+        }
+
         function LlenaTipo() {
             $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
-                        $("#cbTipo").append(data);
+                         $("#cbTipo").html("");
+                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                         $("#cbTipo").append(data);
+                         $("#nombreTipo").val("");
                     });
         }
 

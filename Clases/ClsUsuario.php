@@ -189,7 +189,7 @@ class Usuario {
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
-            echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#myModal"><img src="../../imagenes/editar.png"/></a></td>';
+            echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#ActualizarDatos"><img src="../../imagenes/editar.png"/></a></td>';
             echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
             echo '<td>' . $registro["usuario"] . '</td>';
             echo '<td>' . $registro["area"] . "" . $registro["almacen"] . '</td>';

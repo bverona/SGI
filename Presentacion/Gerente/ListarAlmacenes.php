@@ -54,7 +54,30 @@
           </div>          
       </div>
       
-    
+    <!-- Modal Editar Almacén-->
+            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/EditarAlmacen.php">
+                <div class="modal fade" id="EditarAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nuevo Almacén!</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p><input type="text" maxlength="32" class="form-control" name="editaralmacen" id="editaralmacen" required placeholder="Nombre Almacén"></p>
+                            </div>
+                            <input type="hidden" id="idEditado" name="idEditado">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>        
+    <!-- /Modal Editar Almacén-->    
       
       
     </div> <!-- /container -->
@@ -67,29 +90,28 @@
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
     
-    function leerDatos(id,nombre)
+    function leerDatos(id,nombre) 
     {
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#nombre').focus();
-        })
-        $("#id").val(id);
-        
+
+        $('#EditarAlmacen').on('shown.bs.modal', function () {
+            $('#editaralmacen').focus();
+        });
+        alert(id);
+        $("#idEditado").val(id);
+        $("#editaralmacen").val(nombre);
+          
     }
+
 
     //para implementar el eliminar primero se deben realizar los pedidos por 
     //las áreas y la gestión por parte de los almacenes
-    function eliminar(p_dni) {
+    function eliminar(id) {
 
-        alert("Antes de implementar ver Requerimientos para eliminar Almacen");
-
-//        if (confirm("Esta seguro de eliminar")) {
-//            $.post("../../Funciones/InactivaAlmacen.php", {id_usu: p_dni})
-//                    .done(function(data) {
-//                        alert(data);
-//                        document.location.href = "ListarUsuarios.php";
-//                    });
-//        }
-
+        $.post("../../Funciones/EliminaAlmacen.php",{id:id})
+                .done(function(data){
+                    alert("Eliminado");
+                    location.reload();
+    });        
     }
 
         function SelectAlmacen(valor) {

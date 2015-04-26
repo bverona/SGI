@@ -104,19 +104,17 @@
 
     //para implementar el eliminar primero se deben realizar los pedidos por 
     //las áreas y la gestión por parte de los almacenes
-    function eliminar(p_dni) 
-    {
+    function eliminar(id) {
+        
+        alert(id);
 
-    alert("Antes de implementar ver Requerimientos para eliminar Áreas");
-//        if (confirm("Esta seguro de eliminar")) {
-//            $.post("../../Funciones/InactivaAlmacen.php", {id_usu: p_dni})
-//                    .done(function(data) {
-//                        alert(data);
-//                        document.location.href = "ListarUsuarios.php";
-//                    });
-//        }
-
+        $.post("../../Funciones/EliminaArea.php",{id:id})
+                .done(function(data){
+                    alert("Eliminado");
+                    location.reload();
+    });        
     }
+
     
        function SelectAlmacen() {            
          $("#area").prop("checked", false) ;

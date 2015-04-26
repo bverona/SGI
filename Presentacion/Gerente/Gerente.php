@@ -46,7 +46,9 @@ if (!isset($_SESSION["usuario"])) {
 
         </div> <!-- /container -->
 
+        
 
+        
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
@@ -60,6 +62,18 @@ if (!isset($_SESSION["usuario"])) {
         {
             $('#nombre').focus();
         });
+
+        function Verifica()
+        {
+            
+            if($('#cbModulosNuevo').val()!=0)
+            {
+                $('#btnNuevoUsuario').prop("disabled",false);
+            }else 
+            {
+                $('#btnNuevoUsuario').prop("disabled",true);
+            }
+        }
 
         function leerDatos(id_)
         {

@@ -129,21 +129,7 @@
 
     <script type="text/javascript">
     
-    function leerDatos(id)
-    {
-        $('#ActualizaProveedor').on('shown.bs.modal', function () {
-            $('#nombre').focus();
-        });
-                
-        $("#id").val(id);   
-    } 
 
-    function LlenaSelectNuevo(val) {
-    $.post("../../Funciones/llenarSelectNuev.ophp", {valor_Rb: val})
-       .done(function(data) {
-           $("#cbModulosNuevo").html(data);
-       });
-    }     
     </script>
   </body>
 </html>
