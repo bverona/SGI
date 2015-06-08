@@ -36,13 +36,13 @@
            $objNavBar->DefineNavBar();
         ?>
         
-          <!-- Main component for a primary marketing message or call to action -->
+          <!-- Container -->
              <div class="container">
                 <div class="panel panel-success">
                     <div class="panel-heading"><b>Listado de Artículos</b>
                         <div class="panel-body panel-success">
-                            <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover">
+                            <div class="table-responsive ">
+                                <table class="table table-hover table-condensed">
                                   <thead>
                                     <tr>
                                         <th>Entrada</th>
@@ -79,7 +79,7 @@
 
                                 <div class="form-group">
                                     <label for="nombre">Artículo</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
+                                    <input type="text" class="form-control" name="nombreEntrada" id="nombreEntrada" required placeholder="Nombre de Artículo">
                                 </div>
                                 <div class="form-group">
                                     <label for="cantidad">Cantidad</label>
@@ -236,15 +236,15 @@
             });
      });
 
-       function leerDatosEntrada(id_) 
+       function leerDatosEntrada(id_)
         {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
+            $.post("../../Funciones/DatosArticulo.php", {id:id_})
                     .done(function(data) {
                         data = $.parseJSON(data);
-                        $("#nombre").val(data.nombre);
-                        $("#saldo").val(data.cantidad);
+                        $("#nombreEntrada").val(data.nombre);
+                        $("#cantidad").val(data.cantidad);
                         $("#id").val(data.id);
-                    }, "json");                    
+                    }, "json");
         }
     
        function leerDatosSalida(id_) 

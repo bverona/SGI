@@ -18,6 +18,7 @@ if (!isset($_SESSION["usuario"])) {
 
         <!--Bootstrap-->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../jquery-css/jquery.ui.css">
         <!-- Personaliza este archivo -->
         <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
@@ -45,8 +46,7 @@ if (!isset($_SESSION["usuario"])) {
 
 
         </div> <!-- /container -->
-
-        
+       
 
         
         <!-- Bootstrap core JavaScript
@@ -55,6 +55,10 @@ if (!isset($_SESSION["usuario"])) {
 
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+    
+    <script src="../../Jquery/jquery.ui.autocomplete.js"></script>
+    <script src="../../Jquery/jquery.ui.js"></script>
+
     <script type="text/javascript">
         var valorrb;
 

@@ -150,7 +150,18 @@
                     });
          
         }
-
+        
+        function ProcesaPedido(prov, dest, articulo, cantidad, dp)
+        {
+            var id = $("#cbTipo").val();
+            $.post("../../Funciones/ProcesaPedidos.php", {
+                prov: prov, dest: dest, articulo: articulo, cantidad: cantidad, dp: dp})
+                    .done(function(data)
+                    {
+                        alert('Pedido Procesado');
+                    });
+        }
+        
     </script>
  
 </html>

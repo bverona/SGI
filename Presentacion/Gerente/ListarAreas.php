@@ -102,8 +102,6 @@
         $("#id").val(id);   
     }
 
-    //para implementar el eliminar primero se deben realizar los pedidos por 
-    //las áreas y la gestión por parte de los almacenes
     function eliminar(id) {
         
         alert(id);
@@ -161,7 +159,6 @@
         //alert(valorrb);
         $.post("../../Funciones/llenarSelect.php", {valor_Rb: val})
                 .done(function(data) {
-
                     $("#cbModulos").html(data);
                 });
     }

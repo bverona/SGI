@@ -85,7 +85,7 @@
                                     </li>
                                     
                                     <li>
-                                        <a href="ArticuloProveedor.php">
+                                        <a data-toggle="modal" data-target="#ArticuloProveedor" onclick="ListarProveedores()" href="#">
                                             Agrega artículo Proveedor
                                         </a>
                                     </li>
@@ -106,7 +106,9 @@
                 </div><!--/.container-fluid -->
             </div>
             <!-- Static navbar -->
-            
+
+   
+
     <!-- Modal Nuevo Almacén-->
             <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
                 <div class="modal fade" id="NuevoAlmacen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -159,7 +161,7 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos" onchange="Verifica()">
+                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos" onchange="Verifica();">
 
                                     </select>
                                 </div>
@@ -293,8 +295,10 @@
             <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
+                
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo" onclick="PosibleCodigo();LlenaTipo()">Nuevo Artículo</a></li>                                       
+                    <li><a href="#" data-toggle="modal" data-target="#NuevoArticulo" onclick="PosibleCodigo();LlenaTipo();LlenaUnidad()">Nuevo Artículo</a></li>                                       
+                    <li><a href="ArticulosRegistrados.php" >Artículos Registrados</a></li>                                       
                 </ul>
               </li>
             </ul>
@@ -358,56 +362,62 @@
       </div>
       <!--/Static navbar -->
 
-            <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Nuevo Artículo</h4>
-                                </div>
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="unidad">Unidad</label>
-                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbtipo">Tipo</label>
-                                            <select class="form-control" id="cbTipo" name="cbtipo">
-                                             <option value="0">Seleccione Tipo</option> 
-                                                
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                                <input type="button" class="btn btn-primary btn-success" data-target="#NuevoTipo" data-toggle="modal" aria-hidden="true" value="Nuevo Tipo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="codigo">Código </label>
-                                                <input type="text" class="form-control" name="codigo" readonly id="codigo" required placeholder="codigo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="precio">Precio </label>
-                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                        </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                              </div>
-
+        <!-- Modal Nuevo Artículo-->
+            <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                    <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>Nuevo Artículo</h4>
                             </div>
+                            <div class="modal-body">
+                                    <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="unidad">Unidad</label>
+                                            <select class="form-control" id="cbUnidad" name="cbUnidad">
+                                             <option value="0">Seleccione Unidad</option> 
+
+                                            </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <input type="button" class="btn btn-primary btn-success" data-target="#NuevaUnidad" data-toggle="modal" aria-hidden="true" value="Nueva Unidad">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="cantidad">Cantidad</label>
+                                            <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cbtipo">Tipo</label>
+                                        <select class="form-control" id="cbTipo" name="cbtipo">
+                                         <option value="0">Seleccione Tipo</option> 
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                            <input type="button" class="btn btn-primary btn-success" data-target="#NuevoTipo" data-toggle="modal" aria-hidden="true" value="Nuevo Tipo">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="codigo">Código </label>
+                                            <input type="text" class="form-control" name="codigo" readonly id="codigo" required placeholder="codigo">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="precio">Precio </label>
+                                            <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                           </div>
+
                         </div>
-                </form>        
-            <!-- /Modal Nuevo Artículo-->
+                      </div>
+                    </div>
+            </form>        
+        <!-- /Modal Nuevo Artículo-->
 
             <!-- Modal Nuevo Tipo-->
                 <form name="frmgrabarTipo" id="frmgrabarTipo" method="post" action="">
@@ -432,6 +442,30 @@
 |                        </div>
                 </form>        
             <!-- /Modal Nuevo Tipo-->
+
+            <!-- Modal Nueva Unidad-->
+                <form name="frmgrabarUnidad" id="frmgrabarUnidad" method="post" action="">
+                        <div class="modal fade" id="NuevaUnidad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Nueva Unidad</h4>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" class="form-control" name="nombreUnidad" id="nombreUnidad" required placeholder="Nombre Unidad" required>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" aria-hidden="true" onclick="RegistraUnidad()">Aceptar</button>
+                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                </form>        
+            <!-- /Modal Nueva Unidad-->
 
                 ';
            }

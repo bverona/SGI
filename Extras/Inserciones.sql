@@ -1,7 +1,7 @@
 -- usuarios ok
 -- usuarios con privilegios,estos usuarios se crearán una vez y no podrán eliminarse
-insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('bruno'),8 );
-insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('almacen'),5 );
+insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('a'),8 );
+insert into usuario (nombre_usu, clave_usu, permisos_usu) values('almacen',md5('a'),5 );
 
 
 -- almacenes ok
@@ -34,25 +34,50 @@ insert into tipoArticulo(nombre_tip)values
 ("Vehículos"),
 ("Otros");
 
-insert into articulo(nombre_art,unidad_art,TipoArticulo_id_tip_art) values 
-('Cemento rojo',' bolsas',2),
-('yeso','bolsas', 2),
-('Pintura Roja','baldes', 2),
-('Pintura Amarilla','bolsas', 2),
-('piedra chancada','volquetadas', 2),
-('madera','unidades', 2),
-('Cemento azul',' bolsas', 2),
-('tecnopor',' planchas', 2),
-('piedra de 1/2','volquetada', 2),
-('alambre grueso','metros', 2),
-('Papel bond','medio millar', 1),
-('Caja Lapiceros','Unidad', 1),
-('Engrapador','unidad', 1),
-('perforador','unidad', 1),
-('bujías','unidad', 3),
-('mantenimiento','unidad', 3),
-('Gasolina','litros', 3),
-('Espejo retrovisor','unidad', 3);
+
+-- unidades de medida
+INSERT INTO `sgi`.`unidad_de_medida`
+(`nombre_um`)
+VALUES
+("metros"),-- 1
+("centimtros"),
+("unidad"),-- 3
+("kg"),
+("tn"),-- 5
+("pulgadas"),
+("docenas"),-- 7
+("decenas"),
+("paquete"),-- 9
+("bolsa"),
+("caja"),-- 11
+("saco"),
+("baldes"),-- 13
+("volquetadas"),
+("planchas"),-- 15
+("Litros")
+;
+
+
+insert into articulo(nombre_art,TipoArticulo_id_tip_art,id_um) values 
+('Cemento rojo',2,10),
+('yeso', 2,10),
+('Pintura Roja', 2,11),
+('Pintura Amarilla',2,10),
+('piedra chancada', 2,14),
+('madera', 2,3),
+('Cemento azul', 2,1),
+('tecnopor', 2,16),
+('piedra de 1/2',4, 2),
+('alambre grueso',2,1),
+('Papel bond', 1,3),
+('Caja Lapiceros',1,3),
+('Engrapador',1,3),
+('perforador', 1,3),
+('bujías', 3,3),
+('mantenimiento', 3,3),
+('Gasolina', 3,16),
+('Espejo retrovisor',3,3);
+
 
 -- Proveedores
 insert into proveedor (nombre_proveedor,direccion_proveedor,ruc_proveedor)values ('Proveedor','Chiclayo','1234567890');
@@ -70,27 +95,7 @@ INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,
 INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,`area_id_are`) VALUES ('a','0cc175b9c0f1b6a831c399e269772661',2,NULL,4);
 INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,`area_id_are`) VALUES ('b','92eb5ffee6ae2fec3ad71c777531578f',4,3,NULL);
 INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,`area_id_are`) VALUES ('almacen4','0cc175b9c0f1b6a831c399e269772661',4,5,NULL);
-INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,`area_id_are`) VALUES ('almacen5','0cc175b9c0f1b6a831c399e269772661',4,7,NULL);
 
-
-insert into 
-    articulo_proveedor 
-        (
-            articulo_id_art,
-            proveedor_id_proveedor,
-            articulo_proveedor_cant,
-            articulo_proveedor_pre
-        )
-values  (1,2,100,20.5),
-        (2,3,10,10.3),
-        (3,1,20,8),
-        (4,3,6,9.2),
-        (5,1,50,4.5),
-        (6,2,40,1.5),
-        (7,1,8,0.5),
-        (8,4,100,5),
-        (9,2,28,2.5),
-        (10,3,20,6.5);
 
 insert into orden_de_compra 
             ( 

@@ -23,7 +23,7 @@
 
   </head>
 
-  <body onload="LlenarSelect();">
+  <body>
 
     <div class="container">
 
@@ -66,16 +66,36 @@
             var nombre = $("#nombreTipo").val();
             $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
                     .done(function(data){
-                        LlenaTipo();
+                        LlenaTipo();//hace que se actualice inmediatamente
                     });
         }
-        function LlenarSelect(){
+ 
+        function LlenaTipo(){
             $.post("../../Funciones/llenarTipo.php")
                     .done(function(data) {
                          $("#cbTipo").html("");
                          $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
                          $("#cbTipo").append(data);
                          $("#nombreTipo").val("");
+                    });
+        }
+
+        function RegistraUnidad()
+        {
+            var nombre = $("#nombreUnidad").val();
+            $.post("../../Funciones/nuevaUnidad.php",{nombre:nombre})
+                    .done(function(data){
+                        LlenaUnidad();//hace que se actualice inmediatamente
+                    });
+        }
+ 
+        function LlenaUnidad(){
+            $.post("../../Funciones/LlenarUnidad.php")
+                    .done(function(data) {
+                         $("#cbUnidad").html("");
+                         $("#cbUnidad").append('<option value="0">Seleccione Unidad</option>');
+                         $("#cbUnidad").append(data);
+                         //$("#cbUnidad").val("");
                     });
         }
 

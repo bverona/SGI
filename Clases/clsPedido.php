@@ -229,10 +229,13 @@ class Pedido {
                         usuario u ON p.id_usu_ped = u.id_usu
                         where p.almacen_id_alm<>0 
                         and
-                        dp.atendido_det_ped=0;";
+                        dp.atendido_det_ped=0";
 
         $resultado = $objCon->consultar($sql);
 
+        //funcion que procesa los pedidos de los almacenes
+        $this->ProcesaPedidos();
+        
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
@@ -249,7 +252,9 @@ class Pedido {
                           <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">' .
-            $this->PosiblesSoluciones($registro["dp"], $registro["id_articulo"],$registro["articulo"], $registro["precio"],$registro["destino"], $registro["cantidad"],$registro["id_alm"])
+                    
+                    $this->PosiblesSoluciones($registro["dp"], $registro["id_articulo"],
+                    $registro["articulo"], $registro["precio"],$registro["destino"], $registro["cantidad"],$registro["id_alm"])
             . ' </ul>
                     </div>' .
             '</td>';
@@ -399,12 +404,18 @@ class Pedido {
         $arregloSoluciones;
         $j = 0;
         $k = 0;
-        // toma el pedido y verifica el artículo solicitado 
-        // en toda la lista de artículos disponibles
+
+        /*
+         * toma el pedido y verifica el artículo solicitado 
+         * en toda la lista de artículos disponibles
+        */
         while ($registro = $resultado->fetch()) {
             for ($i = 0; $i < count($arregloProductos); $i++) {
                 
-                //primero verifica que el artículo solicitado coincida con el artículo buscado
+                /*
+                 * primero verifica que el artículo solicitado coincida con el artículo buscado
+                 * luego valida que la busqueda no se realice en el mismo almacen
+                */
                 if (($registro["articulo"] == $arregloProductos[$i]["articulo"]) && ($registro["almacen"] <> $arregloProductos[$i]["almacen"])) {
 
                     /*

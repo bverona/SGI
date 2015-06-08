@@ -33,7 +33,8 @@ class Articulo {
      * de artículos nuevos
      */
 
-    public function AgregarArticulo($nombre, $unidad, $tipo, $codigo, $precio, $almacen) {
+    public function AgregarArticulo($nombre, $unidad, $tipo, $codigo, $precio, $almacen) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         require_once '../Clases/clsMovimiento.php';
@@ -63,7 +64,8 @@ class Articulo {
         return $correcto;
     }
 
-    public function EditarArticulo($nombre, $unidad, $cantidad) {
+    public function EditarArticulo($nombre, $unidad, $cantidad) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
@@ -82,7 +84,8 @@ class Articulo {
         return $correcto;
     }
 
-    public function EliminarArticulo($nombre) {
+    public function EliminarArticulo($nombre) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
@@ -95,7 +98,8 @@ class Articulo {
         return $correcto;
     }
 
-    public function SelectTipoArticulo() {
+    public function SelectTipoArticulo() 
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
         $sql = "select idTipoArticulo,  nombre_tip from tipoarticulo order by 1";
@@ -107,7 +111,37 @@ class Articulo {
         echo $almacenes;
     }
 
-    public function SelectArticulo($id) {
+    public function BuscarArticulo($articulo) 
+    {
+        require 'clsConexion.php';
+        $objCon = new Conexion();
+        
+        $sql="
+            select 
+                    a.id_art  as id,
+                    a.nombre_art as nombre,
+                    um.nombre_um as unidad
+            from articulo a inner join unidad_de_Medida um 
+                on a.id_um=um.id_um
+            where nombre_art like '%".$articulo."%'";
+
+        $resultado=$objCon->Consultar($sql);
+        $i=0;
+        $retorno=null;
+        
+        while($registro=$resultado->fetch())
+        {
+            $retorno[$i]["id"]=$registro["id"];
+            $retorno[$i]["articulo"]=$registro["nombre"];
+            $retorno[$i]["unidad"]=$registro["unidad"];
+            $i++;
+        }
+
+        return $retorno;                
+    }    
+    
+    public function SelectArticulo($id) 
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
         $sql = "select id_art as id, nombre_art as nombre from articulo where TipoArticulo_id_tip_art ='" . $id . "' order by 1";
@@ -124,7 +158,8 @@ class Articulo {
         }
     }
 
-    public function BuscaArticulo($id) {
+    public function BuscaArticulo($id) 
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
         $sql = "select id_art as id, nombre_art as nombre, cantidad_art as cantidad, unidad_art as unidad from articulo where id_art ='" . $id . "'";
@@ -148,7 +183,8 @@ class Articulo {
      *  encuentra y el nombre de este últim. 
      *  [articulo][cantidad][almacen][nombre_almacen]
      */
-    public function ArregloArticulos() {
+    public function ArregloArticulos() 
+    {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
@@ -496,7 +532,7 @@ class Articulo {
         }
     }
 
-    public function ListarTodosArticulos()
+    public function ListarTodosArticulos($foco)
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
@@ -504,12 +540,13 @@ class Articulo {
         $sql = "select 
                         a.id_art,
                         a.nombre_art as nombre,
-                        a.unidad_art as unidad,
-                        a.codigo_art as codigo,
+                        um.nombre_um as unidad,
                         t.nombre_tip as tipo
                    from 
                         articulo a inner join tipoarticulo t
                         on a.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        inner join unidad_de_medida um 
+                        on a.id_um=um.id_um
                         order by 2";
 
         $resultado = $objCon->consultar($sql);
@@ -517,7 +554,10 @@ class Articulo {
         while ($registro = $resultado->fetch()) {
             if ($registro!=null) {
                 echo '<tr>';
-                echo '<td><a href="#" onclick="leerDatosEntrada(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalEntrada"><span class="glyphicon glyphicon-arrow-down"></span><img src="../../imagenes/entrada.png"/></a></td>';
+                if($foco==1)
+                {
+                    echo '<td><a href="#" onclick="leerDatosEntrada(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalEntrada"><span class="glyphicon glyphicon-arrow-down"></span><img src="../../imagenes/entrada.png"/></a></td>';
+                }
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
                 echo '<td>' . $registro["id_art"] . '</td>';
@@ -554,8 +594,9 @@ class Articulo {
         }
         return $aux;
     }
-
-    public function MaxIdArticulo() {
+    
+    public function MaxIdArticulo() 
+    {
         
         require_once 'clsConexion.php';
         $objCon = new Conexion();
@@ -569,7 +610,25 @@ class Articulo {
         echo $registro["posibleId"];
     }
     
-   
+    public function RegistrarArticuloProveedor($proveedor,$articulo,$cantidad,$precio) 
+    {
+        require 'clsConexion.php';
+        
+        $objCon= new Conexion();
+        
+        $sql = "
+            INSERT INTO `articulo_proveedor`
+                (`proveedor_id_proveedor`,
+                `articulo_id_art`,
+                `articulo_proveedor_cant`,
+                `articulo_proveedor_pre`)
+            VALUES
+                (".$proveedor.",".$articulo.",".$cantidad.",".$precio.")";
+        
+            $objCon->Consultar($sql);
+        
+    }
+    
 }
 
 ?>

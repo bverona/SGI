@@ -1,4 +1,16 @@
 
+
+
+select 
+    id_proveedor as id,
+    nombre_proveedor as nombre,
+    ruc_proveedor as ruc
+from proveedor;
+
+
+
+update 
+
 select  
                         ap.proveedor_id_proveedor as id, 
                         a.nombre_art as articulo, 

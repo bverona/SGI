@@ -6,12 +6,17 @@
         header("location:index.php");
     }
 
-    
+    $foco=$_POST["foco"];
 
+    if(!$foco)
+    {
+        $foco=1;
+    }
+    
     require_once '../Clases/clsArticulo.php';
     
     $objArticulo= new Articulo();
-    $objArticulo->ListarTodosArticulos();
+    $objArticulo->ListarTodosArticulos($foco);
     
     
         

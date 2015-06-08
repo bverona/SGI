@@ -902,7 +902,7 @@ pre code {
   position: relative;
   min-height: 1px;
   padding-right: 15px;
-  padding-left: 15px;
+  padding-left: 15  px;
 }
 
 .col-xs-1,
@@ -5601,7 +5601,7 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .panel-body {
-  padding: 15px;
+  padding: 10px;
 }
 
 .panel-body:before,
@@ -5949,7 +5949,7 @@ button.close {
   overflow-y: scroll;
 }
 
-.modal.fade .modal-dialog {
+.modal.fade .modal-dialog .modal-dialogo{
   -webkit-transform: translate(0, -25%);
       -ms-transform: translate(0, -25%);
           transform: translate(0, -25%);
@@ -5959,7 +5959,7 @@ button.close {
           transition: transform 0.3s ease-out;
 }
 
-.modal.in .modal-dialog {
+.modal.in .modal-dialog .modal-dialogo{
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
           transform: translate(0, 0);
@@ -6035,6 +6035,10 @@ button.close {
   position: relative;
   padding: 20px;
 }
+.modal-body-prov {
+  position: relative;
+  padding: 10px;
+}
 
 .modal-footer {
   padding: 19px 20px 20px;
@@ -6086,7 +6090,7 @@ button.close {
     margin: 30px auto;
   }
   .modal-dialog-prov {
-    width: 650px;
+    width: 690px;
     margin: 30px auto;
   }
   .modal-content {

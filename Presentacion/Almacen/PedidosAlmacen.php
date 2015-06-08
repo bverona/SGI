@@ -46,8 +46,8 @@ if (!isset($_SESSION["usuario"])) {
                     <div class="panel-heading"><b>Listado de Pedidos</b>
                         <div class="panel-body">
                             <form role="form" action="ProcesaPedido.php" method="POST">
-                                <div class="table-responsive table-hover">
-                                    <table class="table table-striped table-hover table-bordered">
+                                <div class="table-responsive ">
+                                    <table class="table table-striped table-condensed table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Artículo</th>
@@ -106,10 +106,10 @@ if (!isset($_SESSION["usuario"])) {
                                         <tr>
                                             <td><input class="form-control" type="text" readonly="" id="producto" name="producto" value="Producto"></td>
                                             <td>
-                                                <input class="form-control" type="text" id="precio" name="Precio" readonly="true" value="0"></td>
+                                                <input class="form-control" type="text" id="preciooc" name="Precio" readonly="true" value="0"></td>
                                             <td>
 
-                                                <input class="form-control" type="text" id="cantidad" readonly="true" name="cantidad" value="0">
+                                                <input class="form-control" type="text" id="cantidadoc" readonly="true" name="cantidad" value="0">
                                             </td>
                                             <td>
                                                 <button class="form-control btn btn-default btn-sm" data-toggle="modal"  id="btnProveedor" onclick="ListarProveedores()"  data-target="#ModalProveedores" value="">Seleccione Proveedor</button>
@@ -250,10 +250,10 @@ if (!isset($_SESSION["usuario"])) {
                 $("#btnProveedor").html('No Proveedor');
             }else
             {
-                $("#precio").val(precio);
+                $("#preciooc").val(precio);
                 $("#btnProveedor").html(proveedor);
                 $("#id_prov").val(id_prov);
-                $("#cantidad").val($("#cantidadreq").val());
+                $("#cantidadoc").val($("#cantidadreq").val());
             }
         }
 

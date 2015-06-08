@@ -27,7 +27,7 @@
   <body>
 
     <div class="container">
-
+   
         <?php
         /*
          *  Define el Tipo de NavBar a Usar
@@ -36,89 +36,45 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-
-        
-            <!-- Modal Nuevo Proveedor-->
-            <form name="frmgrabarProveedor" id="frmgrabarProveedor" method="post" action="../../Funciones/ActualizaProveedor.php">
-                <div class="modal fade" id="ActualizaProveedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Actualiza Proveedor!</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <p><input type="text" class="form-control" name="txtnombreproveedor" id="txtnombreproveedor" required placeholder="Nombre Proveedor"></p>
-                                <p><input type="text" class="form-control" name="txtdireccionproveedor" id="txtdireccionproveedor" required placeholder="Dirección Proveedor"></p>
-                                <p><input type="text" class="form-control" name="txtrucproveedor" maxlength="10" id="txtrucproveedor" required placeholder="RUC Proveedor"></p>
-                            </div>
-                               <input type="hidden" name="id" id="id">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- /Modal Nuevo Proveedor-->            
-
-            <!-- Modal GestionarArtículo-->
-                <div class="modal fade" id="GestionaArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Articulo Proveedor</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading"><b>Listado de Artículos</b>
-                                        <div class="panel-body panel-success">
-                                            <div class="table-responsive table-hover">
-                                                <table class="table table-striped table-hover">
-                                                  <thead>
-                                                    <tr>
-                                                        <th>Artículo</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Precio</th>
-                                                        <th>
-                                                            Añadir     
-                                                        </th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody id="tbody">
-
-                                                  </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                               <input type="hidden" name="id" id="id">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <!-- /Modal GestionarArtículo-->            
+            
       
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="container">
           <div class="row">
-              <div class="col-xs-12 col-lg-8">    
+              <div class="col-xs-12 col-lg-4 ">    
                     <?php
                     require_once '../../Clases/clsProveedor.php';
                     $obj=new Proveedor();
-                    $obj->ListarProveedores();
+                    $obj->ListarProveedoresSimple();
                     ?>
             </div>
           </div>          
-      </div>
+      
+    <!-- Modal Articulo Proveedor-->
+            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
+                <div class="modal fade" id="AnhadeArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4>Nuevo Almacén!</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p><input type="text" maxlength="32" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                                <p><input type="text" maxlength="32" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                                <p><input type="text" maxlength="32" class="form-control" name="txtnombrealmacen" id="txtnombrealmacen" required placeholder="Nombre Almacén"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>        
+    <!-- Modal Articulo Proveedor-->
+
     </div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript
