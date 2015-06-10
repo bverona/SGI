@@ -79,7 +79,7 @@
 
                                 <div class="form-group">
                                     <label for="nombre">Artículo</label>
-                                    <input type="text" class="form-control" name="nombreEntrada" id="nombreEntrada" required placeholder="Nombre de Artículo">
+                                    <input type="text" class="form-control" name="nombreEntrada" id="nombreEntrada" readonly required placeholder="Nombre de Artículo">
                                 </div>
                                 <div class="form-group">
                                     <label for="cantidad">Cantidad</label>

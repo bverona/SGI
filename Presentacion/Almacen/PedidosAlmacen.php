@@ -17,7 +17,7 @@ if (!isset($_SESSION["usuario"])) {
         <title>Pedidos Por Almacen</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
         <!-- Custom styles for this template -->
         <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
 
@@ -38,42 +38,45 @@ if (!isset($_SESSION["usuario"])) {
             $objPed = new Pedido(0, 0, 0);
 
             $objNavBar->DefineNavBar();
-            $objPed->ProcesaPedidos();
             ?>
-            <div class="col-xs-12">
-                <!-- Main component for a primary marketing message or call to action -->
-                <div class="panel panel-info">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
-                            <form role="form" action="ProcesaPedido.php" method="POST">
-                                <div class="table-responsive ">
-                                    <table class="table table-striped table-condensed table-hover table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Artículo</th>
-                                                <th>Cantidad</th>
-                                                <th>Usuario</th>
-                                                <th>Almacen</th>
-                                                <th>Fecha</th>
-                                                <th>Estado</th>
-                                                <th>Soluciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tbody">
-                                            <?php
-                                            require_once '../../Clases/clsPedido.php';
-                                            $objPed = new Pedido("", "", "");
-                                            $objPed->ListarPedidosAlmacen();
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+
+            <!-- Main component for a primary marketing message or call to action -->            
+
+            <div class="panel panel-success">
+                <div class="panel-heading"><b>Listado de Pedidos</b>
                 </div>
+                    <div class="panel-body">                          
+                        <div class="row">
+                            <div class=" col-xs-12">    
+                                <div class="col-xs-2">
+                                    <p class="text-center"><b>Articulo</b></p>
+                                </div>    
+                                <div class="col-xs-1 ">
+                                    <p class="text-center"><b>Cantidad</b></p>
+                                </div>    
+                                <div class="col-xs-1 ">
+                                    <p class="text-center"><b>Usuario</b></p>
+                                </div>    
+                                <div class=" col-xs-2 ">
+                                    <p class="text-center"><b>Almacén</b></p>
+                                </div>    
+                                <div class="col-xs-1">
+                                    <p class="text-center"><b>Fecha</b></p>
+                                </div>    
+                                <div class="col-xs-2 ">
+                                    <p class="text-center"><b>Estado</b></p>
+                                </div>    
+                                <div class="col-xs-2">
+                                    <p class="text-center"><b>Soluciones</b></p>
+                                </div>                            
+                            </div>
+                        </div>
+                        <?php 
+                            $objPed->ListarPedidosAlmacen();
+                        ?>
+                    </div>
             </div>
-        </div>
+           
 
         <!-- Modal Orden Compra-->
         <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GeneraOrdenCompra.php">
@@ -191,7 +194,7 @@ if (!isset($_SESSION["usuario"])) {
         </div>
         <!-- /Modal Proveedores-->            
 
-
+        </div>
     </body>
     
         <!-- Bootstrap core JavaScript
@@ -201,16 +204,27 @@ if (!isset($_SESSION["usuario"])) {
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
 
-        $('#NuevoArticulo').on('shown.bs.modal', function() {
-            $('#nombre').focus();
-        });
-              
+    $('#NuevoArticulo').on('shown.bs.modal', function() {
+        $('#nombre').focus();
+    });
+     
+    function MostrarPosiblesSoluciones(dp,id_art,nombre_articulo,precio,destino,cantidad)
+    {
+       var origen =$("#origen").val(); 
+       var pedido="#pedido";
+        $.post("../../Funciones/MostrarPosiblesSoluciones.php",
+            {dp:dp,id_art:id_art,nombre_articulo:nombre_articulo,
+             precio:precio,destino:destino,origen:origen,cantidad:cantidad})
+                .done(function(data){
+                   $(pedido.concat(dp)).html(data); 
+                });
+    }
          
-         function VerificaCantidad(cantidad)
-         {
-            var aux=$("#cantidadreq").val();
-            aux =(aux+'').replace(/[^0-9]/,'');
-            $("#cantidadreq").val(aux);    
+    function VerificaCantidad(cantidad)
+    {
+        var aux=$("#cantidadreq").val();
+        aux =(aux+'').replace(/[^0-9]/,'');
+        $("#cantidadreq").val(aux);    
             
         if( $("#cantidadreq").val() > cantidad )
             {
@@ -219,127 +233,127 @@ if (!isset($_SESSION["usuario"])) {
     }
 
 
-        function ParametrosModal(dp, id_prod, nombre, precio, almacen)
-        {
-            $("#producto").val(nombre);
-            $("#id_alm").val(almacen);
-            $("#precio").val(0);
-            $("#cantidad").val(0);
-            $("#id_art").val(id_prod);
-            $("#id_prov").val();
-            $("#btnProveedor").html('Seleccione Proveedor');
+    function ParametrosModal(dp, id_art, nombre, precio, almacen)
+    {
+        $("#producto").val(nombre);
+        $("#id_alm").val(almacen);
+        $("#precio").val(0);
+        $("#cantidad").val(0);
+        $("#id_art").val(id_art);
+        $("#id_prov").val();
+        $("#btnProveedor").html('Seleccione Proveedor');
+}
+
+    function ListarProveedores()
+    {
+        var articulo = $("#id_art").val();
+
+        $.post("../../Funciones/MuestraProveedores.php",{articulo:articulo})
+                .done(function(data){
+                   $("#bodytablaproveedores").html(data); 
+                });
     }
 
-        function ListarProveedores()
-        {
-            var articulo = $("#id_art").val();
-        
-            $.post("../../Funciones/MuestraProveedores.php",{articulo:articulo})
-                    .done(function(data){
-                       $("#bodytablaproveedores").html(data); 
-                    });
-        }
-
     function AsignaArticulo(precio,proveedor,id_prov)
+    {
+        if(precio===-1)
         {
-            if(precio===-1)
-            {
-                $("#precio").val(0.0);
-                $("#cantidad").val(0);
-                $("#id_prov").val(0);
-                $("#btnProveedor").html('No Proveedor');
-            }else
-            {
-                $("#preciooc").val(precio);
-                $("#btnProveedor").html(proveedor);
-                $("#id_prov").val(id_prov);
-                $("#cantidadoc").val($("#cantidadreq").val());
-            }
-        }
-
-        function ProcesaPedido(prov, dest, articulo, cantidad, dp)
+            $("#precio").val(0.0);
+            $("#cantidad").val(0);
+            $("#id_prov").val(0);
+            $("#btnProveedor").html('No Proveedor');
+        }else
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/ProcesaPedidos.php", {
-                prov: prov, dest: dest, articulo: articulo, cantidad: cantidad, dp: dp})
-                    .done(function(data)
-                    {
-                        alert('Pedido Procesado');
-                    });
+            $("#preciooc").val(precio);
+            $("#btnProveedor").html(proveedor);
+            $("#id_prov").val(id_prov);
+            $("#cantidadoc").val($("#cantidadreq").val());
         }
+    }
 
-        function leerDatosEntrada(id_)
+    function ProcesaPedido(prov, dest, articulo, cantidad, dp)
+    {
+                    alert(prov+"/"+dest+"/"+articulo+"/"+cantidad+"/"+dp);
+        $.post("../../Funciones/ProcesaPedidos.php", {
+            prov: prov, dest: dest, articulo: articulo, cantidad: cantidad, dp: dp})
+                .done(function(data)
+                {
+                    alert('Pedido Procesado');
+                });
+    }
+
+    function leerDatosEntrada(id_)
+    {
+        $.post("../../Funciones/DatosArticulo.php", {id: id_})
+                .done(function(data) {
+                    data = $.parseJSON(data);
+                    $("#nombre").val(data.nombre);
+                    $("#saldo").val(data.cantidad);
+                    $("#id").val(data.id);
+                }, "json");
+    }
+
+    function leerDatosSalida(id_)
+    {
+        $.post("../../Funciones/DatosArticulo.php", {id: id_})
+                .done(function(data) {
+                    data = $.parseJSON(data);
+                    $("#nombresalida").val(data.nombre);
+                    $("#saldosalida").val(data.cantidad);
+                    $("#idsalida").val(data.id);
+                }, "json");
+    }
+
+    //llena el textarea #codigo con el POSIBLE código a generar
+   function PosibleCodigo(){
+        $.post("../../Funciones/PosibleId.php")
+                .done(function (data){
+                    $("#codigo").val(data);
+        });
+    }
+
+    function RegistraTipo()
+    {
+        var nombre = $("#nombreTipo").val();
+        $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
+                .done(function(data){
+                    LlenaTipo();
+                });
+    }
+
+    function LlenaTipo() {
+        $.post("../../Funciones/llenarTipo.php")
+                .done(function(data) {
+                     $("#cbTipo").html("");
+                     $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
+                     $("#cbTipo").append(data);
+                     $("#nombreTipo").val("");
+                });
+    }
+
+    function DefineSalida(val)
+    {
+
+        if (val === 2)
         {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                    .done(function(data) {
-                        data = $.parseJSON(data);
-                        $("#nombre").val(data.nombre);
-                        $("#saldo").val(data.cantidad);
-                        $("#id").val(data.id);
-                    }, "json");
-        }
-
-        function leerDatosSalida(id_)
+            $("#divmodulos").prop("hidden", false);
+        } else
         {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                    .done(function(data) {
-                        data = $.parseJSON(data);
-                        $("#nombresalida").val(data.nombre);
-                        $("#saldosalida").val(data.cantidad);
-                        $("#idsalida").val(data.id);
-                    }, "json");
+            $("#divmodulos").prop("hidden", true);
         }
 
-        //llena el textarea #codigo con el POSIBLE código a generar
-       function PosibleCodigo(){
-            $.post("../../Funciones/PosibleId.php")
-                    .done(function (data){
-                        $("#codigo").val(data);
-            });
-        }
+    }
 
-        function RegistraTipo()
-        {
-            var nombre = $("#nombreTipo").val();
-            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
-                    .done(function(data){
-                        LlenaTipo();
-                    });
-        }
+    function Filtro()
+    {
+        var id = $("#cbTipo").val();
+        $.post("../../Funciones/MuestraArticulos.php", {id: id})
+                .done(function(data) {
+                    $("#tbody").html(data);
 
-        function LlenaTipo() {
-            $.post("../../Funciones/llenarTipo.php")
-                    .done(function(data) {
-                         $("#cbTipo").html("");
-                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
-                         $("#cbTipo").append(data);
-                         $("#nombreTipo").val("");
-                    });
-        }
+                });
 
-        function DefineSalida(val)
-        {
-
-            if (val === 2)
-            {
-                $("#divmodulos").prop("hidden", false);
-            } else
-            {
-                $("#divmodulos").prop("hidden", true);
-            }
-
-        }
-
-        function Filtro()
-        {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php", {id: id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-
-                    });
-
-        }
+    }
 
     </script>
 

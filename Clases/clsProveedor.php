@@ -65,7 +65,10 @@ class Proveedor {
         return $correcto;
     }
 
-    public function ListarProveedores() {
+    
+    /*
+    public function ListarProveedores2() 
+    {
 
         require_once 'clsConexion.php';
         $objCon = new Conexion();
@@ -124,8 +127,9 @@ class Proveedor {
     </div>
                 ';
     }
+*/    
     
-    public function ListarProveedores2() {
+    public function ListarProveedores() {
 
         require_once 'clsConexion.php';
         $objCon = new Conexion();
@@ -175,7 +179,7 @@ class Proveedor {
                 echo'
                     <div class="col-xs-1">
                     <a class="btn btn-success" data-toggle="collapse" href="#proveedor'.$registro["id"].'" 
-                        onclick="SeleccionarProveedor('.$registro["id"].');MostrarArticulosPorProveedor()" aria-expanded="false" aria-controls="#proveedor'.$registro["id"].'"> 
+                        onclick="SeleccionarProveedor('.$registro["id"].');MostrarArticulosPorProveedor('.$registro["id"].')" aria-expanded="false" aria-controls="#proveedor'.$registro["id"].'"> 
                     Articulos Registrados</a>
                     </div>';            
             echo'</div>';
@@ -280,6 +284,7 @@ class Proveedor {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
+        //busca a todos los articulos con las mismas características
         $sql=" 
                 select id_art_prov as id from 
                     articulo_proveedor 
@@ -287,34 +292,36 @@ class Proveedor {
                     proveedor_id_proveedor=".$proveedor." and
                     articulo_id_art=".$articulo." and 
                     articulo_proveedor_pre=".$precio." and     
-                    vigenci_art_prov=1";
+                    vigencia_art_prov=1";
         
         $resultado=$objCon->Consultar($sql);
         
-        
+        // si no encuentra ninguna coincidencia registra un nuevo articulo
         if(!$registro=$resultado->fetch())
         {
-            
-        $sql2 = "insert into articulo_has_proveedor "
+        $sql = "insert into articulo_has_proveedor "
                 . "(articulo_id_art,proveedor_id_proveedor,"
                 . "articulo_proveedor_cant,articulo_proveedor_pre) "
                 . "values (" . $articulo . "," . $proveedor . "," . $cantidad 
                 . "," . $precio . ")";
-        }else
+        $objCon->Consultar($sql);
+        }else //si encuentra coincidencia solo se actualiza 
             {
-                $sql2=" 
+                $sql=" 
                         update  
                             articulo_proveedor 
                         set     
-                            articulo_proveedor_cant=".$cantidad."+ articulo_proveedor_cant 
+                            articulo_proveedor_cant=".$cantidad."
                         where 
-                                proveedor_id_proveedor=".$proveedor." and
+                                proveedor_id_proveedor=".$proveedor." and 
                                 articulo_id_art=".$articulo." and 
                                 articulo_proveedor_pre=".$precio;
-            }
+                $objCon->Consultar($sql);
+                }
+        echo "sql ".$sql;
     }
-
-    public function CambiarEstadoArticuloProveedor($id)
+  
+    public function CambiarEstadoArticuloProveedor($proveedor,$articulo)
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
@@ -323,11 +330,13 @@ class Proveedor {
             update  
                 articulo_proveedor 
             set     
-                vigenci_art_prov=0
+                vigencia_art_prov= 0  
             where 
-                articulo_id_art=".$id;        
-        $objCon->Consultar($sql);
-    }    
+                articulo_id_art=".$articulo." and ".
+                "proveedor_id_proveedor=".$proveedor;        
+        echo $sql;
+            $objCon->Consultar($sql);
+    }
     
     public function ListarArticulosPorProveedor($proveedor)
     {
@@ -336,23 +345,26 @@ class Proveedor {
         $sql = " 
                 select 
                     a.nombre_art as articulo,
+                    ap.articulo_id_art as idArticulo,
+                    p.nombre_proveedor as nombre_proveedor,
                     ap.proveedor_id_proveedor as proveedor,
                     ap.articulo_proveedor_cant as cantidad,
                     ap.articulo_proveedor_pre as precio,
-                    ap.vigenci_art_prov as vigencia
+                    ap.vigencia_art_prov as vigencia
                 from
                     articulo_proveedor ap inner join proveedor p
                     on ap.proveedor_id_proveedor= p.id_proveedor  
                     inner join articulo a 
                     on a.id_art = ap.articulo_id_art
                 where
-                    ap.proveedor_id_proveedor=".$proveedor;
+                    ap.proveedor_id_proveedor=".$proveedor." and ".
+                    "ap.vigencia_art_prov=1";
                    
         $resultado=$objCon->Consultar($sql);
 
             echo'
                 <div class="panel panel-info">
-                        <div class="panel-heading"><b>Listado de Proveedores</b></div>
+                        <div class="panel-heading"><b>Articulos Registrados </b></div>
                             <div class="panel-body">';
             echo'
                 <div class="col-xs-12 ">    
@@ -380,8 +392,13 @@ class Proveedor {
             echo        '<div class="col-xs-2"><p class="text-center">' . $registro["cantidad"] . '</p></div>';
             echo        '<div class="col-xs-2"><p class="text-center">' . $registro["precio"] . '</p></div>';
             echo        '<div class="col-xs-2"><p class="text-center">' . ($registro["vigencia"]==1?'Vigente':'No Vigente') . '</p>
-                        <input type="hidden" value="'.$registro["vigencia"].'"> </div>';
-            echo        '<div class="col-xs-2"><p class="text-center"><a href="#" onclick="CambiarEstado('.$registro["proveedor"].')"><img src="../../Imagenes/cambiarEstado.ico"></a></p></div>';
+                        <input type="hidden" id="vigenciaArtPro" value="'.$registro["vigencia"].'"> 
+                        <input type="hidden" id="articuloArtPro" value="'.$registro["idArticulo"].'"> '
+                    . '</div>';
+            echo        '<div class="col-xs-2"><p class="text-center">'
+                            . '<a href="#" onclick="CambiarEstado('.$registro["proveedor"].','.$registro["idArticulo"].')">'
+                            . '<img src="../../Imagenes/cambiaEstado.png"></a></p>'
+                        .'</div>';
             echo    '</div>';                   
         }
                 echo '</div>';

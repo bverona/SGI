@@ -137,6 +137,7 @@ class Pedido {
 
         $resultado = $objCon->consultar($sql);
 
+        
         while ($registro = $resultado->fetch()) {
 
             ($registro["atendido"] == 1) ? $aux = "Atendido" : $aux = "No Atendido";
@@ -153,7 +154,8 @@ class Pedido {
         }
     }
 
-    public function ListarPedidosPorArea($area) {
+    public function ListarPedidosPorArea($area)
+    {
         require_once 'clsConexion.php';
 
         $objCon = new Conexion();
@@ -202,8 +204,7 @@ class Pedido {
         $objCon = new Conexion();
 
         $sql = "select 
-                        art.id_art as id_articulo,
-                        a.id_alm as id_alm,
+                        art.id_art as id_art,
                         a.nombre_alm as almacen,
                         art.nombre_art as articulo,
                         dp.cantidad_art as cantidad,
@@ -238,32 +239,55 @@ class Pedido {
         
         while ($registro = $resultado->fetch()) {
 
-            echo '<tr>';
-            echo '<td>' . $registro["articulo"] . '</td>';
-            echo '<td>' . $registro["cantidad"] . '</td>';
-            echo '<td>' . $registro["usuario"] . '</td>';
-            echo '<td>' . $registro["almacen"] . '</td>';
-            echo '<td>' . $registro["fecha"] . '</td>';
-            echo '<td>' . $registro["atendido"] . '</td>';
-            echo '<td>' .
-            '<div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                          Soluciones
-                          <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">' .
-                    
-                    $this->PosiblesSoluciones($registro["dp"], $registro["id_articulo"],
-                    $registro["articulo"], $registro["precio"],$registro["destino"], $registro["cantidad"],$registro["id_alm"])
-            . ' </ul>
-                    </div>' .
-            '</td>';
-            echo '</tr>';
+        echo'<div class="row">';
+            echo'<div class="col-xs-12">';
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["articulo"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["cantidad"].'</p> 
+                    </div>';
+                echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["usuario"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["almacen"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["fecha"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["atendido"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                    <a class="btn btn-success" data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
+                        onclick="MostrarPosiblesSoluciones('
+                        .$registro["dp"].','.$registro["id_art"].','
+                        ."'".$registro["articulo"]."'".','.$registro["precio"].','
+                        .$registro["destino"].','.$registro["cantidad"].
+                        ')" aria-expanded="false" aria-controls="#pedido'.$registro["dp"].'"> 
+                    Posibles Soluciones</a>
+                     </div>';  
+
+            echo'</div>';
+        echo'</div >';
+        
+        echo' <div class="row collapse" aria-expanded="false" id="pedido'.$registro["dp"].'">
+                        
+        </div><p></p>';
         }
     }
 
     /* 
      * Registra las posibles soluciones para un pedido realizado
+     * en la tabla soluciones_det_ped
      */
     public function RegistraSoluciones($detalle_ped, $proveedor, $articulo, $cantidad_art_disp) 
     {
@@ -295,14 +319,14 @@ class Pedido {
      *   y que generará una orden de compra para lo faltante.
      * 3 Que Genere una orden de compra con lo requerido por el subalmacén.
      */
-    public function PosiblesSoluciones($detalle_ped, $articulo,$nombre_articulo,$precio, $destino, $cant,$origen) 
+    public function PosiblesSoluciones($detalle_ped, $id_art,$nombre_articulo,$precio, $destino,$cantidad) 
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
 
         $sql = "
                 select 
-                    a.nombre_alm as pro,
+                    a.nombre_alm as proveedor,
                     a.id_alm as id_pro,
                     s.detalle_pedido_id_det_ped as dp,
                     s.soluciones_det_cant_art as disponible,
@@ -313,7 +337,7 @@ class Pedido {
                     almacen a ON s.soluciones_det_pro = a.id_alm
                 where
                     s.detalle_pedido_id_det_ped = " . $detalle_ped . " and " .
-                "s.articulo_id_art = " . $articulo;
+                "s.articulo_id_art = " . $id_art;
 
         $resultado = $objCon->Consultar($sql);
 
@@ -322,41 +346,79 @@ class Pedido {
          * Si está vacía entonces se genera una orden de compra
          */
         $resul = "";
-        while ($registro = $resultado->fetch()) 
+
+            echo'
+                <div class="panel panel-info">
+                        <div class="panel-heading"><b>Listado de Soluciones</b></div>
+                            <div class="panel-body">';
+            $titulo='
+                <div class="col-xs-12 ">    
+                    <div class="col-xs-2">
+                        <p class="text-center"><b>Almacen</b></p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Articulo</b></p>
+                    </div>    
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Disponibilidad</b></p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Transferir</b></p>
+                    </div>                            
+                </div>';
+        while($registro=$resultado->fetch())
         {
-            $resul .= ' <li role="presentation">' .
-                    ' <button role="menuitem" type="button" tabindex="-1" class="btn btn-link" '
-                    . 'onclick="ProcesaPedido('
-                    . $registro["id_pro"] . ','
-                    . $destino . ','
-                    . $articulo . ','
-                    . $cant . ','
-                    . $detalle_ped . ')" >' .
-                    $registro["pro"] . " -- " . $registro["disponible"] .
-                    ' </button> </li> ';
+
+            $resul.=    '<div class="col-xs-12 ">';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $registro["proveedor"] . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $nombre_articulo . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $registro["disponible"] . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">'
+                            . '<a class="btn btn-success" href="#" '
+                            . 'onclick="ProcesaPedido('.$registro["id_pro"].','
+                            .$destino.','.$registro["articulo"].','
+                            .$cantidad.','.$detalle_ped.')">                               
+                            Realizar Trasferencia</a></p>'
+                            .'</div>';
+
+            $resul.=    '</div>';                   
         }
-        
+
         /* Variable vacía, se genera orden de compra */
         if($resul=='')
         {
-            $resul=  $this->GeneraOrdenDeCompra($detalle_ped, $articulo,  $nombre_articulo,$precio, $destino);
-            return $resul;
+            $titulo='
+                <div class="col-xs-12 ">    
+                    <div class="col-xs-4">
+                        <p class="text-center"><b>Generar Órden de Compra</b></p>
+                    </div>
+                </div>';
+            $resul.=$this->GeneraOrdenDeCompra($detalle_ped, $id_art,  $nombre_articulo,$precio, $destino,$cantidad);
         }
+               $resul.= '</div>';
+            $resul.= '</div>';
+        $resul.= '</div>';
         
-        return $resul;
+        echo  $titulo.$resul;
     }
     
-    public function GeneraOrdenDeCompra($det_ped,$id_prod,$nombre_prod, $precio,$almacen) 
+    public function GeneraOrdenDeCompra($det_ped,$id_art,$nombre_art, $precio,$almacen,$cantidad) 
     {
-        $resul = ' <li role="presentation"> ' .
-                ' <a data-toggle="modal" data-target="#OrdenCompra" href="#" onclick="ParametrosModal('.$det_ped.','.$id_prod.',\''. $nombre_prod.'\','.$precio.','.$almacen.')">
-                  <b>Genera Orden de Compra</b>
-                 </a> ' .
-                '  </li> ';
+        $resul = ' 
+                <div class="col-xs-12">
+                    <div class="col-xs-4">
+                        <p class="text-center"><a class="btn btn-md btn-success" data-toggle="modal" data-target="#OrdenCompra" href="#"
+                        onclick="ParametrosModal('.$det_ped.','.$id_art.',\''
+                        .$nombre_art.'\','.$precio.','.$almacen.','.$cantidad.')">
+                        <b>Genera Orden de Compra</b>
+                        </a></p>
+                     </div>                  
+                </div> ';
         return $resul;
     }
     
-    public function ProcesaPedidos() {
+    public function ProcesaPedidos() 
+    {
         require_once 'clsConexion.php';
         require_once 'clsArticulo.php';
 
@@ -448,9 +510,6 @@ class Pedido {
                     } else
                         if ((($arregloProductos[$i]["cantidad"]) - ($registro["cantidad"])) < 0) 
                         {
-                            //echo "diferencia: ".($arregloProductos[$i]["cantidad"] - $registro["cantidad"])."<br>";
-                            //echo "<br>Entro al segundo ".$i."<br>";
-                            //echo $registro["articulo"]."-->".$arregloProductos[$i]["articulo"]."<br>";
 
                             $arregloSoluciones[$j]["id_det_ped"] = $registro["id_dp"];
                             $arregloSoluciones[$j]["articulo"] = $registro["articulo"];
@@ -464,29 +523,6 @@ class Pedido {
                 
             }
 
-            /*
-              echo "<br>"." ------- <br>Articulo :" . $registro["nombre"] . "--Cantidad :" . $registro["cantidad"]."<br>**Posibles Soluciones**<br><br>";
-              $a++;
-
-              if(count($arregloSoluciones)>0)
-
-              {
-              for (; $k < count($arregloSoluciones); $k++)
-              {
-              echo "*************************<br>";
-              echo "id detalle pedido :".$arregloSoluciones[$k]["id_det_ped"]."<br>";
-              echo "articulo :".$arregloSoluciones[$k]["nombre"]."<br>";
-              echo "Cantidad pedida :".$arregloSoluciones[$k]["cant_ped"]."<br>";
-              echo "Almacen Destino:".$arregloSoluciones[$k]["alm_dest"]."<br>";
-              echo "Almace Proveedor:".$arregloSoluciones[$k]["alm_prov"]."<br>";
-              echo "Cantidad Producto:".$arregloSoluciones[$k]["cant_prod"]."<br>";
-              }
-              }
-              else
-              {
-              echo "no existen almacenes que puedan abastecerlo, se genera orden de compra <br><br>";
-              }
-             */
         }
     }
 

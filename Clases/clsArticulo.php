@@ -162,14 +162,13 @@ class Articulo {
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_art as id, nombre_art as nombre, cantidad_art as cantidad, unidad_art as unidad from articulo where id_art ='" . $id . "'";
+        $sql = "select id_art as id, nombre_art as nombre,  unidad_art as unidad from articulo where id_art ='" . $id . "'";
         $resultado = $objCon->consultar($sql);
         $retorno;
         while ($registro = $resultado->fetch()) {
             $retorno = array(
                 "id" => $registro["id"],
                 "nombre" => $registro["nombre"],
-                "cantidad" => $registro["cantidad"],
                 "unidad" => $registro["unidad"]
             );
         }

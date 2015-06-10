@@ -21,11 +21,11 @@
       
         if(($objMovimiento->AgregaMovimientoEntrada($cantidad,"", $_SESSION["id_almacen"], $articulo)))
         {
-            Funciones::mensaje("Operación exitosa", "../Presentacion/Almacen/ListarArticulos.php", 's');
+            Funciones::mensaje("Operación exitosa", "../Presentacion/Almacen/RegistraEntrada.php", 's');
         }
         else
             {
-            Funciones::mensaje("Error al realizar operación", "../Presentacion/Almacen/ListarArticulos.php", 'e');
+            Funciones::mensaje("Error al realizar operación", "../Presentacion/Almacen/RegistraEntrada.php", 'e');
             }
          
 ?>

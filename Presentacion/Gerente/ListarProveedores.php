@@ -142,7 +142,7 @@
                         <div class="modal-footer">
                             <input type="hidden" id="idArt" name="idArt">
                             <input type="hidden" id="idProv" name="idProv">
-                            <button type="submit" class="btn btn-primary btn-success" onclick="RegistrarArticuloProveedor()" aria-hidden="true">Aceptar</button>
+                            <button type="button" class="btn btn-primary btn-success" onclick="RegistrarArticuloProveedor()" data-dismiss="modal" aria-hidden="true" >Aceptar</button>
                             <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                         <div class="col-xs-1 ">
                             <p class="text-center"><b>Añadir Artículo</b></p>
                         </div>    
-                        <div class="col-xs-1 col">
+                        <div class="col-xs-1">
                             <p class="text-center"><b>Articulos Registrados</b></p>
                         </div>                            
                     </div>
@@ -182,17 +182,17 @@
                 <?php
                 require_once '../../Clases/clsProveedor.php';
                 $obj=new Proveedor();
-                $obj->ListarProveedores2();
+                $obj->ListarProveedores();
                 ?>
             </div>
         </div>
+        
     </div>
             
-    </div> 
+     
+  </body>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- JQuery & Bootstrap-->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
 
@@ -223,6 +223,16 @@
         event.preventDefault();
     } 
     
+    function CambiarEstado(id,articulo)
+    {
+        $.post("../../Funciones/CambiarEstadoArticuloProveedor.php",
+                {proveedor:id,articulo:articulo})
+                .done(function(data){
+
+                    MostrarArticulosPorProveedor(id);
+                });
+    }
+
     function MarcarRegistro (event,ui)
     {
             var registro = ui.item.value;
@@ -242,8 +252,13 @@
             {articulo:id, cantidad:cantidad, precio:precio, proveedor:prov})
                  .done(function(data){
                     alert("registrado");
-                    location.reload();
-                 });
+                    MostrarArticulosPorProveedor(prov);
+                    $("#idArt").val("");
+                    $("#cantidad").val(""); 
+                    $("#precio").val("");
+                    $("#idProv").val("");
+                    $("#txtarticulo").val("");
+    });
     }
 
     function leerDatos(id)
@@ -272,18 +287,16 @@
     }
     
     
-    function MostrarArticulosPorProveedor()
+    function MostrarArticulosPorProveedor(idProv)
     {
-        var idProv=$("#idProv").val();
         var  proveedor ="#proveedor";
-        //var id
-        //alert(proveedor.concat(idProv));
+
         $.post("../../Funciones/MostrarArticulosProveedor.php",{proveedor:idProv})
                 .done(function(data){
+
                     $(proveedor.concat(idProv)).html(data);
                 });
     }
     
     </script>
-  </body>
 </html>

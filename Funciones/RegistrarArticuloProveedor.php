@@ -5,10 +5,10 @@
     $cantidad=$_POST["cantidad"];
     $precio=$_POST["precio"];
 
-    require '../Clases/clsArticulo.php';
+    require '../Clases/clsProveedor.php';
     
-    $objArt = new Articulo();
-    echo $proveedor."\n".$articulo."\n".$cantidad."\n".$precio;
-    $objArt->RegistrarArticuloProveedor($proveedor,$articulo,$cantidad,$precio);
+    $objPro = new Proveedor();
+
+    $objPro->AñadirArticuloProveedor($articulo,$proveedor,$cantidad,$precio);
 
     ?>

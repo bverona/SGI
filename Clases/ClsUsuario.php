@@ -174,13 +174,13 @@ class Usuario {
                     <div class="panel-heading"><b>Listado de Usuarios</b></div>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped table-bordered table-hover">
                                   <thead>
                                     <tr>
-                                      <th>Editar</th>
-                                      <th>Eliminar</th>
-                                      <th>Usuario</th>
-                                      <th>Área/Almacén</th>
+                                      <th><p class="text-center">Editar</p></th>
+                                      <th><p class="text-center">Eliminar</p></th>
+                                      <th><p class="text-center">Usuario</p></th>
+                                      <th><p class="text-center">Área/Almacén</p></th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -189,10 +189,10 @@ class Usuario {
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
-            echo '<td><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#ActualizarDatos"><img src="../../imagenes/editar.png"/></a></td>';
-            echo '<td><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></td>';
-            echo '<td>' . $registro["usuario"] . '</td>';
-            echo '<td>' . $registro["area"] . "" . $registro["almacen"] . '</td>';
+            echo '<td><p class="text-center"><a href="#" onclick="leerDatos(' . $registro["id"] . ')" data-toggle="modal" data-target="#ActualizarDatos"><img src="../../imagenes/editar.png"/></a></p></td>';
+            echo '<td><p class="text-center"><a href="#" onclick="eliminar(\'' . $registro["id"] . '\')"><img src="../../imagenes/eliminar.png"/></a></p></td>';
+            echo '<td><p class="text-center">' . $registro["usuario"] . '</p></td>';
+            echo '<td><p class="text-center">' . $registro["area"] . "" . $registro["almacen"] . '</p></td>';
             echo '</tr>';
         }
         echo '              </tbody>

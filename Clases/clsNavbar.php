@@ -83,12 +83,6 @@
                                             Listar Proveedores
                                         </a>
                                     </li>
-                                    
-                                    <li>
-                                        <a data-toggle="modal" data-target="#ArticuloProveedor" onclick="ListarProveedores()" href="#">
-                                            Agrega artículo Proveedor
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>
