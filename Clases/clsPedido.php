@@ -80,11 +80,15 @@ class Pedido {
         return $correcto;
     }
 
-    public function EliminarPedido($id) {
+    public function CancelarPedido($dp) {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
-        $sql = "delete from pedido where id_ped=" . $id;
+        $sql = "update 
+                    detalle_pedido 
+                set atendido_det_ped=1,
+                    comentario_det_ped='Pedido Cancelado porque en almacén solicitante había suficiente stock para que este sea satisfecho' 
+                where id_det_ped=".$dp;
         if (($obj->Consultar($sql)) == !0) {
             $correcto = true;
         }
@@ -92,7 +96,37 @@ class Pedido {
         return $correcto;
     }
 
-    public function AgregarDetallePedido($id_art, $cant) {
+    public function VerificarPedido($almacen,$articulo,$cantidad)
+    {
+        
+        require_once 'clsArticulo.php';
+
+        $objArt = new Articulo();
+        
+        $articulos=$objArt->ArregloArticulos();
+
+        $texto="";
+        for ($i = 0; $i < count($articulos); $i++) {
+
+            /*
+             * primero verifica que el artículo solicitado coincida con el artículo buscado
+             * luego valida que la busqueda no se realice en el mismo almacen
+            */
+            if (($articulo == $articulos[$i]["articulo"]) && ($almacen == $articulos[$i]["almacen"]) && ((($articulos[$i]["cantidad"]) - ($cantidad)) >= 0)) 
+            {
+                $texto='data-toggle="popover" data-placement="top" title="AVISO" data-content="Hay stock suficiente en el mismo Almacén.
+                        Puede cancelar el requerimiento o atenderlo normalmente"';
+                $texto='data-toggle="tooltip" data-placement="top" title="Hay stock suficiente en el mismo Almacén.
+                        Puede cancelar el requerimiento o atenderlo normalmente"';
+            } 
+
+        }
+        return $texto;
+                        
+    }
+    
+    public function AgregarDetallePedido($id_art, $cant) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
@@ -206,6 +240,7 @@ class Pedido {
         $sql = "select 
                         art.id_art as id_art,
                         a.nombre_alm as almacen,
+                        a.id_alm as id_alm,
                         art.nombre_art as articulo,
                         dp.cantidad_art as cantidad,
                         dp.id_det_ped as dp,
@@ -228,14 +263,15 @@ class Pedido {
                         articulo art ON dp.articulo_id_art = art.id_art
                             inner join
                         usuario u ON p.id_usu_ped = u.id_usu
-                        where p.almacen_id_alm<>0 
-                        and
+                    where 
+                        
                         dp.atendido_det_ped=0";
+        
+    // almacén general debería realizar Pedidos?? de ser así borrar primera condición del where
 
         $resultado = $objCon->consultar($sql);
 
-        //funcion que procesa los pedidos de los almacenes
-        $this->ProcesaPedidos();
+
         
         while ($registro = $resultado->fetch()) {
 
@@ -267,22 +303,113 @@ class Pedido {
                     </div>';                 
                 echo'            
                     <div class="col-xs-2">
-                    <a class="btn btn-success" data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
-                        onclick="MostrarPosiblesSoluciones('
-                        .$registro["dp"].','.$registro["id_art"].','
-                        ."'".$registro["articulo"]."'".','.$registro["precio"].','
-                        .$registro["destino"].','.$registro["cantidad"].
-                        ')" aria-expanded="false" aria-controls="#pedido'.$registro["dp"].'"> 
-                    Posibles Soluciones</a>
+                        <div '.$this->VerificarPedido($registro["id_alm"], $registro["id_art"], $registro["cantidad"]).'><a class="btn btn-success" data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
+                            onclick="MostrarPosiblesSoluciones('
+                            .$registro["dp"].','.$registro["id_art"].','
+                            ."'".$registro["articulo"]."'".','.$registro["precio"].','
+                            .$registro["destino"].','.$registro["cantidad"].
+                            ')" aria-expanded="false" aria-controls="#pedido'.$registro["dp"].'"> 
+                        Posibles Soluciones</a>
+                        </div>
                      </div>';  
-
+                echo    
+                    '<div class="col-xs-1"><p class="text-center">
+                                <a  href="#" id="CancelarPedido'.$registro["dp"].'" onclick="AsignaDP('.$registro["dp"].');CancelaPedido('.$registro["dp"].');">                               
+                                <img src="../../Imagenes/Cancelar Pedido.png" > </a>
+                                </p>'
+                            .'</div>';
+                
             echo'</div>';
         echo'</div >';
         
-        echo' <div class="row collapse" aria-expanded="false" id="pedido'.$registro["dp"].'">
+        echo' <br><div class="row collapse" aria-expanded="false" id="pedido'.$registro["dp"].'">
                         
-        </div><p></p>';
+        </div>';
         }
+    }
+
+    public function ListarPedidosAlmacenGerente()
+    {
+        require_once 'clsConexion.php';
+
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art as id_art,
+                        a.nombre_alm as almacen,
+                        a.id_alm as id_alm,
+                        art.nombre_art as articulo,
+                        dp.cantidad_art as cantidad,
+                        dp.id_det_ped as dp,
+                        u.nombre_usu as usuario,
+                        p.fecha_ped as fecha,
+                        p.almacen_id_alm as destino,
+                        coalesce(art.precio_art,2) as precio,
+                        case
+                        when dp.atendido_det_ped = 0 then 'No atendido'
+                        when dp.atendido_det_ped = 1 then 'Atendido' 
+                        end
+                        as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                    where 
+                        
+                        dp.atendido_det_ped=0";
+        
+    // almacén general debería realizar Pedidos?? de ser así borrar primera condición del where
+
+        $resultado = $objCon->consultar($sql);
+
+
+        
+        while ($registro = $resultado->fetch()) {
+
+        echo'<div class="row">';
+            echo'<div class="col-xs-12">';
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["articulo"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["cantidad"].'</p> 
+                    </div>';
+                echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["usuario"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["almacen"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["fecha"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["atendido"].'</p> 
+                    </div>';                 
+
+        }
+    }
+
+    public function LimpiaSoluciones() 
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "delete from soluciones_det_ped";
+
+        $objCon->Consultar($sql);
     }
 
     /* 
@@ -305,11 +432,6 @@ class Pedido {
             VALUES (" . $detalle_ped . "," . $proveedor . "," . $articulo . "," . $cantidad_art_disp . ")";
 
         $objCon->Consultar($sql);
-
-        $sql = "update detalle_pedido set procesado_det=1 "
-                . "where id_det_ped=" . $detalle_ped;
-
-        $objCon->Consultar($sql);
     }
     
     /*
@@ -323,7 +445,8 @@ class Pedido {
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
-
+        $this->ProcesaPedidos();
+        
         $sql = "
                 select 
                     a.nombre_alm as proveedor,
@@ -337,7 +460,9 @@ class Pedido {
                     almacen a ON s.soluciones_det_pro = a.id_alm
                 where
                     s.detalle_pedido_id_det_ped = " . $detalle_ped . " and " .
-                "s.articulo_id_art = " . $id_art;
+                "s.articulo_id_art = " . $id_art
+                //revisar tabla solución nuevamente.
+                ;
 
         $resultado = $objCon->Consultar($sql);
 
@@ -364,9 +489,10 @@ class Pedido {
                     </div>
                     <div class="col-xs-2 ">
                         <p class="text-center"><b>Transferir</b></p>
-                    </div>                            
+                    </div>
                 </div>';
-        while($registro=$resultado->fetch())
+            
+            while($registro=$resultado->fetch())
         {
 
             $resul.=    '<div class="col-xs-12 ">';
@@ -401,7 +527,7 @@ class Pedido {
         
         echo  $titulo.$resul;
     }
-    
+      
     public function GeneraOrdenDeCompra($det_ped,$id_art,$nombre_art, $precio,$almacen,$cantidad) 
     {
         $resul = ' 
@@ -424,7 +550,9 @@ class Pedido {
 
         $objCon = new Conexion();
         $objArt = new Articulo();
-
+     
+        $this->LimpiaSoluciones();
+        
         /* INICIO Consulta los pedidos que no han sido atendidos*/
         $sql = "select 
                         dp.id_det_ped as id_dp,
@@ -432,7 +560,8 @@ class Pedido {
                         art.nombre_art as nombre,
                         a.id_alm as almacen,
                         a.nombre_alm as nombre_almacen,
-                        dp.cantidad_art as cantidad
+                        dp.cantidad_art as cantidad,
+                        dp.atendido_det_ped
                     from
                         almacen a
                             inner join
@@ -441,13 +570,7 @@ class Pedido {
                         detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
                             inner join
                         articulo art ON dp.articulo_id_art = art.id_art
-                            inner join
-                        usuario u ON p.id_usu_ped = u.id_usu
-                        where p.almacen_id_alm<>0 
-                        and
-                        dp.atendido_det_ped=0
-                        and 
-                        dp.procesado_det=0";
+                        where dp.atendido_det_ped=0";
         /* Consulta los pedidos que no han sido atendidos FIN*/
 
         /*
@@ -472,6 +595,7 @@ class Pedido {
          * en toda la lista de artículos disponibles
         */
         while ($registro = $resultado->fetch()) {
+           //print_r($registro);echo"<br><br>";
             for ($i = 0; $i < count($arregloProductos); $i++) {
                 
                 /*
@@ -525,8 +649,6 @@ class Pedido {
 
         }
     }
-
-
 
     public function PedidoAtendido($dp) 
     {
@@ -586,7 +708,8 @@ class Pedido {
         }
     }
 
-    public function ListarPedidosSubAlmacen($almacen) {
+    public function ListarPedidosSubAlmacen($almacen) 
+    {
         require_once 'clsConexion.php';
 
         $objCon = new Conexion();

@@ -37,38 +37,42 @@
         ?>
         
       <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
-                        <div class="panel-body">
-                            <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
-                                  <thead>
-                                    <tr>
-
-                                        <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tbody">
-                                  <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacen();
-                                  ?>
-                                  </tbody>
-                          </table>
-                    </div>
-                </div>
+<div class="panel panel-success">
+            <div class="panel-heading"><b>Listado de Pedidos</b>
             </div>
-        </div>
+                <div class="panel-body">                          
+                    <div class="row">
+                        <div class=" col-xs-12">    
+                            <div class="col-xs-2">
+                                <p class="text-center"><b>Articulo</b></p>
+                            </div>    
+                            <div class="col-xs-1 ">
+                                <p class="text-center"><b>Cantidad</b></p>
+                            </div>    
+                            <div class="col-xs-1 ">
+                                <p class="text-center"><b>Usuario</b></p>
+                            </div>    
+                            <div class=" col-xs-2 ">
+                                <p class="text-center"><b>Almacén</b></p>
+                            </div>    
+                            <div class="col-xs-2">
+                                <p class="text-center"><b>Fecha</b></p>
+                            </div>    
+                            <div class="col-xs-2 ">
+                                <p class="text-center"><b>Estado</b></p>
+                            </div>    
+                        </div>
+                    </div>
+                <?php
+                  require '../../Clases/clsPedido.php';
+                  $objPed=new Pedido(0, 0, 0);
+                  $objPed->ListarPedidosAlmacenGerente();
+                ?>
 
+                </div>
         </div>
-
+      
+      
     </div> <!-- /container -->
 
 

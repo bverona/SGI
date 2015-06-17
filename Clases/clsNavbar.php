@@ -66,6 +66,7 @@
                                     <li><a href="PedidosAreaGerente.php">Listar Pedidos de Áreas</a></li>
                                     <li><a href="PedidosAlmacenGerente.php">Listar Pedidos de Almacén</a></li>
                                     <li><a href="PedidosPorArea.php">Pedidos por Área</a></li>
+                                    <li><a href="OrdenesDeCompra.php">Listar Ordenes de Compra</a></li>
                                 </ul>
                             </li>
                             

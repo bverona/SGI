@@ -1,5 +1,63 @@
 
+select 
+                    o.id_orden_de_compra as id,
+                    art.nombre_art as articulo,
+                    o.cantidad_orden_de_compra as cantidad,
+                    case
+                        when o.prioridad_orden_de_compra=1 then 'Baja'
+                        when o.prioridad_orden_de_compra=2 then 'Media'
+                        when o.prioridad_orden_de_compra=3 then 'Alta'
+                    end as Prioridad,
+                    alm.nombre_alm as nombre_alm,
+                    o.fecha_orden_de_compra as fecha
+                    from 
+                        orden_de_compra o inner join articulo art
+                        on o.articulo_id_art=art.id_art 
+                        inner join almacen alm
+                        on alm.id_alm=o.almacen_id_alm 
+                    where o.atendido_orden_de_compra=0;
 
+
+
+
+-- ListarPedidosAlmacen
+select 
+    dp.id_det_ped as id_dp,
+    art.id_art as articulo,
+    art.nombre_art as nombre,
+    a.id_alm as almacen,
+    a.nombre_alm as nombre_almacen,
+    dp.cantidad_art as cantidad
+from
+    almacen a
+        inner join
+    pedido p ON a.id_alm = p.almacen_id_alm
+        inner join
+    detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+        inner join
+    articulo art ON dp.articulo_id_art = art.id_art
+    where
+    dp.atendido_det_ped=0;
+
+-- Posibles Soluciones
+select 
+                        dp.id_det_ped as id_dp,
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
+                        a.id_alm as almacen,
+                        a.nombre_alm as nombre_almacen,
+                        dp.cantidad_art as cantidad,
+                        dp.atendido_det_ped,
+                        dp.procesado_det
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                        where dp.atendido_det_ped=0;
 
 select 
     id_proveedor as id,

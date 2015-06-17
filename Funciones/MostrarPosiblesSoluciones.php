@@ -10,7 +10,6 @@
 
     require '../Clases/clsPedido.php';
     
-    echo $cant;
     $objPro = new Pedido(0,0,0);
     
     $objPro ->PosiblesSoluciones($detalle_ped, $id_art, $nombre_articulo, $precio, $destino, $cant, $origen);

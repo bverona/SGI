@@ -97,21 +97,17 @@ INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,
 INSERT INTO `usuario` (`nombre_usu`,`clave_usu`,`permisos_usu`,`almacen_id_alm`,`area_id_are`) VALUES ('almacen4','0cc175b9c0f1b6a831c399e269772661',4,5,NULL);
 
 
-insert into orden_de_compra 
-            ( 
-                prioridad_orden_de_compra,
-                atendido_orden_de_compra,
-                almacen_id_alm,
-                fecha_orden_de_compra,
-                hora_orden_de_compra,
-                cantidad_orden_de_compra,
-                observacion_orden_de_compra,
-                articulo_id_art,
-                articulo_proveedor_id_art,
-                articulo_proveedor_id_prov
-            )
-            values
-            (0,false,3,);
+INSERT INTO orden_de_compra
+(
+prioridad_orden_de_compra,
+atendido_orden_de_compra,
+almacen_id_alm,
+fecha_orden_de_compra,
+cantidad_orden_de_compra,
+observacion_orden_de_compra,
+articulo_id_art)
+VALUES
+    (1,0,3,('2015-06-17'),4,'Ninguna',19);
 
 
 

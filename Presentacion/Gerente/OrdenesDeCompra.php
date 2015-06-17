@@ -14,7 +14,7 @@ if (!isset($_SESSION["usuario"])) {
         <meta name="author" content="Bruno Verona">
         <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-        <title>Pedidos Por Almacen</title>
+        <title>Órdenes de Compra</title>
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
@@ -32,10 +32,8 @@ if (!isset($_SESSION["usuario"])) {
              *  Define el Tipo de NavBar a Usar
              */
             require_once '../../Clases/clsNavbar.php';
-            require_once '../../Clases/clsPedido.php';
 
             $objNavBar = new NavBar();
-            $objPed = new Pedido(0, 0, 0);
             
             $objNavBar->DefineNavBar();
             ?>
@@ -49,22 +47,22 @@ if (!isset($_SESSION["usuario"])) {
                     <div class="row">
                         <div class=" col-xs-12">    
                             <div class="col-xs-2">
-                                <p class="text-center"><b>Articulo</b></p>
+                                <p class="text-center"><b>Codigo</b></p>
+                            </div>    
+                            <div class="col-xs-1 ">
+                                <p class="text-center"><b>Artículo</b></p>
                             </div>    
                             <div class="col-xs-1 ">
                                 <p class="text-center"><b>Cantidad</b></p>
                             </div>    
-                            <div class="col-xs-1 ">
-                                <p class="text-center"><b>Usuario</b></p>
-                            </div>    
                             <div class=" col-xs-2 ">
-                                <p class="text-center"><b>Almacén</b></p>
+                                <p class="text-center"><b>Prioridad</b></p>
                             </div>    
                             <div class="col-xs-1">
-                                <p class="text-center"><b>Fecha</b></p>
+                                <p class="text-center"><b>Almacen</b></p>
                             </div>    
                             <div class="col-xs-2 ">
-                                <p class="text-center"><b>Estado</b></p>
+                                <p class="text-center"><b>Fecha</b></p>
                             </div>    
                             <div class="col-xs-2">
                                 <p class="text-center"><b>Soluciones</b></p>
@@ -79,85 +77,6 @@ if (!isset($_SESSION["usuario"])) {
                     ?>
                 </div>
         </div>
-
-        <!-- Modal Orden Compra-->
-        <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GenerarOrdenCompra.php">
-            <div class="modal fade" id="OrdenCompra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialogo ">
-                    <div class="modal-content">                                 
-                        <div class="modal-header">
-                            <div class="container-fluid">
-                                <div class="row" >
-                                    <div class="col-xs-12">
-                                        <h4 class="text-center text-primary">
-                                            <p> Orden de Compra</p>
-                                        </h4>                                                                        
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-1">
-                                        <p>
-                                            <b> Fecha:</b>
-                                        </p>                                                                        
-                                    </div>
-                                    <div class="col-xs-1">
-                                        <p>
-                                            <?php echo date('d-m-Y');?>
-                                        </p>                                                                        
-                                    </div>
-                                </div>
-                            </div>                                
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                              <div class="row">
-                                  <div class="col-xs-3"><p class="text-center"><b>Producto</b></p></div>
-                                  <div class="col-xs-2"><p class="text-center"><b>Cantidad</b></p></div>
-                                <div class="col-xs-2"><p class="text-center"><b>Prioridad</b></p></div>
-                                <div class="col-xs-5"><p class="text-center"><b>Observación</b></p></div>
-                              </div>
-                              <div class="row">
-                                <div class="col-xs-3">
-                                    <input class="form-control" type="text" readonly id="producto" name="producto" value="Producto">
-                                </div>
-                                <div class="col-xs-2">
-                                    <input class="form-control" type="text" id="cantidadoc" name="cantidad" readonly value="0">
-                                </div>
-                                <div class="col-xs-2">
-                                    <select class="form-control" name="prioridad" id="prioridad">
-                                        <option value="1"> 
-                                            Baja
-                                        </option>
-                                        <option value="2"> 
-                                            Media
-                                        </option>
-                                        <option value="3"> 
-                                            Alta
-                                        </option>
-                                    </select>                                
-                                </div>
-                                <div class="col-xs-5">
-                                <textarea class="form-control" id="observacion" name="observacion" placeholder="Observación"></textarea>
-                                </div>
-                               </div>
-                              </div>
-                            </div>                            
-                            <div class="modal-footer">
-                                <input type="hidden" id="dp" name="dp" value="">
-                                <input type="hidden" id="id_art" name="id_art" value="">
-                                <input type="hidden" id="id_alm" name="id_alm" value="">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </div>
-
-
-                    </div>
-                
-            </div>
-        </form>       
-        <!-- /Modal Orden Compra-->
            
         </div>
     </body>
