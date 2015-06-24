@@ -299,7 +299,7 @@ class Proveedor {
         // si no encuentra ninguna coincidencia registra un nuevo articulo
         if(!$registro=$resultado->fetch())
         {
-        $sql = "insert into articulo_has_proveedor "
+        $sql = "insert into articulo_proveedor "
                 . "(articulo_id_art,proveedor_id_proveedor,"
                 . "articulo_proveedor_cant,articulo_proveedor_pre) "
                 . "values (" . $articulo . "," . $proveedor . "," . $cantidad 

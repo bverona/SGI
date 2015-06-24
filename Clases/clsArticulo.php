@@ -182,6 +182,7 @@ class Articulo {
      *  encuentra y el nombre de este últim. 
      *  [articulo][cantidad][almacen][nombre_almacen]
      */
+    
     public function ArregloArticulos() 
     {
         require_once 'clsConexion.php';
@@ -190,7 +191,15 @@ class Articulo {
         $sql = "select 
                         art.id_art as articulo,
                         art.nombre_art as nombre,
-                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         a.nombre_alm as nombre_almacen,
                         a.id_alm as almacen
                    from 
@@ -203,7 +212,7 @@ class Articulo {
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
                         group by art.nombre_art, almacen
-                        order by 5";
+                        order by 2";
 
         $resultado = $objCon->consultar($sql);
         $retorno=null;
@@ -212,7 +221,7 @@ class Articulo {
         //
         while ($registro = $resultado->fetch()) {
             $retorno[$i]["articulo"] = $registro["articulo"];
-            $retorno[$i]["cantidad"] = $this->SaldoArticulo($registro["articulo"], $registro["almacen"]);
+            $retorno[$i]["cantidad"] = $registro["saldo"];
             $retorno[$i]["almacen"] = $registro["almacen"];
             $retorno[$i]["nombre_almacen"] = $registro["nombre_almacen"];
             $i++;
@@ -229,6 +238,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                      (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,                        
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -249,6 +267,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -271,15 +298,15 @@ class Articulo {
         }
 
         while ($registro = $resultado->fetch()) {
-            $aux=$this->SaldoArticulo($registro["id_art"], $registro["idAlm"]);
-            if ($aux>0) {
+
+            if ($registro["saldo"]>0) {
                 echo '<tr>';
                 if ($almacen != 0) {
                     echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
                 }
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
-                echo '<td>' . $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]) . '</td>';
+                echo '<td>' . $registro["saldo"] . '</td>';
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';
@@ -296,6 +323,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -316,6 +352,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -339,12 +384,12 @@ class Articulo {
         }
 
         while ($registro = $resultado->fetch()) {
-            $aux=$this->SaldoArticulo($registro["id_art"], $registro["idAlm"]);
-            if ($aux>0) {
+
+            if ($registro["saldo"]>0) {
                 echo '<tr>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
-                echo '<td>' . $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]).'</td>';
+                echo '<td>' . $registro["saldo"].'</td>';
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';
@@ -361,6 +406,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -382,11 +436,11 @@ class Articulo {
         $retorno=null;  
         $i=0;
         while ($registro = $resultado->fetch()) {
-            $aux=$this->SaldoArticulo($registro["id_art"], $registro["idAlm"]);
-            if ($aux>0) {                    
+
+            if ($registro["saldo"]>0) {                    
             echo $i;
                 $retorno[$i]["id"]= $registro["id_art"] ;
-                $retorno[$i]["cantidad"]=  $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]);
+                $retorno[$i]["cantidad"]=  $registro["saldo"];
                 $retorno[$i]["almacen"]=  $registro["idAlm"] ;
                 $i++;                
             }
@@ -429,6 +483,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -449,6 +512,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -470,6 +542,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -491,6 +572,15 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
@@ -517,13 +607,13 @@ class Articulo {
         }
 
         while ($registro = $resultado->fetch()) {
-            $aux=$this->SaldoArticulo($registro["id_art"], $registro["idAlm"]);
-            if ($aux>0) {
+            
+            if ($registro["saldo"]>0) {
                 echo '<tr>';
                 echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
-                echo '<td>' . $this->SaldoArticulo($registro["id_art"], $registro["idAlm"]) . '</td>';
+                echo '<td>' . $re . '</td>';
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';
@@ -564,34 +654,6 @@ class Articulo {
                 echo '</tr>';
             }
         }
-    }
-
-    public function SaldoArticulo($articulo, $almacen) 
-    {
-        require_once 'clsConexion.php';
-        $obj = new Conexion();
-
-        $sql = "select MAX(id_mov) as maximo from movimiento "
-                . "where almacen_id_alm=" . $almacen .
-                " and " .
-                " articulo_id_art=" . $articulo;
-        
-        $resultado = $obj->Consultar($sql);
-        $registro = $resultado->fetch();
-
-        if ($registro["maximo"] != "") {
-            $sql = "select saldo_movimiento as saldo "
-                    . "from movimiento "
-                    . "where id_mov=" . $registro["maximo"];
-
-            $resultado = $obj->Consultar($sql);
-            $registro = $resultado->fetch();
-
-            $aux = $registro["saldo"];
-        } else {
-            $aux = 0;
-        }
-        return $aux;
     }
     
     public function MaxIdArticulo() 

@@ -41,16 +41,30 @@ if (!isset($_SESSION["usuario"])) {
             <!-- Main component for a primary marketing message or call to action -->            
 
         <div class="panel panel-success">
-            <div class="panel-heading"><b>Listado de Pedidos</b>
+            <div class="panel-heading">
+                        <div class=" col-xs-12">    
+                            <div class="col-xs-6 col-sm-3">
+                                <p class="text-center"><b>Listado de Órdenes de Compra</b></p>
+                            </div>    
+                            <div class="col-xs-2 col-xs-offset-4 col-lg-offset-7 ">
+                                <div class="form-group">
+                                    <button class=" form-control btn btn-success"><b>Procesar</b></button>
+                                </div>    
+                            </div>    
+                        </div>
+                <p></p><br>
             </div>
                 <div class="panel-body">                          
                     <div class="row">
                         <div class=" col-xs-12">    
-                            <div class="col-xs-2">
+                            <div class="col-xs-1">
                                 <p class="text-center"><b>Codigo</b></p>
                             </div>    
-                            <div class="col-xs-1 ">
+                            <div class="col-xs-2 ">
                                 <p class="text-center"><b>Artículo</b></p>
+                            </div>    
+                            <div class="col-xs-2 ">
+                                <p class="text-center"><b>Usuario</b></p>
                             </div>    
                             <div class="col-xs-1 ">
                                 <p class="text-center"><b>Cantidad</b></p>
@@ -58,22 +72,18 @@ if (!isset($_SESSION["usuario"])) {
                             <div class=" col-xs-2 ">
                                 <p class="text-center"><b>Prioridad</b></p>
                             </div>    
-                            <div class="col-xs-1">
+                            <div class="col-xs-2">
                                 <p class="text-center"><b>Almacen</b></p>
                             </div>    
                             <div class="col-xs-2 ">
                                 <p class="text-center"><b>Fecha</b></p>
                             </div>    
-                            <div class="col-xs-2">
-                                <p class="text-center"><b>Soluciones</b></p>
-                            </div>                            
-                            <div class="col-xs-1 ">
-                                <p class="text-center"><b>Cancelar</b></p>
-                            </div>  
                         </div>
                     </div>
                     <?php 
-                        $objPed->ListarPedidosAlmacen();
+                        require '../../Clases/clsOrdenCompra.php';
+                        $objOrd= new OrdenCompra();
+                        $objOrd->ListarOrdenesDeCompra();
                     ?>
                 </div>
         </div>

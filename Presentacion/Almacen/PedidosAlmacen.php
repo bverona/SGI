@@ -42,7 +42,7 @@ if (!isset($_SESSION["usuario"])) {
 
             <!-- Main component for a primary marketing message or call to action -->            
 
-        <div class="panel panel-success">
+        <div class="panel panel-info">
             <div class="panel-heading"><b>Listado de Pedidos</b>
             </div>
                 <div class="panel-body">                          

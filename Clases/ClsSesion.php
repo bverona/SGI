@@ -40,6 +40,75 @@
             }
                 return $sesion;
         }
+
+    function PosiblesOrdenesDeCompra
+        ($dp,$resto,$proveedor,$solicitante,$cant_prov,$art,
+            $alm_dest,$cant_solic) 
+    {
+        require_once  'clsConexion.php';
+        
+        $objCon = new Conexion();
+        
+        $sql="
+            select nombre_alm as proveedor,
+                    (select  
+                        nombre_art 
+                     from 
+                        articulo 
+                     where id_art=".$art.") as articulo 
+            from 
+                almacen  
+            where id_alm=".$proveedor;
+        
+        $titulo='
+                <div class="panel panel-warning">
+                        <div class="panel-heading"><b>Posibles Ordenes de Compra</b></div>
+                            <div class="panel-body">
+                <div class="col-xs-12 ">    
+                    <div class="col-xs-2">
+                        <p class="text-center"><b>Articulo</b></p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Proveedor</b></p>
+                    </div>    
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Disponibilidad</b></p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Cantida Requerida</b></p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <p class="text-center"><b>Cantidad A Ordenar</b></p>
+                    </div>
+                </div>';
+
+        $resul='';
+        $mostrar='';
+        
+        while($registro=$resultado->fetch())
+        {
+
+            $resul.=    '<div class="col-xs-12 ">';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $registro["articulo"] . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $registro["proveedor"] . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $cant_prov . '</p></div>';
+            $resul.=        '<div class="col-xs-2"><p class="text-center">' . $resto.'</p>'
+                            .'</div>';
+
+            $resul.=    '</div>';                   
+        }
+
+               $cierre= '</div>';
+            $cierre.= '</div>';
+        $cierre.= '</div>';
+        /* Variable vacía, se genera orden de compra */
+        if($resul!='')
+        {
+            $mostrar.=$titulo.$resul.$cierre;
+        }
+        
+        echo  $mostrar;        
+    }    
         
         
     }

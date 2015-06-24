@@ -1,8 +1,104 @@
+select 
+                    a.nombre_alm as proveedor,
+                    a.id_alm as id_pro,
+                    s.detalle_pedido_id_det_ped as dp,
+                    s.soluciones_det_cant_art as disponible,
+                    s.articulo_id_art as articulo,
+                    s.diferencia_sol_det_ped as diferencia
+                from
+                    soluciones_det_ped s
+                        inner join
+                    almacen a ON s.soluciones_det_pro = 12 
+                where
+                    s.detalle_pedido_id_det_ped = 41  
+                    and s.tipo_sol_det_ped=0;
+
+
+                select 
+                    a.nombre_alm as proveedor,
+                    a.id_alm as id_pro,
+                    s.detalle_pedido_id_det_ped as dp,
+                    s.soluciones_det_cant_art as disponible,
+                    s.articulo_id_art as articulo,
+                    s.diferencia_sol_det_ped as diferencia
+                from
+                    soluciones_det_ped s
+                        inner join
+                    almacen a ON s.soluciones_det_pro = a.id_alm 
+                where
+                    s.detalle_pedido_id_det_ped = 15 and 
+                s.articulo_id_art =49;
+
+
+
+select nombre_alm ,(select  nombre_proveedor from proveedor) as prov from almacen;
+union
+select  nombre_proveedor from proveedor;
+
+select 
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        a.nombre_alm as nombre_almacen,
+                        a.id_alm as almacen
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        group by art.nombre_art, almacen
+                        order by 2;
+
+
+select 
+    MAX(id_mov) as maximo 
+from movimiento 
+                    where almacen_id_alm= $almacen 
+                    and 
+                    articulo_id_art= $articulo;
+
+select 
+    saldo_movimiento as saldo 
+                    from movimiento 
+                    where id_mov=();
+
+select 
+                        dp.id_det_ped as id_dp,
+                        art.id_art as articulo,
+                        art.nombre_art as nombre,
+                        a.id_alm as almacen,
+                        a.nombre_alm as nombre_almacen,
+                        dp.cantidad_art as cantidad,
+                        dp.atendido_det_ped
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                        where dp.atendido_det_ped=0;
+
+
 
 select 
                     o.id_orden_de_compra as id,
                     art.nombre_art as articulo,
                     o.cantidad_orden_de_compra as cantidad,
+                    u.nombre_usu as usuario,
                     case
                         when o.prioridad_orden_de_compra=1 then 'Baja'
                         when o.prioridad_orden_de_compra=2 then 'Media'
@@ -15,6 +111,12 @@ select
                         on o.articulo_id_art=art.id_art 
                         inner join almacen alm
                         on alm.id_alm=o.almacen_id_alm 
+                        inner join detalle_pedido dp 
+                        on  dp.id_det_ped=o.detalle_pedido_id_det_ped
+                        inner join Pedido p 
+                        on p.id_ped=dp.Pedido_id_ped 
+                        inner join usuario u
+                        on u.id_usu= p.id_usu_ped
                     where o.atendido_orden_de_compra=0;
 
 

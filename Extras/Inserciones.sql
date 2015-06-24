@@ -105,9 +105,12 @@ almacen_id_alm,
 fecha_orden_de_compra,
 cantidad_orden_de_compra,
 observacion_orden_de_compra,
-articulo_id_art)
+articulo_id_art,
+detalle_pedido_id_det_ped
+)
 VALUES
-    (1,0,3,('2015-06-17'),4,'Ninguna',19);
+(1,0,3,('2015-06-17'),4,'Ninguna',19,3);
+
 
 
 

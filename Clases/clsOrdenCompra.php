@@ -22,7 +22,8 @@ class OrdenCompra {
                     fecha_orden_de_compra,
                     cantidad_orden_de_compra,
                     observacion_orden_de_compra,
-                    articulo_id_art
+                    articulo_id_art,
+                    detalle_pedido_id_det_ped
                 )
                 VALUES
                 (
@@ -32,7 +33,8 @@ class OrdenCompra {
                  $fecha."',".
                  $cantidad.",'".
                  $observacion."',".
-                 $id_art.
+                 $id_art.",".
+                 $dp.
              ")";
         echo "<br>".$sql."<br>";
         if($objCon->Consultar($sql))
@@ -54,19 +56,26 @@ class OrdenCompra {
                     o.id_orden_de_compra as id,
                     art.nombre_art as articulo,
                     o.cantidad_orden_de_compra as cantidad,
+                    u.nombre_usu as usuario,
                     case
                         when o.prioridad_orden_de_compra=1 then 'Baja'
                         when o.prioridad_orden_de_compra=2 then 'Media'
                         when o.prioridad_orden_de_compra=3 then 'Alta'
                     end as Prioridad,
                     alm.nombre_alm as nombre_alm,
-                    o.fecha_orden_de_compra as fecha,
+                    o.fecha_orden_de_compra as fecha
                     from 
                         orden_de_compra o inner join articulo art
                         on o.articulo_id_art=art.id_art 
                         inner join almacen alm
                         on alm.id_alm=o.almacen_id_alm 
-                    where o.atendido_orden_de_compra=0";
+                        inner join detalle_pedido dp 
+                        on  dp.id_det_ped=o.detalle_pedido_id_det_ped
+                        inner join Pedido p 
+                        on p.id_ped=dp.Pedido_id_ped 
+                        inner join usuario u
+                        on u.id_usu= p.id_usu_ped
+                    where o.atendido_orden_de_compra=0;";
         
         $resultado = $objCon->consultar($sql);
         
@@ -75,53 +84,37 @@ class OrdenCompra {
         echo'<div class="row">';
             echo'<div class="col-xs-12">';
                 echo'            
+                    <div class="col-xs-1">
+                        <p class="text-center">'.$registro["id"].'</p> 
+                    </div>';     
+                echo'            
                     <div class="col-xs-2">
                         <p class="text-center">'.$registro["articulo"].'</p> 
+                    </div>';
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["usuario"].'</p> 
                     </div>';     
                 echo'            
                     <div class="col-xs-1">
                         <p class="text-center">'.$registro["cantidad"].'</p> 
-                    </div>';
-                echo'            
-                    <div class="col-xs-1">
-                        <p class="text-center">'.$registro["usuario"].'</p> 
-                    </div>';     
-                echo'            
-                    <div class="col-xs-2">
-                        <p class="text-center">'.$registro["almacen"].'</p> 
                     </div>';                 
                 echo'            
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["Prioridad"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["nombre_alm"].'</p> 
+                    </div>                    
+                    ';
+                echo'            
+                    <div class="col-xs-2">
                         <p class="text-center">'.$registro["fecha"].'</p> 
-                    </div>';                 
-                echo'            
-                    <div class="col-xs-2">
-                        <p class="text-center">'.$registro["atendido"].'</p> 
-                    </div>';                 
-                echo'            
-                    <div class="col-xs-2">
-                        <div '.$this->VerificarPedido($registro["id_alm"], $registro["id_art"], $registro["cantidad"]).'><a class="btn btn-success" data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
-                            onclick="MostrarPosiblesSoluciones('
-                            .$registro["dp"].','.$registro["id_art"].','
-                            ."'".$registro["articulo"]."'".','.$registro["precio"].','
-                            .$registro["destino"].','.$registro["cantidad"].
-                            ')" aria-expanded="false" aria-controls="#pedido'.$registro["dp"].'"> 
-                        Posibles Soluciones</a>
-                        </div>
-                     </div>';  
-                echo    
-                    '<div class="col-xs-1"><p class="text-center">
-                                <a  href="#" id="CancelarPedido'.$registro["dp"].'" onclick="AsignaDP('.$registro["dp"].');CancelaPedido('.$registro["dp"].');">                               
-                                <img src="../../Imagenes/Cancelar Pedido.png" > </a>
-                                </p>'
-                            .'</div>';
-                
+                    </div>';                                 
             echo'</div>';
         echo'</div >';
         
-        echo' <br><div class="row collapse" aria-expanded="false" id="pedido'.$registro["dp"].'">
-                        
-        </div>';
         }
     }
 
