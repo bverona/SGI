@@ -237,7 +237,7 @@ class Articulo {
         $sql = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_um as unidad,
                       (select 
                             saldo_movimiento
                          from movimiento 
@@ -254,19 +254,20 @@ class Articulo {
                         almacen a 
                         inner join 
                         movimiento m 
-                        on a.id_alm=m.almacen_id_alm
+                            on a.id_alm=m.almacen_id_alm
                         inner join articulo art 
-                        on m.articulo_id_art=art.id_art
+                            on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
-                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
-                        where m.almacen_id_alm=" . $almacen . "
+                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        inner join unidad_de_medida um 
+                            on art.id_um=um.id_um                         where m.almacen_id_alm=" . $almacen . "
                         group by art.nombre_art
                    order by 1;";
 
         $sql2 = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_um as unidad,
                         (select 
                             saldo_movimiento
                          from movimiento 
@@ -283,11 +284,13 @@ class Articulo {
                         almacen a 
                         inner join 
                         movimiento m 
-                        on a.id_alm=m.almacen_id_alm
+                            on a.id_alm=m.almacen_id_alm
                         inner join articulo art 
-                        on m.articulo_id_art=art.id_art
+                            on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
-                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo 
+                        inner join unidad_de_medida um 
+                            on art.id_um=um.id_um 
                         group by art.nombre_art, almacen
                         order by 5";
 
@@ -689,6 +692,49 @@ class Articulo {
             $objCon->Consultar($sql);
         
     }
+  
+
+
+    public function SaldoArticulo($articulo,$almacen) {
+        
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+        
+        $sql ='
+                select 
+                    MAX(id_mov) as maximo 
+                from 
+                    movimiento
+                    where almacen_id_alm='.$almacen.
+                    ' and 
+                    articulo_id_art='.$articulo;
+        
+        $resultado= $objCon->Consultar($sql);
+        $registro = $resultado->fetch();
+        
+        $aux=0;
+        if($registro["maximo"]!="")
+        {
+            $sql='
+                select 
+                    saldo_movimiento as saldo 
+                from 
+                    movimiento
+                    where id_mov='.$registro["maximo"];
+            
+            $resultado = $objCon->Consultar($sql);
+            $registro = $resultado->fetch();
+            
+            $aux=$registro["saldo"];
+        }
+        else
+        {
+            $aux=0;
+        }
+        
+        return $aux;
+    }
+    
     
 }
 

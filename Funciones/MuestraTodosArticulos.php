@@ -8,7 +8,8 @@
 
     $foco=$_POST["foco"];
 
-    if(!$foco)
+
+    if(!isset($foco))
     {
         $foco=1;
     }

@@ -16,8 +16,6 @@
     <title>SGI - Inicio Sesión</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../prueba1.css" rel="stylesheet">
-    <link href="../prueba2.css" rel="stylesheet">
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../bootstrap/css/signin.css" rel="stylesheet">
     
@@ -48,7 +46,7 @@
                 <input type="input" class="form-control" placeholder="Usuario" name="txtusuario" value="<?php echo $usuario; ?>" required autofocus>
                 <p></p>
                 <input type="password" class="form-control" placeholder="Contraseña" name="txtpass" required>
-                <button class="btn btn-lg btn btn-success  btn-block" type="submit">Ingresar</button>
+                <button class="btn btn-lg btn btn-default btn-block" type="submit">Ingresar</button>
             </form>
 
             

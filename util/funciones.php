@@ -29,16 +29,17 @@
                         $preMensaje = "¡Atento!";
                     break;
             }
-                            
+            
             $mensaje = '
                         <html>
                             <head>
                                 <title>Mensaje del sistema</title>
-                                <meta HTTP-EQUIV="refresh" CONTENT="2; URL='.$direccion.'">
+                                <meta HTTP-EQUIV="refresh" CONTENT="3; URL='.$direccion.'">
                                 <meta charset="utf-8">
-                                <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+                                <link href="../bs/css/bootstrap.css" rel="stylesheet">
+                                <link href="../bs/ico/favicon.ico" rel="shortcut icon">
                             </head>
-                            <body>                                
+                            <body>
                                  <div class="'.$tipoMensaje.'">
                                      '.$texto.' 
                                      <a href="'.$direccion.'" class="alert-link">&nbsp;Regresar</a>
@@ -49,9 +50,21 @@
             
             echo $mensaje;
         }
-    
         
+        public static function generaPDF($file='', $html='', $paper='a4', $download=false) {
+            require_once '../dompdf/dompdf_config.inc.php';
+            
+            $dompdf = new DOMPDF();
+            $dompdf->set_paper($paper);
+            $dompdf->load_html(utf8_encode($html));
+            ini_set("memory_limit","32M");
+            $dompdf->render();
+            file_put_contents($file, $dompdf->output());
+     
+            if ($download){
+                    $dompdf->stream($file);
+            }
+	}
 
-        
     }
 ?>

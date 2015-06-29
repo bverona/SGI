@@ -105,7 +105,6 @@ class Movimiento {
     public function AgregaMovimientoTrasferencia($id_art, $cantidad, $descripcion, $almacenOrigen, $almacenDestino) 
     {
         require_once 'clsConexion.php';
-
         $obj = new Conexion();
 
         $correcto = false;
@@ -147,8 +146,10 @@ class Movimiento {
     }
 
     public function definecant($almacen, $articulo) {
+
         require_once 'clsConexion.php';
         $objCon = new Conexion();
+        
         //Va a mostrar todos los usuarios a excepción de los que tienen privilegios
         $sql = "select  
                             coalesce(dm.cantidad_det_mov,'-') as cantidad
@@ -160,6 +161,7 @@ class Movimiento {
 
         $resultado = $objCon->consultar($sql);
         $i = null;
+        
         while ($registro = $resultado->fetch()) {
             $i = $registro["cantidad"];
         }

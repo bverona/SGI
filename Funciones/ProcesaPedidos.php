@@ -6,7 +6,6 @@ $articulo=$_POST["articulo"];
 $cantidad=$_POST["cantidad"];
 $dp=$_POST["dp"];
 
-require '../util/funciones.php';
 require '../Clases/clsPedido.php';
 require '../Clases/clsMovimiento.php';
 
