@@ -14,18 +14,23 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Pedidos Por Almacén</title>
 
-    <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Personaliza este archivo -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+        <!-- Bootstrap Core CSS -->
+        <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
   </head>
 
-  <body>
-
-    <div class="container">
+  <body onload="llenarTabla();">
 
         <?php
         /*
@@ -37,59 +42,74 @@
         ?>
         
       <!-- Main component for a primary marketing message or call to action -->
-<div class="panel panel-success">
-            <div class="panel-heading"><b>Listado de Pedidos</b>
-            </div>
-                <div class="panel-body">                          
-                    <div class="row">
-                        <div class=" col-xs-12">    
-                            <div class="col-xs-2">
-                                <p class="text-center"><b>Articulo</b></p>
-                            </div>    
-                            <div class="col-xs-1 ">
-                                <p class="text-center"><b>Cantidad</b></p>
-                            </div>    
-                            <div class="col-xs-1 ">
-                                <p class="text-center"><b>Usuario</b></p>
-                            </div>    
-                            <div class=" col-xs-2 ">
-                                <p class="text-center"><b>Almacén</b></p>
-                            </div>    
-                            <div class="col-xs-2">
-                                <p class="text-center"><b>Fecha</b></p>
-                            </div>    
-                            <div class="col-xs-2 ">
-                                <p class="text-center"><b>Estado</b></p>
-                            </div>    
-                        </div>
+      <div id="wrapper">
+          <div id="page-wrapper">
+              <br>
+            <div class="row">
+                <div class="col-xs-12 col-lg-9">    
+                    <div class="panel panel-success">
+                          <div class="panel-heading"><b>Listado de Pedidos</b>
+                          </div>
+                              <div class="panel-body">                          
+                                  <div class="row">
+                                      <div class=" col-xs-12">    
+                                          <div class="col-xs-2">
+                                              <p class="text-center"><b>Articulo</b></p>
+                                          </div>    
+                                          <div class="col-xs-2 ">
+                                              <p class="text-center"><b>Cantidad</b></p>
+                                          </div>    
+                                          <div class="col-xs-2 ">
+                                              <p class="text-center"><b>Usuario</b></p>
+                                          </div>    
+                                          <div class=" col-xs-2 ">
+                                              <p class="text-center"><b>Almacén</b></p>
+                                          </div>    
+                                          <div class="col-xs-2">
+                                              <p class="text-center"><b>Fecha</b></p>
+                                          </div>    
+                                          <div class="col-xs-2 ">
+                                              <p class="text-center"><b>Estado</b></p>
+                                          </div>    
+                                      </div>
+                                  </div>
+                                  <div id="bodypedidos">
+                                      
+                                  </div>
+                            </div>
                     </div>
-                <?php
-                  require '../../Clases/clsPedido.php';
-                  $objPed=new Pedido(0, 0, 0);
-                  $objPed->ListarPedidosAlmacenGerente();
-                ?>
-
-                </div>
+            </div>
+                    </div>
+            </div>
         </div>
-      
-      
-    </div> <!-- /container -->
 
+ 
 
+  <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
         $('#nombre').focus();
     });
+
+    function llenarTabla(){
+        $.post("../../Funciones/LlenarPedidosAlmacenGerente.php")
+            .done(function(data) {
+                $("#bodypedidos").html(data);
+                });
+    }
+
 
     $(document).ready(function (){        
           $('#cantidad').keyup(function (){
@@ -167,5 +187,6 @@
         }
         
     </script>
+  </body>
  
 </html>

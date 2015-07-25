@@ -1,3 +1,22 @@
+select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art;
+
+
+
+
+
+
+
+
+
+
 -- usuarios ok
 -- usuarios con privilegios,estos usuarios se crearán una vez y no podrán eliminarse
 insert into usuario (nombre_usu, clave_usu, permisos_usu) values('bruno',md5('a'),8 );

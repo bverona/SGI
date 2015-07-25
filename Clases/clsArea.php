@@ -109,22 +109,6 @@
             $sql = "select id_are as id, nombre_are as nombre from area where id_are <> 0 order by 1;";
             $resultado = $objCon->consultar($sql);
             
-        echo '
-        <div class="panel panel-success">
-            <div class="panel-heading"><b>Listado de Almacenes</b></div>
-                <div class="panel-body">
-                    <div class="table-responsive table-hover">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Editar</th>
-                              <th>Eliminar</th>
-                              <th>Areas</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-        ';
-
             while ($registro = $resultado->fetch()) {
 
                 echo '<tr>';
@@ -133,12 +117,6 @@
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '</tr>';
             }
-                echo '</tbody>
-                  </table>
-            </div>
-        </div>
-    </div>
-                ';
 
         }
         

@@ -150,13 +150,16 @@ class Pedido {
 
         $objCon = new Conexion();
 
-        $sql = "select 
+        $sql = 'select 
                         a.nombre_are as area,
                         art.nombre_art as articulo,
                         dp.cantidad_art as cantidad,
                         u.nombre_usu as usuario,
                         p.fecha_ped as fecha,
-                        dp.atendido_det_ped as atendido
+                        case
+                            when dp.atendido_det_ped=1 then "Atendido"
+                            when dp.atendido_det_ped=0 then "No Atendido"
+                        end as atendido    
                     from
                         area a
                             inner join
@@ -167,23 +170,22 @@ class Pedido {
                         articulo art ON dp.articulo_id_art = art.id_art
                             inner join
                         usuario u ON p.id_usu_ped = u.id_usu
-                        where p.Area_id_are<>0 ";
+                        where p.Area_id_are<>0 ';
 
         $resultado = $objCon->consultar($sql);
 
         
         while ($registro = $resultado->fetch()) {
 
-            ($registro["atendido"] == 1) ? $aux = "Atendido" : $aux = "No Atendido";
 
             echo '<tr>';
 
-            echo '<td>' . $registro["articulo"] . '</td>';
-            echo '<td>' . $registro["cantidad"] . '</td>';
-            echo '<td>' . $registro["usuario"] . '</td>';
-            echo '<td>' . $registro["area"] . '</td>';
-            echo '<td>' . $registro["fecha"] . '</td>';
-            echo '<td>' . $aux . '</td>';
+            echo '<td><p class="text-center">'.$registro["articulo"] .'</p></td>';
+            echo '<td><p class="text-center">'.$registro["cantidad"] .'</p></td>';
+            echo '<td><p class="text-center">'.$registro["usuario"] .'</p></td>';
+            echo '<td><p class="text-center">'.$registro["area"] .'</p></td>';
+            echo '<td><p class="text-center">'. $registro["fecha"] .'</p></td>';
+            echo '<td><p class="text-center">'. $registro["atendido"] .'</p></td>';
             echo '</tr>';
         }
     }
@@ -379,11 +381,11 @@ class Pedido {
                         <p class="text-center">'.$registro["articulo"].'</p> 
                     </div>';     
                 echo'            
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
                         <p class="text-center">'.$registro["cantidad"].'</p> 
                     </div>';
                 echo'            
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
                         <p class="text-center">'.$registro["usuario"].'</p> 
                     </div>';     
                 echo'            

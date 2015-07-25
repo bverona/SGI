@@ -127,10 +127,12 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+
     <script type="text/javascript">
 
  
         var arreglo= new Array(); 
+
         $(document).ready(function (){
           $('#cantidad').tooltip();
           $('#cantidad').keyup(function (){
@@ -145,8 +147,9 @@
             $("#cbtipo").val("");
             $("#cbarticulo").val("");
             $("#cantidad").val("");
-            $("#comentario").val("");
+            $("#comentario").val("");        
         };
+        
 
         function EnviaPedido()
         {       
@@ -163,6 +166,8 @@
                 arreglo=new Array();
             });
         }
+        
+        
         function AñadePedido()
         {
           
@@ -183,6 +188,12 @@
                         $('#cantidad').tooltip('show');
                     }
                     else 
+                        if(isNaN($("#cantidad").val()))
+                    {                                
+                        $("#cantidad").val("");
+                        $("#cantidad").focus();
+                    }
+                    else
                     {
                         arreglo.push([$("#cbarticulo").val(),$("#cantidad").val()]); //funciona
                         PedidoTabla();
@@ -212,7 +223,7 @@
             .done(function( data ) {
                 $("#cbarticulo").html(data);
                 Unidad();
-    });
+        });
             
         }
         

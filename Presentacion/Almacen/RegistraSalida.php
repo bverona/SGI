@@ -143,7 +143,7 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger " aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-danger" onclick="ValidarDatos();" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -320,6 +320,40 @@
             });
          
         }
+
+        function RegistrarDatosSalida()
+        {
+            $.post("../../Funciones/RegistraMovimientoSalida.php",
+            {
+                idsalida:$("#idsalida").val(),cantidadsalida:$("#cantidadsalida").val(),
+                saldosalida:$("#saldosalida").val(),almacenOrigen:$("#almacensalida").val(),
+                RadioInline:$("#RadioInline").val(),almacenDestino:$("#cbModulos").val(),
+                
+            })
+            .done(function(data) 
+            {
+                alert("Realizado Correctamente");
+                location.reload();
+            });
+            
+        }
+
+        function ValidarDatos()
+        {   
+          
+               if($("#cantidadsalida").val()>$("#Saldo".concat($("#idsalida").val())).html())
+            {
+                alert("No se puede sacar más de "+ $("#Saldo".concat($("#idsalida").val())).html());
+                
+                $("#cantidadsalida").val($("#Saldo".concat($("#idsalida").val())).html());
+                $("#cantidadsalida").focus();
+                
+            }else
+            {
+                RegistrarDatosSalida();
+            }
+        }
+
 
     </script>
 </html>

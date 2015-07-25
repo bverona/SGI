@@ -27,5 +27,5 @@
                 $texto="Realizado Correctamente";
                 }  
                    
-        Funciones::mensaje($texto, "../Presentacion/Almacen/ListarArticulos.php", 's');
+        //Funciones::mensaje($texto, "../Presentacion/Almacen/ListarArticulos.php", 's');
 ?>

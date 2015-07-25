@@ -5,6 +5,7 @@
     if ( (!isset($_SESSION["usuario"])) || ($_SESSION["permisos"]!=2)){
         header("location:index.php");
     }
+
     ?>
 <html lang="es">
   <head>
@@ -120,17 +121,20 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../Jquery/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
+    <script src="../../phpjs/index.js"></script>
 
     <script type="text/javascript">
 
- 
+        llenarArticulo();
+        
         var arreglo= new Array(); 
         $(document).ready(function (){
           $('#cantidad').tooltip();
           $('#cantidad').keyup(function (){
             this.value =(this.value + '').replace(/[^0-9]/,'');
+            
             Unidad();
-            this.value
+
         });
         });
         
@@ -158,10 +162,11 @@
                 arreglo=new Array();
             });
         }
+        
         function AñadePedido()
         {
-          
-            if(($("#cbtipo").val()===null))
+            
+        if(($("#cbtipo").val()===null))
             {
                 $('#cbtipo').focus();
                 $('#cbtipo').tooltip('show');                
@@ -178,21 +183,29 @@
                         $('#cantidad').tooltip('show');
                     }
                     else 
+                        if(isNaN($("#cantidad").val()))
+                    {                                
+                        alert("solo ingreso de números");
+                        $("#cantidad").val("");
+                        $("#cantidad").focus();
+                    }
+                    else
                     {
                         arreglo.push([$("#cbarticulo").val(),$("#cantidad").val()]); //funciona
                         PedidoTabla();
                     }
+                       
+        }
             //alert(arreglo[arreglo.length-1][0]+" "+arreglo[arreglo.length-1][1]+" "+arreglo[arreglo.length-1][2]);
             
-    }    
+        
        
         function Unidad()
         {
             var id = $("#cbarticulo").val();
             $.post("../../Funciones/DatosArticulo.php",{id:id})
             .done(function(data)
-            {
-     
+            {     
                 data = $.parseJSON(data);
                 $("#unidad").val(data.unidad)
             });
@@ -207,7 +220,7 @@
             .done(function( data ) {
                 $("#cbarticulo").html(data);
                 Unidad();
-    });
+        });
             
         }
         

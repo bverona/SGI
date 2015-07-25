@@ -8,7 +8,7 @@
     $cant=$_POST["cantidad"];
     $origen=$_POST["origen"];
 
-    require '../Clases/clsPedido.php';
+    require_once  '../Clases/clsPedido.php';
     
     $objPro = new Pedido(0,0,0);
     

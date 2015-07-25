@@ -1,6 +1,6 @@
 <?php    
-    session_name("SGI");
-    session_start();
+//    session_name("SGI");
+//    session_start();
     
     if ( ! isset($_SESSION["usuario"])){
         header("location:../../index.php");
@@ -10,99 +10,123 @@
         public function DefineNavBar() {
             //navbar para gerente
        if($_SESSION["permisos"]==8)
-           {
-       echo ' 
-            <!-- Static navbar -->
-            <div class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">NavBar</span>
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <a class="navbar-brand" href="Gerente.php">Gestión de Módulos</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                        
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a data-toggle="modal" data-target="#NuevoUsuario" href="#">
-                                            Nuevo Usuario
-                                        </a> 
-                                    </li>
-                                    <li><a href="ListarUsuarios.php">Listar Usuario</a></li>
-                                </ul>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Almacenes<span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a data-toggle="modal" data-target="#NuevoAlmacen" href="#">  Nuevo Almacén</a></li>
-                                    <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
-                                </ul>
-                            </li>
+       {
+           echo'       
+    <!-- Nav Bar -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Barra de Navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Gerente</a>
+            </div>
+            <!-- /.navbar-header -->
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a data-toggle="modal" data-target="#NuevaArea" href="#">
-                                            Nueva Area
-                                        </a> 
-                                    </li>
-                                    <li>
-                                        <a  href="ListarAreas.php">Listar Áreas</a>
-                                    </li>
-                                </ul>
-                            </li>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle"  disabled data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li><a href="ActualizarDatos.php"><i class="fa fa-gear fa-fw"></i> Modificar datos</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="../../Funciones/cerrarSesion.php"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+            
+            <!-- navbar-static-side -->
+            <div class="navbar-default sidebar" role="navigation">
+               
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="Gerente.php"><i class="glyphicon glyphicon-home"></i> Almacén General</a>
+                        </li>
+                        <li>
+                            <a href="s"><i class="fa fa-users fa-fw"></i>Usuarios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="s" data-toggle="modal" data-target="#NuevoUsuario">Nuevo Usuario</a>
+                                </li>
+                                <li>
+                                    <a href="ListarUsuarios.php">Listar Usuarios</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                        <li>
+                            <a href="s"><i class="fa fa-sitemap fa-fw"></i>Almacenes<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a data-toggle="modal" data-target="#NuevoAlmacen" href="s">Nuevo Almacén</a></li>
+                                <li><a  href="ListarAlmacenes.php">Listar Almacenes</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="s"><i class="fa fa-building fa-fw"></i>Áreas<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a data-toggle="modal" data-target="#NuevaArea" href="s">
+                                        Nueva Area
+                                    </a> 
+                                </li>
+                                <li>
+                                    <a  href="ListarAreas.php">Listar Áreas</a>
+                                </li>                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="s"><i class="fa fa-clipboard fa-fw"></i>Reportes<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="PedidosAreaGerente.php">Listar Pedidos de Áreas</a></li>
+                                <li><a href="PedidosAlmacenGerente.php">Listar Pedidos de Almacén</a></li>
+                                <li><a href="PedidosPorArea.php">Pedidos por Área</a></li>
+                                <li><a href="OrdenesDeCompra.php">Listar Ordenes de Compra</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+                        <li>
+                            <a href="s"><i class="fa fa-truck fa-fw"></i>Proveedores<span class="fa arrow"></span></a>
                             
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="PedidosAreaGerente.php">Listar Pedidos de Áreas</a></li>
-                                    <li><a href="PedidosAlmacenGerente.php">Listar Pedidos de Almacén</a></li>
-                                    <li><a href="PedidosPorArea.php">Pedidos por Área</a></li>
-                                    <li><a href="OrdenesDeCompra.php">Listar Ordenes de Compra</a></li>
-                                </ul>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proveedores<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
+                            <ul class="nav nav-second-level">
                                     <li>
                                         <a data-toggle="modal" data-target="#NuevoProveedor" href="#">
                                             Nuevo Proveedor
                                         </a> 
-                                    </li>
-                                    
+                                    </li>                                    
                                     <li>
                                         <a href="ListarProveedores.php">
                                             Listar Proveedores
                                         </a>
                                     </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">' .$_SESSION['usuario']. '<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                                    <li><a href="../../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div><!--/.container-fluid -->
-            </div>
-            <!-- Static navbar -->
+                            </ul>
+                            <!--nav-second-level -->
+                        </li>
 
-   
+                    </ul>
+                </div>
+                
+            </div>
+            
+            
+        </nav>
+        <!-- /Nav Bar -->
+
 
     <!-- Modal Nuevo Almacén-->
             <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
@@ -173,52 +197,6 @@
             </form>        
     <!-- /Modal Nuevo Usuario-->
 
-    <!-- Modal Editar Usuario-->
-            <form name="frmgrabarUsuario" id="frmgrabarUsuario" method="post" action="../../Funciones/NuevoUsuario.php">
-                <div class="modal fade" id="EditarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Nuevo Usuario</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" maxlength="32" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Usuario">
-                                </div>
-                                <div class="form-group">
-                                    <label for="pass">Contraseña</label>
-                                    <input type="password" maxlength="32" class="form-control" name="pass" id="pass" required placeholder="Contraseña">
-                                </div>
-                                <div class="form-group" onclick="">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area" onclick="LlenaSelectNuevo(2);" value="2"> Área
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="almacen" value="4"  onclick="LlenaSelectNuevo(4);"> Almacén
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" id="cbModulosNuevo" name="cbModulos" onchange="Verifica()">
-
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" id="btnNuevoUsuario" disabled="true" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </form>        
-    <!-- /Modal Editar Usuario-->
-
-
     <!-- Modal Nueva Área-->
             <form name="frmgrabarArea" id="frmgrabarArea" method="post" action="../../Funciones/NuevaArea.php">
                 <div class="modal fade" id="NuevaArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -269,8 +247,10 @@
                 </div>
             </form>        
     <!-- /Modal Nuevo Proveedor-->            
-            
-               ';
+
+
+
+';
        }        
        else //navbar almacén General
            if($_SESSION["permisos"]==5)

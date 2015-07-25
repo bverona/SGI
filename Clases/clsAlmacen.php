@@ -181,20 +181,7 @@ class Almacen {
         $aux;
         $resultado = $objCon->consultar($sql);
         echo '
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Almacenes</b></div>
-                        <div class="panel-body">
-                            <div class="table-responsive table-hover">
-                                <table class="table">
-                                  <thead>
-                                    <tr>
-                                      <th>Editar</th>
-                                      <th>Eliminar</th>
-                                      <th>Almacén</th>
-                                      <th>Estado</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>';
+                ';
         while ($registro = $resultado->fetch()) {
             $registro["estado"]=="Inactivo"?
             $aux='<td> Elminado </td>':
@@ -207,12 +194,7 @@ class Almacen {
             echo '<td>' . $registro["estado"] . '</td>';
             echo '</tr>';
         }
-        echo '</tbody>
-                              </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        echo '
                 ';
     }
 

@@ -169,23 +169,6 @@ class Usuario {
 
         $resultado = $objCon->consultar($sql);
 
-        echo '
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Usuarios</b></div>
-                        <div class="panel-body">
-                            <div class="table-responsive table-hover">
-                                <table class="table table-striped table-bordered table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th><p class="text-center">Editar</p></th>
-                                      <th><p class="text-center">Eliminar</p></th>
-                                      <th><p class="text-center">Usuario</p></th>
-                                      <th><p class="text-center">Área/Almacén</p></th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                ';
-
         while ($registro = $resultado->fetch()) {
 
             echo '<tr>';
@@ -195,12 +178,7 @@ class Usuario {
             echo '<td><p class="text-center">' . $registro["area"] . "" . $registro["almacen"] . '</p></td>';
             echo '</tr>';
         }
-        echo '              </tbody>
-                          </table>
-                    </div>
-                </div>
-            </div>
-                ';
+
     }
 
 }

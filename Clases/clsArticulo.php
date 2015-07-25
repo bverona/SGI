@@ -162,14 +162,20 @@ class Articulo {
     {
         require_once 'clsConexion.php';
         $objCon = new Conexion();
-        $sql = "select id_art as id, nombre_art as nombre,  unidad_art as unidad from articulo where id_art ='" . $id . "'";
+        $sql = "select 
+                    id_art as id,
+                    nombre_art as nombre,
+                    unidad_art as unidad
+                from 
+                articulo where id_art ='" . $id . "'";
         $resultado = $objCon->consultar($sql);
         $retorno;
         while ($registro = $resultado->fetch()) {
             $retorno = array(
                 "id" => $registro["id"],
                 "nombre" => $registro["nombre"],
-                "unidad" => $registro["unidad"]
+                "unidad" => $registro["unidad"],
+                "cantidad" => $registro["unidad"],
             );
         }
         return $retorno;
@@ -309,7 +315,7 @@ class Articulo {
                 }
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
-                echo '<td>' . $registro["saldo"] . '</td>';
+                echo '<td id="Saldo'.$registro["id_art"].'">' . $registro["saldo"] . '</td>';
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';

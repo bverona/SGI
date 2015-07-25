@@ -6,6 +6,8 @@
     unset($_SESSION["usuario"]);
     unset($_SESSION["permisos"]);
 
+    session_destroy();
+    
     
     header("location:../index.php");
 

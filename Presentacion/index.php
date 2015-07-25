@@ -29,7 +29,7 @@
     #login {
         
         background-color: rgba(0, 0, 0, 0.2);
-        margin-top: 15%;
+        margin-top: 11%;
         border-radius: 10px;
     }
     </style>
@@ -37,7 +37,7 @@
     <!-- Custom styles for this template -->
   </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
 
             <form class="form-signin" id="login" role="form" action="../Funciones/login.php" method="post">
                 <div class="text-center">
@@ -51,7 +51,7 @@
 
             
         </div>
-    </body>
 
+    </body>
 
 </html>
