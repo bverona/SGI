@@ -3,7 +3,7 @@
     
     public function Conecta() {
     
-       $host="mysql:host=localhost;port=3307;dbname=SGI";
+       $host="mysql:host=localhost;port=3306;dbname=SGI";
        $usuario="root";
        $clave="bruno";
 

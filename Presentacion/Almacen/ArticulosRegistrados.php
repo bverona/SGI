@@ -14,18 +14,22 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Registra Entrada</title>
+    <title>Articulos Registrados</title>
 
-    <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-        <!-- Personaliza este archivo -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
   <body onload="Filtro();">
-
-    <div class="container">
 
         <?php
         /*
@@ -35,14 +39,18 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-        
+    <div id="wrapper">
+
+        <div id="page-wrapper">
           <!-- Container -->
-             <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Artículos</b>
-                        <div class="panel-body panel-success">
+             <div class="row">
+                <div class="col-xs-12">
+                    <br>
+                    <div class="panel panel-info">
+                    <div class="panel-heading"><b>Listado de Artículos</b></div>
+                        <div class="panel-body">
                             <div class="table-responsive ">
-                                <table class="table table-striped table-condensed table-hover">
+                                <table class="table table-condensed table-hover">
                                   <thead>
                                     <tr>
                                         <th>Artículo</th>
@@ -56,81 +64,27 @@
                                   </tbody>
                           </table>
                     </div>
-                </div>
-            </div>
+                        </div>
+                    
         </div>
-
+                </div>      
         </div>
-
+        </div>  
 
     </div> <!-- /container -->
 
-               
-            <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h4>Nuevo Artículo</h4>
-                                </div>
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="unidad">Unidad</label>
-                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbtipo">Tipo</label>
-                                            <select class="form-control" id="cbtipo" name="cbtipo">
-    <!--                                            <option value="0">Seleccione Tipo</option>-->
-                                                <?php 
-                                                require_once '../../Clases/clsTipo.php';
-                                                $objTipo = new TipoArticulo();
-                                                $objTipo->SelectTipoArticulo();
-                                                ?>
-                                            </select>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="codigo">Código </label>
-                                                <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="precio">Precio </label>
-                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                        </div>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                </form>        
-            <!-- /Modal Nuevo Artículo-->
-
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
 
     <script type="text/javascript">
 

@@ -19,7 +19,6 @@ if (!isset($_SESSION["usuario"])) {
 
     <!-- Bootstrap Core CSS -->
     <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,6 +33,7 @@ if (!isset($_SESSION["usuario"])) {
 
 <body>
 
+    <!-- wrapper -->    
     <div id="wrapper">
 
 
@@ -44,17 +44,16 @@ if (!isset($_SESSION["usuario"])) {
             $obj->DefineNavBar();
         ?>
         <!-- Nav Bar -->
+
+        <!-- page-wrapper -->
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Sistema Gestor de Compras</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->     
             
             <div class="row">
-
                 <div class="col-xs-12 col-lg-offset-2 col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -91,7 +90,7 @@ if (!isset($_SESSION["usuario"])) {
                     </div>
                     <!-- /.panel -->                    
                 </div>
-                <!-- /.col-lg-8 -->
+
             </div>
             <!-- /.row -->
         </div>

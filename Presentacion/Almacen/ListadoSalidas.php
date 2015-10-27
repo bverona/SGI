@@ -14,18 +14,24 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Reporte de Entradas al Almacén</title>
+    <title>Listado Salidas</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
   <body onload="LlenaSelect();Filtro();">
 
-    <div class="container">
+    <div id="wrapper">
 
         <?php
         /*
@@ -36,7 +42,7 @@
            $objNavBar->DefineNavBar();
         ?>
       <!-- Main component for a primary marketing message or call to action -->
-            <div class="container">
+            <div id="page-wrapper">
                 <div class="panel panel-success">
                     <div class="panel-heading"><b>Listado de Salidas de Almacén </b>
                         <div class="panel-body">
@@ -70,157 +76,163 @@
 
     </div> <!-- /container -->
 
-            <!--Modal Movimiento Entrada -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
-                <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Movimiento Entrada </h4>
-                            </div>
-                            <div class="modal-body">
+    
+    
+    <!--Modal Movimiento Entrada -->
+    <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
+        <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Movimiento Entrada </h4>
+                    </div>
+                    <div class="modal-body">
 
-                                <div class="form-group">
-                                    <label for="nombre">Artículo</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cantidad">Cantidad</label>
-                                    <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Ingrese cantidad">
-                                </div>
-                                <input type="hidden" name="saldo" id="saldo" value="">
-                                <input type="hidden" name="id" id="id" value="">
-                                <input type="hidden" name="almacen" id="almacen" <?php echo 'value="'.$almacen.'"'?> >
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit"  class="btn btn-danger " aria-hidden="true">Registrar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            </div>
+                        <div class="form-group">
+                            <label for="nombre">Artículo</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
                         </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Ingrese cantidad">
+                        </div>
+                        <input type="hidden" name="saldo" id="saldo" value="">
+                        <input type="hidden" name="id" id="id" value="">
+                        <input type="hidden" name="almacen" id="almacen" <?php echo 'value="'.$almacen.'"'?> >
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"  class="btn btn-danger " aria-hidden="true">Registrar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
-            </form>    
-            <!-- Fin Modal Movimiento Entrada-->
-                    
-            <!--Modal Movimiento Salida -->
-            <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
-                <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Movimiento Salida</h4>
-                            </div>
-                            <div class="modal-body">
+            </div>
+        </div>
+    </form>    
+    <!-- Fin Modal Movimiento Entrada-->
 
+    <!--Modal Movimiento Salida -->
+    <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
+        <div class="modal fade" id="ModalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Movimiento Salida</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="nombresalida">Artículo</label>
+                            <input type="text" class="form-control" name="nombresalida" id="nombresalida" readonly>
+                        </div>
+                        <div class="form-group" onclick="">
+                            <label class="radio-inline">
+                                <input type="radio" name="RadioInline" id="area"  onclick="DefineSalida(1);"  value="1"> 
+                                Salida
+                            </label>
+                            <label class="radio-inline" required>
+                                <input type="radio" name="RadioInline" id="almacen" value="2" onclick="DefineSalida(2);"> 
+                                Transferencia
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidadsalida">Cantidad</label>
+                            <input type="text" class="form-control" name="cantidadsalida" id="cantidadsalida" required>
+                        </div>
+                        <div class="form-group" id="divmodulos" hidden="true">
+                            <label>Almacen</label>
+                            <select class="form-control" id="cbModulos" name="cbModulos" >
+                                <?php 
+                                    require_once '../../Clases/clsAlmacen.php';
+                                    $objAlmacen= new Almacen();                                            
+                                    $objAlmacen->ListarAlmacenOption();
+                                ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="saldosalida" id="saldosalida" value="">
+                        <input type="hidden" name="idsalida" id="idsalida" value="">
+                        <input type="hidden" name="almacensalida" id="almacensalida" <?php echo 'value="'.$almacen.'"'?> >
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger " aria-hidden="true">Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>    
+    <!-- Fin Modal Movimiento Salida -->       
+
+    <!-- Modal Nuevo Artículo-->
+        <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
+                <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4>Nuevo Artículo</h4>
+                        </div>
+
+                        <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="nombresalida">Artículo</label>
-                                    <input type="text" class="form-control" name="nombresalida" id="nombresalida" readonly>
-                                </div>
-                                <div class="form-group" onclick="">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="RadioInline" id="area"  onclick="DefineSalida(1);"  value="1"> 
-                                        Salida
-                                    </label>
-                                    <label class="radio-inline" required>
-                                        <input type="radio" name="RadioInline" id="almacen" value="2" onclick="DefineSalida(2);"> 
-                                        Transferencia
-                                    </label>
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="cantidadsalida">Cantidad</label>
-                                    <input type="text" class="form-control" name="cantidadsalida" id="cantidadsalida" required>
+                                        <label for="unidad">Unidad</label>
+                                        <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
                                 </div>
-                                <div class="form-group" id="divmodulos" hidden="true">
-                                    <label>Almacen</label>
-                                    <select class="form-control" id="cbModulos" name="cbModulos" >
+                                <div class="form-group">
+                                        <label for="cantidad">Cantidad</label>
+                                        <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cbtipo">Tipo</label>
+                                    <select class="form-control" id="cbtipo" name="cbtipo">
+<!--                                            <option value="0">Seleccione Tipo</option>-->
                                         <?php 
-                                            require_once '../../Clases/clsAlmacen.php';
-                                            $objAlmacen= new Almacen();                                            
-                                            $objAlmacen->ListarAlmacenOption();
+                                        require_once '../../Clases/clsTipo.php';
+                                        $objTipo = new TipoArticulo();
+                                        $objTipo->SelectTipoArticulo();
                                         ?>
                                     </select>
-                                </div>
-                                <input type="hidden" name="saldosalida" id="saldosalida" value="">
-                                <input type="hidden" name="idsalida" id="idsalida" value="">
-                                <input type="hidden" name="almacensalida" id="almacensalida" <?php echo 'value="'.$almacen.'"'?> >
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger " aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            </div>
+                                </div>
+                                <div class="form-group">
+                                        <label for="codigo">Código </label>
+                                        <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
+                                </div>
+                                <div class="form-group">
+                                        <label for="precio">Precio </label>
+                                        <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
+                                </div>
+
                         </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                            <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                      </div>
+
                     </div>
+                  </div>
                 </div>
-            </form>    
-            <!-- Fin Modal Movimiento Salida -->       
-          
-            <!-- Modal Nuevo Artículo-->
-                <form name="frmgrabarArticulo" id="frmgrabarArticulo" method="post" action="../../Funciones/NuevoArticulo.php">
-                        <div class="modal fade" id="NuevoArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
+        </form>        
+    <!-- /Modal Nuevo Artículo-->
 
-                                <div class="modal-header">
-                                    <h4>Nuevo Artículo</h4>
-                                </div>
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre Artículo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="unidad">Unidad</label>
-                                                <input type="text" class="form-control" name="unidad" id="unidad" required placeholder="Unidad de medida">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="cantidad">Cantidad</label>
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cbtipo">Tipo</label>
-                                            <select class="form-control" id="cbtipo" name="cbtipo">
-    <!--                                            <option value="0">Seleccione Tipo</option>-->
-                                                <?php 
-                                                require_once '../../Clases/clsTipo.php';
-                                                $objTipo = new TipoArticulo();
-                                                $objTipo->SelectTipoArticulo();
-                                                ?>
-                                            </select>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="codigo">Código </label>
-                                                <input type="text" class="form-control" name="codigo" id="codigo" required placeholder="codigo">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="precio">Precio </label>
-                                                <input type="text" class="form-control" name="precio" id="precio" required placeholder="Precio Unitario">
-                                        </div>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                </form>        
-            <!-- /Modal Nuevo Artículo-->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {

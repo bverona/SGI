@@ -16,16 +16,22 @@
 
     <title>Módulo Almacén</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <div class="container">
+    <div id="wrapper">
 
         <?php
         require_once '../../Clases/clsNavbar.php';
@@ -36,22 +42,35 @@
         ?>
         
       <!-- container -->
-      <div class="jumbotron">
-          <h1>Módulo Almacen</h1>
-          <p>Módulo desarrollado para Gestionar el almacén de la Municipalidad Distrital de Motupe</p>
+      <div id="page-wrapper">
+
+          <div class="row">
+              <div class="col-xs-12 col-sm-offset-2 col-sm-12">
+                  <br><br><br> 
+                <h1>Módulo Almacen</h1>
+                <p>Módulo desarrollado para Gestionar el almacén de la Municipalidad Distrital de Motupe</p>
+            </div>  
+          </div>  
+ 
       </div>
 
  
       
       
-    </div> <!-- /container -->
+    </div> 
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
     <script>
         //llena el textarea #codigo con el POSIBLE código a generar
        function PosibleCodigo(){

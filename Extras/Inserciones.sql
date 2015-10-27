@@ -1,3 +1,5 @@
+select * from CUSTOMER;
+
 select 
                             saldo_movimiento
                          from movimiento 
