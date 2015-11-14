@@ -6,7 +6,10 @@
         header("location:index.php");
     }
 
-    $foco=$_POST["foco"];
+    if(isset($_POST["foco"])){
+        $foco=$_POST["foco"];        
+    }
+    
 
 
     if(!isset($foco))

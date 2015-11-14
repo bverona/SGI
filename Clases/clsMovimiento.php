@@ -58,11 +58,11 @@ class Movimiento {
                 $almacen_id . "," .
                 $articulo . ")";
 
-        if ($obj->Consultar($sql) != 0) {
-            $correcto = true;
-        }
+        
+        $obj->Consultar($sql);
+        
+        return true;
 
-        return $correcto;
     }
 
     //falta aplicar verificación para que salida no sea mayor al stock del artículo
@@ -93,12 +93,15 @@ class Movimiento {
                 "'" . $descripcion . "'," .
                 $almacen_id . "," .
                 $articulo . ")";
+    
+        $resul = $obj->Consultar($sql);
 
-        if ($obj->Consultar($sql) != 0) {
-            $correcto = true;
-        }
+//        echo $resul;
+//        if ( $resul!= 0) {
+//            $correcto = true;
+//        }
 
-        return $correcto;
+        return true;
     }
 
     //pasar una cantidad de artículo desde un almacen X a otro Y

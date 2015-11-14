@@ -318,7 +318,7 @@
                                 <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
                                 <li><a href="PedidosArea.php">Listar Pedidos de Áreas</a></li>
                                 <li><a href="MovimientosPorAlmacen.php">Listar Movimientos por Almacén</a></li>
-                                <li><a href="ListarArticulos.php">Existencias</a></li>
+                                <li><a href="Existencias.php">Existencias</a></li>
                                 <!--<li><a href="StockPorAlmacen.php">Listar Movimientos por Artículo</a></li>-->
                             </ul>                   
                         </li>
@@ -343,8 +343,7 @@
                         <li>
                             <a href="s"><i class="fa fa-shopping-cart fa-fw"></i>Órdenes de Compra<span class="fa arrow "> </span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="PedidosAlmacen.php">Pedidos de Almacenes No Atendidos</a></li>
-                                <li><a href="PedidosAlmacenAtendidos.php">Pedidos de Almacenes Atendidos</a></li>
+                                <li><a href="ListaOrdenesCompra.php">Órdenes de Compra Realizadas</a></li>
                             </ul>                   
                         </li>
 
@@ -475,62 +474,86 @@
                if($_SESSION["permisos"]==4)
                    {
                 echo ' 
-      <!--  Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"></span>
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-              <a class="navbar-brand" href="SubAlmacen.php">Gestión de Módulos</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="RealizaPedidosAlmacen.php">Realiza Pedidos</a></li>
-                      </ul>
-                </li>              
+    <!-- Nav Bar -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Barra de Navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Subalmacen</a>
+            </div>
+            <!-- /.navbar-header -->
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Artículos<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                  <li><a href="ListarArticulosSubAlmacen.php">Listar Artículos</a></li>
-                  </ul>
-                </li>
 
+            <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movimientos<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="RegistraEntrada.php">Registra Entrada</a></li>
-                        <li><a href="RegistraSalida.php">Registra Salida</a></li>
+                    <a class="dropdown-toggle"  disabled data-toggle="dropdown" href="#">
+                    '. $_SESSION["usuario"].'
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li><a href="ActualizarDatos.php"><i class="fa fa-gear fa-fw"></i> Modificar datos</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="../../Funciones/cerrarSesion.php"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+                        </li>
                     </ul>
+                    <!-- /.dropdown-user -->
                 </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+            
+            <!-- navbar-static-side -->
+            <div class="navbar-default sidebar" role="navigation">
+               
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                        <a href="SubAlmacen.php"><i class="fa fa-institution fa-fw"></i>SubAlmacen</a>
+                        </li>
+                        <li>
+                        <a href="s"><i class="fa fa-table  fa-fw"></i>Pedidos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="RealizaPedidosAlmacen.php">Realiza Pedidos</a>
+                                </li>
+                            </ul>   
+                        </li>
+
+                        <li>
+                            <a href="s"><i class="fa fa-file-pdf-o fa-fw"></i>Artículos<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="ListarArticulosSubAlmacen.php">Listar Artículos</a></li>
+                            </ul>                   
+                        </li>
+                    
+                        <li>
+                            <a href="s"><i class="fa fa-arrows-h fa-fw"></i>Movimientos<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="RegistraEntrada.php">Registra Entrada</a></li>
+                                <li><a href="RegistraSalida.php">Registra Salida</a></li>
+                            </ul>                   
+                        </li>
+
+                        <li>
+                            <a href="s"><i class="fa fa-file-text  fa-fw"></i>Reportes<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="PedidosSubAlmacen.php">Pedidos Realizados</a></li>
+                            </ul>                   
+                        </li>
+
+                    </ul>
+                </div>
                 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="PedidosSubAlmacen.php">Pedidos Realizados</a></li>
-
-                  </ul>
-                </li>
-
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$_SESSION['usuario'].'<span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="ActualizarDatos.php">Modificar Datos</a></li>
-                    <li><a href="../../Funciones/CerrarSesion.php">Cerrar Sesión</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
-      <!-- /Static navbar -->
+            </div>
+            
+            
+        </nav>
+        <!-- /Nav Bar -->
                 
     ';                   
                    }

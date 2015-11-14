@@ -19,7 +19,7 @@ $descripcion="Trasferido para satisfacer la demanda requerida ";
         }           
     else
         {
-            Funciones::mensaje("Operación Fallida", "../Presentacion/Almacen/PedidosAlmacen.php", $tipo);        
+            echo 'Error';        
         }
 
 

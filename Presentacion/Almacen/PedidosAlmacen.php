@@ -8,24 +8,31 @@ if (!isset($_SESSION["usuario"])) {
 ?>
 <html lang="es">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="Bruno Verona">
-        <link rel="icon" href="../Imagenes/logo muni motupe.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Bruno Verona">
+    <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-        <title>Pedidos Por Almacen</title>
+    <title>Pedidos Atendidos</title>
 
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <!-- Custom styles for this template -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
     </head>
 
     <body>
 
-        <div class="container">
+        <div id="wrapper">
 
             <?php
             /*
@@ -40,11 +47,10 @@ if (!isset($_SESSION["usuario"])) {
             $objNavBar->DefineNavBar();
             ?>
 
-            <!-- Main component for a primary marketing message or call to action -->            
 
-        <div class="panel panel-info">
-            <div class="panel-heading"><b>Listado de Pedidos</b>
-            </div>
+        <div id="page-wrapper"><br>   
+            <div class="panel panel-info">
+            <div class="panel-heading"><b>Listado de Pedidos</b></div>
                 <div class="panel-body">                          
                     <div class="row">
                         <div class=" col-xs-12">    
@@ -78,12 +84,15 @@ if (!isset($_SESSION["usuario"])) {
                         $objPed->ListarPedidosAlmacen();
                     ?>
                 </div>
+            </div>
         </div>
-
+    </div>
+        
         <!-- Modal Orden Compra-->
+        
         <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GenerarOrdenCompra.php">
             <div class="modal fade" id="OrdenCompra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialogo ">
+                <div class="modal-dialog">
                     <div class="modal-content">                                 
                         <div class="modal-header">
                             <div class="container-fluid">
@@ -100,7 +109,7 @@ if (!isset($_SESSION["usuario"])) {
                                             <b> Fecha:</b>
                                         </p>                                                                        
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-xs-offset-1">
                                         <p>
                                             <?php echo date('d-m-Y');?>
                                         </p>                                                                        
@@ -108,23 +117,18 @@ if (!isset($_SESSION["usuario"])) {
                                 </div>
                             </div>                                
                         </div>
-
                         <div class="modal-body">
                             <div class="container-fluid">
-                              <div class="row">
-                                  <div class="col-xs-3"><p class="text-center"><b>Producto</b></p></div>
-                                  <div class="col-xs-2"><p class="text-center"><b>Cantidad</b></p></div>
-                                <div class="col-xs-2"><p class="text-center"><b>Prioridad</b></p></div>
-                                <div class="col-xs-5"><p class="text-center"><b>Observación</b></p></div>
+                                <div class="form-group">                                    
+                                    <label for="producto"><b>Producto</b></label>
+                                    <input class="form-control" type="text" readonly id="producto" name="producto" value="Producto">                              
+                                </div>                                
+                                <div class="form-group">
+                                <label for="cantidadoc"><b>Cantidad</b></label>
+                                <input class="form-control" type="text" id="cantidadoc" name="cantidad" readonly value="0">
                               </div>
-                              <div class="row">
-                                <div class="col-xs-3">
-                                    <input class="form-control" type="text" readonly id="producto" name="producto" value="Producto">
-                                </div>
-                                <div class="col-xs-2">
-                                    <input class="form-control" type="text" id="cantidadoc" name="cantidad" readonly value="0">
-                                </div>
-                                <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label for="cantidadoc"><b>Prioridad</b></label>
                                     <select class="form-control" name="prioridad" id="prioridad">
                                         <option value="1"> 
                                             Baja
@@ -136,37 +140,38 @@ if (!isset($_SESSION["usuario"])) {
                                             Alta
                                         </option>
                                     </select>                                
+                                 </div>
+                                <div class="form-group">
+                                    <label for="observacion"><b>Observación</b></label>
+                                    <textarea class="form-control" id="observacion" name="observacion" placeholder="Observación"></textarea>
                                 </div>
-                                <div class="col-xs-5">
-                                <textarea class="form-control" id="observacion" name="observacion" placeholder="Observación"></textarea>
-                                </div>
-                               </div>
-                              </div>
-                            </div>                            
-                            <div class="modal-footer">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
                                 <input type="hidden" id="dp" name="dp" value="">
                                 <input type="hidden" id="id_art" name="id_art" value="">
                                 <input type="hidden" id="id_alm" name="id_alm" value="">
                                 <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
                         </div>
-
-
                     </div>
-                
+                </div>                                            
             </div>
         </form>       
-        <!-- /Modal Orden Compra-->
-           
-        </div>
-    </body>
-    
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+                   
+        
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function() {
@@ -183,7 +188,7 @@ if (!isset($_SESSION["usuario"])) {
     
 
     function CancelaPedido(dp){
-        
+         
         if(confirm("¿Desea Elimiar el pedido?")){
             $.post("../../Funciones/CancelarPedido.php",{dp:dp})
                     .done(function(){
@@ -260,7 +265,7 @@ if (!isset($_SESSION["usuario"])) {
             prov: prov, dest: dest, articulo: articulo, cantidad: cantidad, dp: dp})
                 .done(function(data)
                 {
-                    alert('Pedido Procesado');
+                    alert(data);
                     location.reload();
                 });
     }
@@ -339,5 +344,5 @@ if (!isset($_SESSION["usuario"])) {
     }
 
     </script>
-
+</body>
 </html>

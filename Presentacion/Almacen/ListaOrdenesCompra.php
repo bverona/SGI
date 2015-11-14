@@ -8,24 +8,31 @@ if (!isset($_SESSION["usuario"])) {
 ?>
 <html lang="es">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="Bruno Verona">
-        <link rel="icon" href="../Imagenes/logo muni motupe.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Bruno Verona">
+    <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-        <title>Órdenes de Compra</title>
+    <title>Órdenes de Compra</title>
 
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-        <!-- Custom styles for this template -->
-        <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
     </head>
 
     <body>
 
-        <div class="container">
+        <div id="wrapper">
 
             <?php
             /*
@@ -37,7 +44,8 @@ if (!isset($_SESSION["usuario"])) {
             
             $objNavBar->DefineNavBar();
             ?>
-
+            <div id="page-wrapper">
+            <br>
         <div class="panel panel-success">
             <div class="panel-heading">
                         <div class=" col-xs-12">    
@@ -82,13 +90,20 @@ if (!isset($_SESSION["usuario"])) {
         </div>
            
         </div>
-    </body>
-    
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+        </div>
+
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function() {

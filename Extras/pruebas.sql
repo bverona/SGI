@@ -1,3 +1,99 @@
+ 
+INSERT INTO orden_de_compra ( prioridad_orden_de_compra, atendido_orden_de_compra, almacen_id_alm, fecha_orden_de_compra, cantidad_orden_de_compra, observacion_orden_de_compra, articulo_id_art, detalle_pedido_id_det_ped ) VALUES ( 2,0,4,'2015-11-13',2,'',41,20);
+
+
+
+
+
+
+insert into movimiento 
+
+                    (
+
+                        tipo_mov,
+
+                        fecha_mov,
+
+                        cantidad_mov,
+
+                        saldo_movimiento,
+
+                        descripcion_mov,
+
+                        almacen_id_alm,
+
+                        articulo_id_art
+
+                    )
+
+                    values( 1,'2015-11-07',2,18,'',1,38);
+
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        um.nombre_um as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                            on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                            on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo 
+                        inner join unidad_de_medida um 
+                            on art.id_um=um.id_um 
+                        group by art.nombre_art, almacen
+                        order by 5;
+
+
+
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where 
+                            m.articulo_id_art=19 and
+                            m.almacen_id_alm=3
+                        group by art.nombre_art
+;
+
+
 select 
                     a.nombre_alm as proveedor,
                     a.id_alm as id_pro,

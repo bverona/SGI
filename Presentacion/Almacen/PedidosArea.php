@@ -14,18 +14,24 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos Por Área</title>
+    <title>Pedidos por Área</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <div class="container">
+    <div id="wrapper">
   
         <?php
         /*
@@ -37,21 +43,21 @@
         ?>
 
       <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Pedidos</b>
+             <div id="page-wrapper">
+                 <br>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><b>Listado de Pedidos</b></div
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <table class="table table-striped table-hover table-bordered table-condensed">
+                                <table class="table table-hover table-condensed">
                                   <thead>
                                     <tr>
-
-                                        <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Area</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th><p class="text-center">Artículo</p></th>
+                                        <th><p class="text-center">Cantidad</p></th>
+                                        <th><p class="text-center">Usuario</p></th>
+                                        <th><p class="text-center">Area</p></th>
+                                        <th><p class="text-center">Fecha</p></th>
+                                        <th><p class="text-center">Estado</p></th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
@@ -64,7 +70,6 @@
                           </table>
                     </div>
                 </div>
-            </div>
         </div>
 
         </div>
@@ -217,13 +222,17 @@
             <!-- /Modal Nuevo Artículo-->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript">
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>    <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
         $('#nombre').focus();

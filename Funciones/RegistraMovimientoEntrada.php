@@ -8,6 +8,7 @@
    
         $articulo=$_POST['id'];
         $cantidad=$_POST['cantidad'];
+        $almacen=$_POST['almacen'];
         $descripcion="";
         
         if(isset($_POST['descripcion']))
@@ -15,17 +16,9 @@
             $descripcion=$_POST['descripcion'];
         }
         
-        require_once '../util/funciones.php';
         require_once '../Clases/clsMovimiento.php'; 
         $objMovimiento = new Movimiento();
       
-        if(($objMovimiento->AgregaMovimientoEntrada($cantidad,"", $_SESSION["id_almacen"], $articulo)))
-        {
-            Funciones::mensaje("Operación exitosa", "../Presentacion/Almacen/RegistraEntrada.php", 's');
-        }
-        else
-            {
-            Funciones::mensaje("Error al realizar operación", "../Presentacion/Almacen/RegistraEntrada.php", 'e');
-            }
+        ($objMovimiento->AgregaMovimientoEntrada($cantidad,$descripcion, $almacen, $articulo));
          
 ?>

@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Registrar Entrada</title>
+    <title>Listado Entradas</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,6 +43,7 @@
         ?>
       <!-- Main component for a primary marketing message or call to action -->
              <div id="page-wrapper">
+                 <br>
                 <div class="panel panel-info">
                     <div class="panel-heading"><b>Listado de Entradas a Almacén </b></div>
                         <div class="panel-body">

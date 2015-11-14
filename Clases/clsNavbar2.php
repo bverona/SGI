@@ -476,6 +476,7 @@
             </button>
               <a class="navbar-brand" href="SubAlmacen.php">Gestión de Módulos</a>
           </div>
+          
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="dropdown">

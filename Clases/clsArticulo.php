@@ -167,20 +167,24 @@ class Articulo {
                     nombre_art as nombre,
                     unidad_art as unidad
                 from 
-                articulo where id_art ='" . $id . "'";
+                articulo where id_art =" . $id ;
         $resultado = $objCon->consultar($sql);
         $retorno;
         while ($registro = $resultado->fetch()) {
             $retorno = array(
                 "id" => $registro["id"],
                 "nombre" => $registro["nombre"],
-                "unidad" => $registro["unidad"],
-                "cantidad" => $registro["unidad"],
+                "unidad" => $registro["unidad"]
             );
         }
         return $retorno;
     }
 
+    public function DatosArticulo($Articulo) {
+        
+    }
+    
+    
     /* 
      *  Lista todos los artículos disponibles en todos los almacenes 
      *  Este procedimiento devuelve un arreglo con el id del artículo,
@@ -188,7 +192,6 @@ class Articulo {
      *  encuentra y el nombre de este últim. 
      *  [articulo][cantidad][almacen][nombre_almacen]
      */
-    
     public function ArregloArticulos() 
     {
         require_once 'clsConexion.php';
@@ -311,7 +314,7 @@ class Articulo {
             if ($registro["saldo"]>0) {
                 echo '<tr>';
                 if ($almacen != 0) {
-                    echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
+                    echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ','.$registro["idAlm"] .')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
                 }
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
@@ -322,7 +325,11 @@ class Articulo {
             }
         }
     }
-
+    
+    /*
+     * 0 para almacén general
+     * cualquier otro número para otros almacenes
+    */
     public function ListarArticulosxSubAlmacen($almacen)
     {
         require_once 'clsConexion.php';
@@ -406,6 +413,9 @@ class Articulo {
         }
     }
 
+    /*
+     * Lista los datos de los artículos según el id del almacen
+     */
     public function DatosArticulosxSubAlmacen($almacen)
     {
         require_once 'clsConexion.php';
@@ -447,11 +457,68 @@ class Articulo {
         while ($registro = $resultado->fetch()) {
 
             if ($registro["saldo"]>0) {                    
-            echo $i;
+            //echo $i;
                 $retorno[$i]["id"]= $registro["id_art"] ;
                 $retorno[$i]["cantidad"]=  $registro["saldo"];
                 $retorno[$i]["almacen"]=  $registro["idAlm"] ;
                 $i++;                
+            }
+        }
+        return $retorno;
+    }
+    
+    /*
+     * Lista los datos de un artículo en específico 
+     * según el id del almacen y el artículo
+     */
+    public function DatosArticuloxSubAlmacen($almacen,$articulo)
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                    where 
+                        m.almacen_id_alm=" . $almacen . " and
+                        m.articulo_id_art=".$articulo.'                        
+                    group by art.nombre_art';
+
+            $resultado = $objCon->consultar($sql);
+
+        $retorno=null;  
+
+        while ($registro = $resultado->fetch()) {
+
+            if ($registro["saldo"]>0) {                    
+
+                $retorno["id"]= $registro["id_art"] ;
+                $retorno["nombre"]= $registro["nombre"] ;
+                $retorno["cantidad"]=  $registro["saldo"];
+                $retorno["almacen"]=  $registro["idAlm"] ;
+                
             }
         }
         return $retorno;
@@ -698,8 +765,6 @@ class Articulo {
             $objCon->Consultar($sql);
         
     }
-  
-
 
     public function SaldoArticulo($articulo,$almacen) {
         

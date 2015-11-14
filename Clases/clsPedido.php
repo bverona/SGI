@@ -811,7 +811,8 @@ class Pedido {
                         usuario u ON p.id_usu_ped = u.id_usu
                         where p.almacen_id_alm<>0 
                         and
-                        dp.atendido_det_ped=1;";
+                        dp.atendido_det_ped=1
+                        order by 6 asc";
 
         $resultado = $objCon->consultar($sql);
 

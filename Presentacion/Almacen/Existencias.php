@@ -5,7 +5,8 @@
     if ( ! isset($_SESSION["usuario"])){
         header("location:index.php");
     }
-?>
+    $almacen=($_SESSION["id_almacen"]);
+    ?>
 <html lang="es">
   <head>
     <meta charset="utf-8">
@@ -14,7 +15,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Pedidos No Atendidos</title>
+    <title>Existencias</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,55 +28,55 @@
 
     <!-- Custom CSS -->
     <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
-
   </head>
 
-  <body>
+  <body onload="LlenarSelect();Filtro();">
 
-    <div id="wrapper">
-
-        <?php
-        /*
-         *  Define el Tipo de NavBar a Usar
-        */
-           require_once '../../Clases/clsNavbar.php';
-           $objNavBar= new NavBar();
-           $objNavBar->DefineNavBar();
-        ?>
         
-             <div id="page-wrapper">
-                <br>
-                <div class="panel panel-info">
-                    <div class="panel-heading"><b>Listado de Pedidos</b></div>
-                        <div class="panel-body">
+        <!-- Container -->
+            <div class="wrapper">
+                <?php
+               /*
+                *  Define el Tipo de NavBar a Usar
+               */
+                  require_once '../../Clases/clsNavbar.php';
+                  $objNavBar= new NavBar();
+                  $objNavBar->DefineNavBar();
+               ?>
+                
+                <div id="page-wrapper">
+                    <br>
+                    <div class="panel panel-info">
+                    <div class="panel-heading"><b>Listado de Artículos</b></div>
+                    <div class="panel-body panel-success">
                             <div class="table-responsive table-hover">
-                                <table class="table table-hover table-condensed">
+                                <table class="table table-condensed table-hover">
                                   <thead>
                                     <tr>
-
                                         <th>Artículo</th>
+                                        <th>Unidad</th>
                                         <th>Cantidad</th>
-                                        <th>Usuario</th>
-                                        <th>Almacen</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
+                                        <th>Tipo</th>
+                                        <th>
+                                            <select class="form-control" id="cbAlmacen" onchange="Filtro()">
+                                                <option value="0">Todos los Almacenes</option>
+                                                
+                                            </select>
+                                        </th>
                                     </tr>
                                   </thead>
                                   <tbody id="tbody">
-                                  <?php 
-                                  require_once '../../Clases/clsPedido.php';
-                                  $objPed= new Pedido("","","");
-                                  $objPed->ListarPedidosAlmacenAtendidos();
-                                  ?>
+                                  
                                   </tbody>
                                 </table>
-                          </div>
-                      </div>
-                  </div>
-              
-        </div>
+                            </div>
+                        </div>
+                </div>
+                </div>      
+                
+            </div>
+        <!-- /container -->
 
-    </div> <!-- /container -->
 
 
     <!-- jQuery -->
@@ -107,6 +108,7 @@
             });
      });
 
+
        function leerDatosEntrada(id_) 
         {
             $.post("../../Funciones/DatosArticulo.php", {id: id_})
@@ -128,7 +130,7 @@
                         $("#idsalida").val(data.id);
                     }, "json");                    
         }
-    
+
         //llena el textarea #codigo con el POSIBLE código a generar
        function PosibleCodigo(){
             $.post("../../Funciones/PosibleId.php")
@@ -155,6 +157,13 @@
                          $("#nombreTipo").val("");
                     });
         }
+        
+        //llena el select cbAlmacen con todos los almacenes
+        function LlenarSelect() {
+            $.post("../../Funciones/llenarSelect.php",{valor_Rb:5})
+                    .done(function(data) {
+                         $("#cbAlmacen").append(data);
+                    });        }
 
         function DefineSalida(val)
         {
@@ -171,15 +180,25 @@
 
         function Filtro()
         {
-            var id = $("#cbTipo").val();
-            $.post("../../Funciones/MuestraArticulos.php",{id:id})
-                    .done(function(data) {
-                        $("#tbody").html(data);
-              
-                    });
+            var almacen = $("#cbAlmacen").val();
+            $.post("../../Funciones/MuestraArticulosAlmacen.php",{almacen:almacen})
+                    .done(function(data) 
+            {
+
+                if(data=="")
+                {
+                $("#tbody").html(
+                "<label class='lead'>No Hay ningún artículo en este almacen</label>");
+                }
+                else
+                {
+                    $("#tbody").html(data);
+                }   
+
+            });
          
         }
 
     </script>
- 
+</body>
 </html>

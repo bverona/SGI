@@ -15,18 +15,24 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Listar Artículo</title>
+    <title>Movimientos Por Almacén</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <!-- Custom styles for this template -->
-    <link href="../../bootstrap/css/Jumbotron.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
   </head>
 
   <body onload="LlenaSelect();LlenaArticulo();Filtro();">
 
-    <div class="container">
+    <div id="wrapper">
 
         <?php
         /*
@@ -37,9 +43,9 @@
            $objNavBar->DefineNavBar();
         ?>
         
-          <!-- Main component for a primary marketing message or call to action -->
-             <div class="container">
-                <div class="panel panel-success">
+             <div id="page-wrapper">
+                <br>
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="row">                            
                             <div class=" col-xs-12 ">
@@ -60,6 +66,7 @@
                                 </div>
                             </div>
                         </div>
+            </div>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
                                 <table class="table table-striped table-hover">
@@ -79,12 +86,12 @@
                           </table>
                     </div>
                 </div>
-            </div>
+
         </div>
 
         </div>
           <!-- /container -->
-
+    </div>      
             <!--Modal Movimiento Entrada -->
             <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
                 <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -173,12 +180,18 @@
             <!-- Fin Modal Movimiento Salida -->
           
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+
     <script type="text/javascript">
 
     $('#NuevoArticulo').on('shown.bs.modal', function () {
@@ -291,4 +304,5 @@
         }
 
     </script>
+  </body>
 </html>

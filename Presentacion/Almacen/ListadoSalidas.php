@@ -41,75 +41,41 @@
            $objNavBar= new NavBar();
            $objNavBar->DefineNavBar();
         ?>
-      <!-- Main component for a primary marketing message or call to action -->
             <div id="page-wrapper">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><b>Listado de Salidas de Almacén </b>
-                        <div class="panel-body">
-                            <div class="table-responsive table-hover">
-                                <div class="col-xs-12 form-group">
-                                <table class="table table-striped table-hover table-bordered">
-                                  <thead>
-                                    <tr>
-                                        <th>
-                                        <select class="form-control col-xs-2" id="cbTipoArticulo" name="cbTipoArticulo" onchange="Filtro();">
-                                            <option value=0>Todos</option>
-                                        </select>
-                                        </th>
-                                        <th>Fecha</th>
-                                        <th>Artículo</th>
-                                        <th>Cantidad</th>
-                                        <th>Saldo</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tbody">
+                <br>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><b>Listado de Salidas de Almacén </b></div>
+                    <div class="panel-body">
+                        <div class="table-responsive table-hover">
+                            <div class="col-xs-12 form-group">
+                            <table class="table table-striped table-hover table-bordered">
+                              <thead>
+                                <tr>
+                                    <th>
+                                    <select class="form-control col-xs-2" id="cbTipoArticulo" name="cbTipoArticulo" onchange="Filtro();">
+                                        <option value=0>Todos</option>
+                                    </select>
+                                    </th>
+                                    <th>Fecha</th>
+                                    <th>Artículo</th>
+                                    <th>Cantidad</th>
+                                    <th>Saldo</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tbody">
 
-                                  </tbody>
-                                </table>
-                                </div>    
-                            </div>
-                </div>
+                              </tbody>
+                            </table>
+                            </div>    
+                        </div>
             </div>
+
         </div>
 
         </div>
 
     </div> <!-- /container -->
 
-    
-    
-    <!--Modal Movimiento Entrada -->
-    <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoEntrada.php">
-        <div class="modal fade" id="ModalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Movimiento Entrada </h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="nombre">Artículo</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required placeholder="Nombre de Artículo">
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Ingrese cantidad">
-                        </div>
-                        <input type="hidden" name="saldo" id="saldo" value="">
-                        <input type="hidden" name="id" id="id" value="">
-                        <input type="hidden" name="almacen" id="almacen" <?php echo 'value="'.$almacen.'"'?> >
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit"  class="btn btn-danger " aria-hidden="true">Registrar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>    
-    <!-- Fin Modal Movimiento Entrada-->
 
     <!--Modal Movimiento Salida -->
     <form name="frmgrabar" id="frmgrabar" method="post" action="../../Funciones/RegistraMovimientoSalida.php">
