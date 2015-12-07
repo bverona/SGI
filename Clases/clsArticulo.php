@@ -247,7 +247,7 @@ class Articulo {
                         art.id_art,
                         (art.nombre_art) as nombre,
                         um.nombre_um as unidad,
-                      (select 
+                        (select 
                             saldo_movimiento
                          from movimiento 
                          where id_mov=(select 
@@ -269,7 +269,18 @@ class Articulo {
                         inner join tipoarticulo t
                             on art.TipoArticulo_id_tip_art=t.idTipoArticulo
                         inner join unidad_de_medida um 
-                            on art.id_um=um.id_um                         where m.almacen_id_alm=" . $almacen . "
+                            on art.id_um=um.id_um                         
+                    where 
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0 and 
+                        m.almacen_id_alm= ".$almacen."       
                         group by art.nombre_art
                    order by 1;";
 
@@ -285,11 +296,11 @@ class Articulo {
                                        from movimiento 
                                        where almacen_id_alm= a.id_alm
                                        and 
-                                        articulo_id_art= art.id_art)) as saldo,
+                                        articulo_id_art= art.id_art)) as saldo,                        
                         t.nombre_tip as tipo,
                         a.nombre_alm as almacen,
                         a.id_alm as idAlm
-                   from 
+                    from 
                         almacen a 
                         inner join 
                         movimiento m 
@@ -297,21 +308,32 @@ class Articulo {
                         inner join articulo art 
                             on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
-                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo 
+                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo
                         inner join unidad_de_medida um 
-                            on art.id_um=um.id_um 
-                        group by art.nombre_art, almacen
-                        order by 5";
+                            on art.id_um=um.id_um                         
+                    where 
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0      
+                        group by art.nombre_art
+                   order by 1;";
 
         if ($almacen != 0) {
             $resultado = $objCon->consultar($sql);
+            echo $sql;
         } else {
             $resultado = $objCon->consultar($sql2);
+            echo $sql2;
         }
 
         while ($registro = $resultado->fetch()) {
 
-            if ($registro["saldo"]>0) {
                 echo '<tr>';
                 if ($almacen != 0) {
                     echo '<td><a href="#" onclick="leerDatosSalida(' . $registro["id_art"] . ','.$registro["idAlm"] .')" data-toggle="modal" data-target="#ModalSalida"><span class="glyphicon glyphicon-arrow-up"></span><img src="../../imagenes/salida.png"/></a></td>';
@@ -322,7 +344,7 @@ class Articulo {
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';
-            }
+            
         }
     }
     
@@ -360,7 +382,16 @@ class Articulo {
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
-                        where m.almacen_id_alm=" . $almacen . "
+                        where m.almacen_id_alm=" . $almacen . " and 
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0  
                         group by art.nombre_art
                    order by 2;";
 
@@ -389,6 +420,15 @@ class Articulo {
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where    (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0
                         group by art.nombre_art, almacen
                         order by 2";
 
@@ -401,7 +441,7 @@ class Articulo {
 
         while ($registro = $resultado->fetch()) {
 
-            if ($registro["saldo"]>0) {
+
                 echo '<tr>';
                 echo '<td>' . $registro["nombre"] . '</td>';
                 echo '<td>' . $registro["unidad"] . '</td>';
@@ -409,10 +449,215 @@ class Articulo {
                 echo '<td>' . $registro["tipo"] . '</td>';
                 echo '<td>' . $registro["almacen"] . '</td>';
                 echo '</tr>';
-            }
+            
         }
     }
 
+    public function ListarResumenArticulos()
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "SELECT 
+                    a.articulo as id, a.nombre as nombre, a.unidad,
+                    SUM(a.saldo) AS saldo, a.tipo 
+                FROM
+                    (SELECT 
+                    (art.id_art) AS articulo,
+                        (art.nombre_art) AS nombre,
+                        a.nombre_alm AS almacen,
+                        um.nombre_um as unidad,
+                        t.nombre_tip as tipo,
+                        ((SELECT 
+                                (saldo_movimiento)
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento m
+                                    WHERE
+                                        m.almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art))) as saldo
+                FROM
+                    almacen a
+                INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                INNER JOIN unidad_de_medida um on um.id_um=art.id_um
+                WHERE
+                    (SELECT 
+                            saldo_movimiento
+                        FROM
+                            movimiento
+                        WHERE
+                            id_mov = (SELECT 
+                                    MAX(id_mov) AS maximo
+                                FROM
+                                    movimiento
+                                WHERE
+                                    almacen_id_alm = a.id_alm
+                                        AND articulo_id_art = art.id_art)) > 0
+                GROUP BY articulo , almacen , saldo
+                ORDER BY 2) a
+                GROUP BY id";
+
+            $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+
+
+                echo '<tr>';
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td>' . $registro["unidad"] . '</td>';
+                echo '<td>' . $registro["saldo"].'</td>';
+                echo '<td>' . $registro["tipo"] . '</td>';
+                echo '</tr>';
+            
+        }
+    }
+
+
+    public function ListarCostoArticulos()
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        round(((select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))*art.precio_art),2) as costo,
+                        round(art.precio_art,2) as precio,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where    (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0
+                        group by art.id_art
+                        order by 1";
+
+            $resultado = $objCon->consultar($sql);
+
+
+        while ($registro = $resultado->fetch()) {
+
+
+                echo '<tr>';
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td><p class="text-left">' . $registro["saldo"].'</p></td>';
+                echo '<td><p class="text-left">' . $registro["precio"].'</p></td>';
+                echo '<td><p class="text-left">' . $registro["costo"] . '</p></td>';
+                echo '</tr>';
+            
+        }
+    }
+    
+    public function ListarCostoArticulosSubAlmacen($almacen)
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        round(((select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))*art.precio_art),2) as costo,
+                        round(art.precio_art,2) as precio,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where    (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0 and
+                                a.id_alm=".$almacen."
+                        group by art.id_art
+                        order by 1";
+
+            $resultado = $objCon->consultar($sql);
+
+
+        while ($registro = $resultado->fetch()) {
+
+
+                echo '<tr>';
+                echo '<td>' . $registro["nombre"] . '</td>';
+                echo '<td><p class="text-left">' . $registro["saldo"].'</p></td>';
+                echo '<td><p class="text-left">' . $registro["precio"].'</p></td>';
+                echo '<td><p class="text-left">' . $registro["costo"] . '</p></td>';
+                echo '</tr>';
+            
+        }
+    }
+    
+    
+    
     /*
      * Lista los datos de los artículos según el id del almacen
      */

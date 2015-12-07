@@ -171,7 +171,8 @@ class Movimiento {
         return $i;
     }
 
-    public function ListarEntradas($almacen) {
+    public function ListarEntradas($almacen) 
+    {
         require_once 'clsConexion.php';
 
         $objCon = new Conexion();
@@ -219,6 +220,136 @@ class Movimiento {
         ($almacen != 0) ?
                         $resultado = $objCon->consultar($sql) :
                         $resultado = $objCon->consultar($sql2);
+
+        while ($registro = $resultado->fetch()) {
+
+            echo '<tr>';
+
+            echo '<td>' . $registro["almacen"] . '</td>';
+            echo '<td>' . $registro["fecha"] . '</td>';
+            echo '<td>' . $registro["articulo"] . '</td>';
+            echo '<td>' . $registro["cantidad"] . '</td>';
+            echo '<td>' . $registro["saldo"] . '</td>';
+            echo '</tr>';
+        }
+    }
+
+    public function ListarEntradasArticulo($almacen,$articulo) {
+        require_once 'clsConexion.php';
+
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=" . $almacen . " 
+                        and 
+                        m.tipo_mov=0  and 
+                        art.id_art =".$articulo." 
+                    order by 2";
+
+        $sql2 = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=" . $almacen . " 
+                        and 
+                        m.tipo_mov=0 
+                    order by 1";
+
+        ($articulo != 0) ?
+        $resultado = $objCon->consultar($sql) :
+        $resultado = $objCon->consultar($sql2);
+
+        while ($registro = $resultado->fetch()) {
+
+            echo '<tr>';
+
+            echo '<td>' . $registro["almacen"] . '</td>';
+            echo '<td>' . $registro["fecha"] . '</td>';
+            echo '<td>' . $registro["articulo"] . '</td>';
+            echo '<td>' . $registro["cantidad"] . '</td>';
+            echo '<td>' . $registro["saldo"] . '</td>';
+            echo '</tr>';
+        }
+    }
+
+    public function ListarSalidasArticulo($almacen,$articulo) {
+        require_once 'clsConexion.php';
+
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=" . $almacen . " 
+                        and 
+                        m.tipo_mov=1  and 
+                        art.id_art =".$articulo." 
+                    order by 2";
+
+        $sql2 = "select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=" . $almacen . " 
+                        and 
+                        m.tipo_mov=1 
+                    order by 1";
+
+        ($articulo != 0) ?
+        $resultado = $objCon->consultar($sql) :
+        $resultado = $objCon->consultar($sql2);
 
         while ($registro = $resultado->fetch()) {
 
@@ -393,7 +524,7 @@ class Movimiento {
                         where
                         m.almacen_id_alm=" . $almacen . "  
                         and art.id_art=" . $articulo . " 
-                    order by 2";
+                    ";
 
         $sql2 = "select 
                         a.nombre_alm as almacen,

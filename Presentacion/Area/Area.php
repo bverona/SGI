@@ -14,7 +14,7 @@
     <meta name="author" content="Bruno Verona">
     <link rel="icon" href="../Imagenes/logo muni motupe.png">
 
-    <title>Navbar Template for Bootstrap</title>
+    <title>Area</title>
 
     <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">

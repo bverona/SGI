@@ -181,6 +181,36 @@ class Usuario {
 
     }
 
+    public function ListarAccesoUsuarios($id_usuario)
+    {
+        require_once 'clsConexion.php';
+        $objCon = new Conexion();
+        //Listará acceso de los usuarios
+        $sql = "SELECT 
+                    u.nombre_usu AS usuario,
+                    DATE_FORMAT(r.acceso_reg, '%d/%m/%y') AS fecha,
+                    DATE_FORMAT(r.acceso_reg, '%h:%i:%s %p') AS hora
+                FROM
+                    registro r
+                        INNER JOIN
+                    usuario u ON r.id_usu_reg = u.id_usu
+                WHERE
+                    r.id_usu_reg=".$id_usuario.
+                    " and r.acceso_reg <> '' ";
+
+        $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+
+            echo '<tr>';
+            echo '<td><p class="text-center">' . $registro["usuario"] . '</p></td>';
+            echo '<td><p class="text-center">' . $registro["fecha"] . '</p></td>';
+            echo '<td><p class="text-center">' . $registro["hora"] . '</p></td>';
+            echo '</tr>';
+        }
+
+    }
+
 }
 
 ?>

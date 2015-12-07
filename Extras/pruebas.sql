@@ -1,4 +1,406 @@
+
+
+
+
+
+
+
+
+
+
+
+/*
+select 
+                        a.nombre_alm as almacen,
+                        m.fecha_mov as fecha,
+                        art.nombre_art as articulo,
+                        m.cantidad_mov as cantidad,
+                        m.saldo_movimiento as saldo
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where
+                        m.almacen_id_alm=5
+                        and 
+                        m.tipo_mov=0 and
+                        art.id_art =
+                    order by 2;
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        art.unidad_art as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        round(((select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))*art.precio_art),2) as costo,
+                        round(art.precio_art,2) as precio,
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where    (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0 
+                                        and a.id_alm=3
+                        group by art.id_art
+                        order by 1;
+
+select * from usuario;
+
+SELECT 
+    u.nombre_usu,
+    DATE_FORMAT(r.acceso_reg, '%d/%m/%y') AS fecha,
+    DATE_FORMAT(r.acceso_reg, '%h:%i:%s %p') AS hora
+FROM
+    registro r
+        INNER JOIN
+    usuario u ON r.id_usu_reg = u.id_usu
+WHERE
+    r.id_usu_reg = 5 and
+    r.acceso_reg <> '';
+
+
+
+
+
+
+SELECT 
+                    a.articulo as id, a.nombre as nombre, a.unidad,
+                    SUM(a.saldo) AS saldo, a.tipo 
+                FROM
+                    (SELECT 
+                    (art.id_art) AS articulo,
+                        (art.nombre_art) AS nombre,
+                        a.nombre_alm AS almacen,
+                        um.nombre_um as unidad,
+                        t.nombre_tip as tipo,
+                        ((SELECT 
+                                (saldo_movimiento)
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento m
+                                    WHERE
+                                        m.almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art))) as saldo
+                FROM
+                    almacen a
+                INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                INNER JOIN unidad_de_medida um on um.id_um=art.id_um
+                WHERE
+                    (SELECT 
+                            saldo_movimiento
+                        FROM
+                            movimiento
+                        WHERE
+                            id_mov = (SELECT 
+                                    MAX(id_mov) AS maximo
+                                FROM
+                                    movimiento
+                                WHERE
+                                    almacen_id_alm = a.id_alm
+                                        AND articulo_id_art = art.id_art)) > 0
+                GROUP BY articulo , almacen , saldo
+                ORDER BY 2) a
+                GROUP BY id;
+
+
+SELECT 
+        a.articulo, a.nombre, SUM(a.saldo) AS saldo
+    FROM
+        (SELECT 
+        (art.id_art) AS articulo,
+            (art.nombre_art) AS nombre,
+            a.nombre_alm AS almacen,
+            ((SELECT 
+                    (saldo_movimiento)
+                FROM
+                    movimiento
+                WHERE
+                    id_mov = (SELECT 
+                            MAX(id_mov) AS maximo
+                        FROM
+                            movimiento m
+                        WHERE
+                            m.almacen_id_alm = a.id_alm
+                                AND articulo_id_art = art.id_art))) AS saldo
+    FROM
+        almacen a
+    INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+    INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+    INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+    WHERE
+        (SELECT 
+                saldo_movimiento
+            FROM
+                movimiento
+            WHERE
+                id_mov = (SELECT 
+                        MAX(id_mov) AS maximo
+                    FROM
+                        movimiento
+                    WHERE
+                        almacen_id_alm = a.id_alm
+                            AND articulo_id_art = art.id_art)) > 0
+    GROUP BY articulo , almacen , saldo
+    ORDER BY 2) a
+    GROUP BY a.articulo;
+
+
+select a.cantidad,a.cantidad,a.precio,a.costo, b.saldo 
+from(
+select 
+                        art.id_art as id,
+                        sum(dp.cantidad_art) as cantidad,
+                        round(art.precio_art,2) as precio,
+                        round((sum(dp.cantidad_art)*art.precio_art),2) as costo
+                    from
+                        almacen a 
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                    where 
+                        dp.atendido_det_ped=0 
+                    group by art.id_art) a 
+full outer join
+(select 
+                        art.id_art as id,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,
+                        t.nombre_tip as tipo
+                   from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                        on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                        on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        where    (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0
+                        group by art.nombre_art
+                        order by 1) b 
+                        on a.id=b.id;
+
+select 
+                        art.id_art,
+                        (art.nombre_art) as nombre,
+                        um.nombre_um as unidad,
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art)) as saldo,                        
+                        t.nombre_tip as tipo,
+                        a.nombre_alm as almacen,
+                        a.id_alm as idAlm
+                    from 
+                        almacen a 
+                        inner join 
+                        movimiento m 
+                            on a.id_alm=m.almacen_id_alm
+                        inner join articulo art 
+                            on m.articulo_id_art=art.id_art
+                        inner join tipoarticulo t
+                            on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        inner join unidad_de_medida um 
+                            on art.id_um=um.id_um                         
+                    where 
+                        (select 
+                            saldo_movimiento
+                         from movimiento 
+                         where id_mov=(select 
+                                            MAX(id_mov) as maximo 
+                                       from movimiento 
+                                       where almacen_id_alm= a.id_alm
+                                       and 
+                                        articulo_id_art= art.id_art))>0 and 
+                        m.almacen_id_alm= 2     
+                        group by art.nombre_art
+                   order by 1;
+
+
+
+
+
+
+
+
+
+
+select 
+                        art.id_art as id_art,
+                        a.nombre_alm as almacen,
+                        a.id_alm as id_alm,
+                        art.nombre_art as articulo,
+                        dp.cantidad_art as cantidad,
+                        dp.id_det_ped as dp,
+                        u.nombre_usu as usuario,
+                        p.fecha_ped as fecha,
+                        p.almacen_id_alm as destino,
+                        coalesce(art.precio_art,2) as precio,
+                        case
+                        when dp.atendido_det_ped = 0 then 'No atendido'
+                        when dp.atendido_det_ped = 1 then 'Atendido' 
+                        end
+                        as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                    where 
+                        
+                        dp.atendido_det_ped=0;
+
+select 
+                        art.id_art as id_art,
+                        a.nombre_alm as almacen,
+                        a.id_alm as id_alm,
+                        art.nombre_art as articulo,
+                        sum(dp.cantidad_art) as cantidad,
+                        dp.id_det_ped as dp,
+                        u.nombre_usu as usuario,
+                        p.fecha_ped as fecha,
+                        p.almacen_id_alm as destino,
+                        coalesce(art.precio_art,2) as precio,
+                        case
+                        when dp.atendido_det_ped = 0 then 'No atendido'
+                        when dp.atendido_det_ped = 1 then 'Atendido' 
+                        end
+                        as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                    where 
+                        dp.atendido_det_ped=0
+                    group by art.id_art;
  
+
+select a.nombre_alm as proveedor, a.id_alm as id_pro, s.detalle_pedido_id_det_ped as dp, 
+s.soluciones_det_cant_art as disponible, s.articulo_id_art as articulo, 
+s.diferencia_sol_det_ped as diferencia from soluciones_det_ped s inner join 
+almacen a ON s.soluciones_det_pro = a.id_alm where s.detalle_pedido_id_det_ped = 22 and 
+s.articulo_id_art = 49 and s.tipo_sol_det_ped=0 ;
+
+select a.nombre_alm as proveedor, a.id_alm as id_pro, s.detalle_pedido_id_det_ped as dp,
+ s.soluciones_det_cant_art as disponible, s.articulo_id_art as articulo,
+ s.diferencia_sol_det_ped as diferencia from soluciones_det_ped s inner join 
+almacen a ON s.soluciones_det_pro = a.id_alm where s.detalle_pedido_id_det_ped = 22 and
+ s.articulo_id_art = 49 and s.tipo_sol_det_ped=1 and s.soluciones_det_cant_art>0;
+
+select 
+                a.nombre_alm as proveedor,
+                art.nombre_art as articulo,
+                dp.cantidad_art as cantidad
+            from
+                soluciones_det_ped s
+                    inner join
+                almacen a ON s.soluciones_det_pro = a.id_alm 
+                inner join articulo art
+                on art.id_art=s.articulo_id_art 
+                inner join detalle_pedido dp
+                on s.detalle_pedido_id_det_ped=dp.id_det_ped
+            where
+                s.detalle_pedido_id_det_ped = 22 and 
+                s.articulo_id_art = 49 and 
+                s. tipo_sol_det_ped=1 and 
+                s.soluciones_det_cant_art>0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO orden_de_compra ( prioridad_orden_de_compra, atendido_orden_de_compra, almacen_id_alm, fecha_orden_de_compra, cantidad_orden_de_compra, observacion_orden_de_compra, articulo_id_art, detalle_pedido_id_det_ped ) VALUES ( 2,0,4,'2015-11-13',2,'',41,20);
 
 
@@ -811,3 +1213,4 @@ select                         coalesce(dm.cantidad_det_mov,'0') as cantidad
              on m.id_mov=dm.movimiento_id_mov
                         where m.almacen_id_alm =2 and dm.articulo_id_art= 2 
                         order by  cantidad desc limit 5,1 ;
+*/

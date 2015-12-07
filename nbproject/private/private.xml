@@ -12,9 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/SGI/Clases/clsArticulo.php</file>
             <file>file:/C:/xampp/htdocs/SGI/Extras/pruebas.sql</file>
-            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Almacen/PedidosAlmacen.php</file>
-            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Almacen/RegistraEntrada.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Gerente/CalculaDemanda.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Funciones/MuestraResumenArticulosAlmacen.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Funciones/MuestraArticulos.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Gerente/Gerente.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Clases/clsPedido.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Gerente/Demanda.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Clases/clsNavbar.php</file>
+            <file>file:/C:/xampp/htdocs/SGI/Presentacion/Almacen/ResumenExistencias.php</file>
         </group>
     </open-files>
 </project-private>

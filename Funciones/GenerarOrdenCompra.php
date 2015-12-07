@@ -1,10 +1,10 @@
 <?php
 
     $prioridad=$_POST["prioridad"];
-    $almacen=$_POST["id_alm"];
-    $cantidad=$_POST["cantidad"];
+    $cantidad=$_POST["cantidadoc"];
     $observación=$_POST["observacion"];
     $id_art=$_POST["id_art"];
+    $almacen=$_POST["id_alm"];
     $dp=$_POST["dp"];
     
     require_once '../Clases/clsOrdenCompra.php';

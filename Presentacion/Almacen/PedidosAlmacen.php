@@ -12,7 +12,7 @@ if (!isset($_SESSION["usuario"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Bruno Verona">
-    <link rel="icon" href="../Imagenes/logo muni motupe.png">
+    <link rel="icon" href="../../Imagenes/logo muni motupe.png">
 
     <title>Pedidos Atendidos</title>
 
@@ -88,8 +88,7 @@ if (!isset($_SESSION["usuario"])) {
         </div>
     </div>
         
-        <!-- Modal Orden Compra-->
-        
+    <!-- Modal Orden Compra-->        
         <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GenerarOrdenCompra.php">
             <div class="modal fade" id="OrdenCompra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -125,10 +124,10 @@ if (!isset($_SESSION["usuario"])) {
                                 </div>                                
                                 <div class="form-group">
                                 <label for="cantidadoc"><b>Cantidad</b></label>
-                                <input class="form-control" type="text" id="cantidadoc" name="cantidad" readonly value="0">
+                                <input class="form-control" type="text" id="cantidadoc" name="cantidadoc" readonly value="0">
                               </div>
                                 <div class="form-group">
-                                    <label for="cantidadoc"><b>Prioridad</b></label>
+                                    <label for="prioridad"><b>Prioridad</b></label>
                                     <select class="form-control" name="prioridad" id="prioridad">
                                         <option value="1"> 
                                             Baja
@@ -151,14 +150,85 @@ if (!isset($_SESSION["usuario"])) {
                                 <input type="hidden" id="dp" name="dp" value="">
                                 <input type="hidden" id="id_art" name="id_art" value="">
                                 <input type="hidden" id="id_alm" name="id_alm" value="">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-success" aria-hidden="true" onclick="GeneraOrdenCompra()">Aceptar</button>
                                 <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </div>                                            
             </div>
         </form>       
-                   
+    <!-- Modal Orden Compra-->                       
+        
+    <!-- Modal Orden Compra Faltante-->        
+        <form name="frmGeneraOrdenCompra" id="frmGeneraOrdenCompra" method="post" action="../../Funciones/GenerarOrdenCompra.php">
+            <div class="modal fade" id="OrdenCompraFaltante" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">                                 
+                        <div class="modal-header">
+                            <div class="container-fluid">
+                                <div class="row" >
+                                    <div class="col-xs-12">
+                                        <h4 class="text-center text-primary">
+                                            <p> Orden de Compra</p>
+                                        </h4>                                                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <p>
+                                            <b> Fecha:</b>
+                                        </p>                                                                        
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-1">
+                                        <p>
+                                            <?php echo date('d-m-Y');?>
+                                        </p>                                                                        
+                                    </div>
+                                </div>
+                            </div>                                
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group">                                    
+                                    <label for="productof"><b>Producto</b></label>
+                                    <input class="form-control" type="text" readonly id="productof" name="productof" value="Producto">                              
+                                </div>                                
+                                <div class="form-group">
+                                    <label for="cantidadoReq"><b>Cantidad</b></label>
+                                    <input class="form-control" type="text" id="cantidadReq" name="cantidadReq" readonly value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="prioridadf"><b>Prioridad</b></label>
+                                    <select class="form-control" name="prioridadf" id="prioridadf">
+                                        <option value="1"> 
+                                            Baja
+                                        </option>
+                                        <option value="2"> 
+                                            Media
+                                        </option>
+                                        <option value="3"> 
+                                            Alta
+                                        </option>
+                                    </select>                                
+                                 </div>
+                                <div class="form-group">
+                                    <label for="observacion"><b>Observación</b></label>
+                                    <textarea class="form-control" id="observacion" name="observacion" placeholder="Observación"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                                <input type="hidden" id="dpf" name="dpf" value="">
+                                <input type="hidden" id="id_artf" name="id_artf" value="">
+                                <input type="hidden" id="id_almf" name="id_almf" value="">
+                                <button type="button" class="btn btn-primary btn-success" aria-hidden="true" onclick="GeneraOrdenCompraFaltante()">Aceptar</button>
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>                                            
+            </div>
+        </form>       
+    <!-- Modal Orden Compra Faltante-->                       
         
     <!-- jQuery -->
     <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
@@ -185,8 +255,35 @@ if (!isset($_SESSION["usuario"])) {
          detped=dp;
         alert(pedido.concat(detped));
     }
-    
 
+
+    function LeerOrdenCompraFaltante(detallePedido,idArticulo,nombreArticulo,precio,proveedor,cantidadRequerida,resto)
+    {
+        $("#dp").val(detallePedido);
+        $("#id_art").val(idArticulo);
+        $("#productof").val(nombreArticulo);
+        $("#precio").val(precio);
+        $("#id_almf").val(proveedor);
+        $("#cantidadoc").val(cantidadRequerida);
+        $("#resto").val(resto);
+
+    }
+    
+    function OrdenCompraFaltante(detallePedido,idArticulo,nombreArticulo,precio, proveedor,resto)
+    {
+        $.post("../../Funciones/GenerarOrdenCompraFaltante",
+        {
+            dp:detallePedido,
+            id_art:idArticulo,
+            nombreArticulo:nombreArticulo,
+            precio:precio,
+            proveedor:proveedor,
+            resto:resto            
+        }).done(function(data){
+            
+       });
+    }
+    
     function CancelaPedido(dp){
          
         if(confirm("¿Desea Elimiar el pedido?")){
@@ -270,26 +367,20 @@ if (!isset($_SESSION["usuario"])) {
                 });
     }
 
-    function leerDatosEntrada(id_)
-    {
-        $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                .done(function(data) {
-                    data = $.parseJSON(data);
-                    $("#nombre").val(data.nombre);
-                    $("#saldo").val(data.cantidad);
-                    $("#id").val(data.id);
-                }, "json");
-    }
-
-    function leerDatosSalida(id_)
-    {
-        $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                .done(function(data) {
-                    data = $.parseJSON(data);
-                    $("#nombresalida").val(data.nombre);
-                    $("#saldosalida").val(data.cantidad);
-                    $("#idsalida").val(data.id);
-                }, "json");
+    function GeneraOrdenCompra(){
+        $.post("../../Funciones/GenerarOrdenCompra.php",
+        {
+          prioridad:$("#prioridad").val(),
+          cantidadoc:$("#cantidadoc").val(),
+          observacion:$("#observacion").val(),
+          id_art:$("#id_art").val(),
+          id_alm:$("#id_alm").val(),            
+          dp:$("#dp").val()
+        })
+        .done(function (data){
+           alert("Realizado Correctamente");
+            location.reload();
+        });
     }
 
     //llena el textarea #codigo con el POSIBLE código a generar

@@ -43,7 +43,8 @@ class Pedido {
         return $this->fecha;
     }
 
-    public function AgregarPedido($usuario, $foco) {
+    public function AgregarPedido($usuario, $foco) 
+    {
 
         $correcto = false;
         require_once 'clsConexion.php';
@@ -62,7 +63,8 @@ class Pedido {
         return $correcto;
     }
 
-    public function EditarPedido($id, $area, $fecha) {
+    public function EditarPedido($id, $area, $fecha) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
@@ -80,7 +82,8 @@ class Pedido {
         return $correcto;
     }
 
-    public function CancelarPedido($dp) {
+    public function CancelarPedido($dp) 
+    {
         $correcto = false;
         require_once 'clsConexion.php';
         $obj = new Conexion();
@@ -305,7 +308,7 @@ class Pedido {
                     </div>';                 
                 echo'            
                     <div class="col-xs-2">
-                        <div '.$this->VerificarPedido($registro["id_alm"], $registro["id_art"], $registro["cantidad"]).'><a class="btn btn-info" data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
+                        <div '.$this->VerificarPedido($registro["id_alm"], $registro["id_art"], $registro["cantidad"]).'><a class="btn btn-info " data-toggle="collapse" href="#pedido'.$registro["dp"].'" 
                             onclick="MostrarPosiblesSoluciones('
                             .$registro["dp"].','.$registro["id_art"].','
                             ."'".$registro["articulo"]."'".','.$registro["precio"].','
@@ -329,7 +332,238 @@ class Pedido {
         </div>';
         }
     }
+    
+    public function ListarSumaPedidos()
+    {
+        require_once 'clsConexion.php';
 
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.nombre_art as articulo,
+                        sum(dp.cantidad_art) as cantidad,
+                        round(art.precio_art,2) as precio,
+                        round((sum(dp.cantidad_art)*art.precio_art),2) as costo
+                    from
+                        almacen a 
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                    where 
+                        dp.atendido_det_ped=0
+                    group by art.id_art;";
+        
+
+        $resultado = $objCon->consultar($sql);
+
+
+        
+        while ($registro = $resultado->fetch()) {
+
+        echo'<div class="row">';
+            echo'<div class="col-xs-12">';
+                echo'            
+                    <div class="col-xs-3">
+                        <p class="text-center">'.$registro["articulo"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-3">
+                        <p class="text-center">'.$registro["cantidad"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-3" >
+                        <p class="text-center">'.$registro["precio"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-3">
+                        <p class="text-center">'.$registro["costo"].'</p> 
+                    </div>';                 
+                
+            echo'</div>';
+        echo'</div >';
+        
+        }
+    }
+
+    public function ListarDemandaPedidos()
+    {
+        require_once 'clsConexion.php';
+
+        $objCon = new Conexion();
+
+        //devuelve el saldo total de un artículo en todos los almacenesewq
+        $sql = "SELECT 
+                    a.id,
+                    a.articulo,
+                    a.cantidad,
+                    a.precio,
+                    a.costo,
+                    COALESCE(b.saldo, 0) as saldo
+                FROM
+                    (SELECT 
+                        art.id_art AS id,
+                            art.nombre_art AS articulo,
+                            SUM(dp.cantidad_art) AS cantidad,
+                            ROUND(art.precio_art, 2) AS precio,
+                            ROUND((SUM(dp.cantidad_art) * art.precio_art), 2) AS costo
+                    FROM
+                        almacen a
+                    INNER JOIN pedido p ON a.id_alm = p.almacen_id_alm
+                    INNER JOIN detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                    INNER JOIN articulo art ON dp.articulo_id_art = art.id_art
+                    INNER JOIN usuario u ON p.id_usu_ped = u.id_usu
+                    WHERE
+                        dp.atendido_det_ped = 0
+                    GROUP BY art.id_art) a
+                        LEFT JOIN
+                    (SELECT 
+                        a.articulo, a.nombre, SUM(a.saldo) AS saldo
+                    FROM
+                        (SELECT 
+                        (art.id_art) AS articulo,
+                            (art.nombre_art) AS nombre,
+                            a.nombre_alm AS almacen,
+                            ((SELECT 
+                                    (saldo_movimiento)
+                                FROM
+                                    movimiento
+                                WHERE
+                                    id_mov = (SELECT 
+                                            MAX(id_mov) AS maximo
+                                        FROM
+                                            movimiento m
+                                        WHERE
+                                            m.almacen_id_alm = a.id_alm
+                                                AND articulo_id_art = art.id_art))) AS saldo
+                    FROM
+                        almacen a
+                    INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                    INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                    INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                    WHERE
+                        (SELECT 
+                                saldo_movimiento
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento
+                                    WHERE
+                                        almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art)) > 0
+                    GROUP BY articulo , almacen , saldo
+                    ORDER BY 2) a
+                    GROUP BY a.articulo) b ON (a.id = b.articulo) 
+                UNION SELECT 
+                    a.id,
+                    a.articulo,
+                    a.cantidad,
+                    a.precio,
+                    a.costo,
+                    COALESCE(b.saldo, 0) AS saldo
+                FROM
+                    (SELECT 
+                        art.id_art AS id,
+                            art.nombre_art AS articulo,
+                            SUM(dp.cantidad_art) AS cantidad,
+                            ROUND(art.precio_art, 2) AS precio,
+                            ROUND((SUM(dp.cantidad_art) * art.precio_art), 2) AS costo
+                    FROM
+                        almacen a
+                    INNER JOIN pedido p ON a.id_alm = p.almacen_id_alm
+                    INNER JOIN detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                    INNER JOIN articulo art ON dp.articulo_id_art = art.id_art
+                    INNER JOIN usuario u ON p.id_usu_ped = u.id_usu
+                    WHERE
+                        dp.atendido_det_ped = 0
+                    GROUP BY art.id_art) a
+                        RIGHT JOIN
+                    (SELECT 
+                        a.articulo, a.nombre, SUM(a.saldo) AS saldo
+                    FROM
+                        (SELECT 
+                        (art.id_art) AS articulo,
+                            (art.nombre_art) AS nombre,
+                            a.nombre_alm AS almacen,
+                            ((SELECT 
+                                    (saldo_movimiento)
+                                FROM
+                                    movimiento
+                                WHERE
+                                    id_mov = (SELECT 
+                                            MAX(id_mov) AS maximo
+                                        FROM
+                                            movimiento m
+                                        WHERE
+                                            m.almacen_id_alm = a.id_alm
+                                                AND articulo_id_art = art.id_art))) AS saldo
+                    FROM
+                        almacen a
+                    INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                    INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                    INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                    WHERE
+                        (SELECT 
+                                saldo_movimiento
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento
+                                    WHERE
+                                        almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art)) > 0
+                    GROUP BY articulo , almacen , saldo
+                    ORDER BY 2) a
+                    GROUP BY a.articulo) b ON (a.id = b.articulo)
+                WHERE
+                    a.id IS NOT NULL;";
+        
+
+        $resultado = $objCon->consultar($sql);
+
+
+        
+        while ($registro = $resultado->fetch()) {
+
+        echo'<div class="row">';
+            echo'<div class="col-xs-12">';
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["articulo"].'</p> 
+                    </div>';     
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["cantidad"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.$registro["saldo"].'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2" >
+                        <p class="text-center">'.($registro["cantidad"]+$registro["cantidad"])*.15.'</p> 
+                    </div>';                 
+                echo'            
+                    <div class="col-xs-2">
+                        <p class="text-center">'.((($registro["cantidad"]+$registro["cantidad"])*.15)+$registro["cantidad"]+$registro["saldo"]).'</p> 
+                    </div>';                 
+                
+            echo'</div>';
+        echo'</div >';
+        
+        }
+    }
+    
     public function ListarPedidosAlmacenGerente()
     {
         require_once 'clsConexion.php';
@@ -369,7 +603,6 @@ class Pedido {
     // almacén general debería realizar Pedidos?? de ser así borrar primera condición del where
 
         $resultado = $objCon->consultar($sql);
-
 
         
         while ($registro = $resultado->fetch()) {
@@ -467,7 +700,7 @@ class Pedido {
                 where
                     s.detalle_pedido_id_det_ped = " . $detalle_ped . " and " .
                 "s.articulo_id_art = " . $id_art." and ".
-                "s.tipo_sol_det_ped=0";
+                "s.tipo_sol_det_ped=0 ";
 
         $sql2 = "
                 select 
@@ -484,15 +717,17 @@ class Pedido {
                 where
                     s.detalle_pedido_id_det_ped = " . $detalle_ped . " and " .
                 "s.articulo_id_art = " . $id_art." and ".
-                "s.tipo_sol_det_ped=1";
+                "s.tipo_sol_det_ped=1 and s.soluciones_det_cant_art>0";
         
         $resultado = $objCon->Consultar($sql);
         $mostrar='';    
         $resultado2=$objCon->Consultar($sql2);
+
         /* $resul
          * Variable que contiene las soluciones halladas en ProcesaPedidos().
          * Si está vacía entonces se genera una orden de compra
          */
+
         $resul = "";
 
             $cabecera='
@@ -587,7 +822,7 @@ class Pedido {
             where
                 s.detalle_pedido_id_det_ped = " . $detalle_ped . " and " .
             "s.articulo_id_art = " . $articulo." and ".
-                "s. tipo_sol_det_ped=1";
+                "s. tipo_sol_det_ped=1 and s.soluciones_det_cant_art>0";
 
         $resultado=$objCon->Consultar($sql);
         $resul='';
@@ -626,10 +861,12 @@ class Pedido {
             $resul.=        '<div class="col-xs-2"><p class="text-center">' . $registro["cantidad"] . '</p></div>';
             $resul.=        '<div class="col-xs-2"><p class="text-center">' . $resto.'</p>'.'</div>';
             $resul.=        '<div class="col-xs-2"><p class="text-center">'
-                                . '<a class="btn btn-success" href="#" '
-                                . 'onclick="OrdenCompraFaltante('.$detalle_ped.','
+                                . '<a class="btn btn-success" data-target="#OrdenCompraFaltante" '
+                                . ' data-toggle="modal" href="#" '
+                                . 'onclick="LeerOrdenCompraFaltante('.$detalle_ped.','
                                 .$articulo.",'".$registro["articulo"]."',"
-                                .$precio.','.$proveedor.','.$resto.')">                               
+                                .$precio.','.$proveedor.','
+                                .$registro["cantidad"].','.$resto.')">                               
                                 Realizar Trasferencia</a></p>'
                             .'</div>';;                   
             $resul.=    '</div>';                   
@@ -643,8 +880,7 @@ class Pedido {
         }
 
         return  $mostrar;        
-    }    
-    
+    }
     
     public function GeneraOrdenDeCompra($det_ped,$id_art,$nombre_art, $precio,$almacen,$cantidad) 
     {
@@ -660,8 +896,6 @@ class Pedido {
                 </div> ';
         return $resul;
     }
-  
-
     
     public function ProcesaPedidos() 
     {
@@ -767,8 +1001,7 @@ class Pedido {
                 
             }
 
-    }
-        
+    }    
 
     public function PedidoAtendido($dp) 
     {
@@ -829,7 +1062,7 @@ class Pedido {
         }
     }
 
-    public function ListarPedidosSubAlmacen($almacen) 
+    public function ListarPedidosSubAlmacenAtendidos($almacen) 
     {
         require_once 'clsConexion.php';
 
@@ -858,10 +1091,60 @@ class Pedido {
                             inner join
                         usuario u ON p.id_usu_ped = u.id_usu
                         where p.almacen_id_alm<>0 
-                        and
-                        dp.atendido_det_ped=0
                         and 
-                        p.almacen_id_alm=" . $almacen;
+                        p.almacen_id_alm=" . $almacen."
+                        and 
+                        dp.atendido_det_ped =1 
+                        order by 5 desc ";
+
+        $resultado = $objCon->consultar($sql);
+
+        while ($registro = $resultado->fetch()) {
+
+            echo '<tr>';
+            echo '<td>' . $registro["articulo"] . '</td>';
+            echo '<td>' . $registro["cantidad"] . '</td>';
+            echo '<td>' . $registro["usuario"] . '</td>';
+            echo '<td>' . $registro["almacen"] . '</td>';
+            echo '<td>' . $registro["fecha"] . '</td>';
+            echo '<td>' . $registro["atendido"] . '</td>';
+            echo '</tr>';
+        }
+    }
+    public function ListarPedidosSubAlmacenNoAtendidos($almacen) 
+    {
+        require_once 'clsConexion.php';
+
+        $objCon = new Conexion();
+
+        $sql = "select 
+                        art.id_art as id_articulo,
+                        a.nombre_alm as almacen,
+                        art.nombre_art as articulo,
+                        dp.cantidad_art as cantidad,
+                        u.nombre_usu as usuario,
+                        p.fecha_ped as fecha,
+                        case
+                        when dp.atendido_det_ped = 0 then 'No atendido'
+                        when dp.atendido_det_ped = 1 then 'Atendido' 
+                        end
+                        as atendido
+                    from
+                        almacen a
+                            inner join
+                        pedido p ON a.id_alm = p.almacen_id_alm
+                            inner join
+                        detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                            inner join
+                        articulo art ON dp.articulo_id_art = art.id_art
+                            inner join
+                        usuario u ON p.id_usu_ped = u.id_usu
+                        where p.almacen_id_alm<>0 
+                        and 
+                        p.almacen_id_alm=" . $almacen."
+                        and 
+                        dp.atendido_det_ped =0                         
+                        order by 5 desc ";
 
         $resultado = $objCon->consultar($sql);
 

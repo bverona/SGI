@@ -20,22 +20,7 @@
 
     <link href="../bootstrap/css/css_login.css" rel="stylesheet">
     
-    <!--style>
-    body {
-    background-image: url(../Imagenes/fondo1.jpg) ;
-    -webkit-background-size: cover;
-    background-size: cover;
-    }
-        
-    #login {
-        
-        background-color: rgba(0, 0, 0, 0.2);
-        margin-top: 11%;
-        border-radius: 10px;
-    }
-    </style>
-   
-    < Custom styles for this template -->
+    
   </head>
     <body>
         <div class="wrapper">

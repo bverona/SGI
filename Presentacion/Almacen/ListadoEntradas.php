@@ -177,43 +177,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
-
-    $('#NuevoArticulo').on('shown.bs.modal', function () {
-        $('#nombre').focus();
-    });
-
-    $(document).ready(function (){        
-          $('#cantidad').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/,'');
-           
-            });
-          $('#cantidadsalida').keyup(function (){
-            this.value =(this.value + '').replace(/[^0-9]/,'');
-           
-            });
-     });
-
-       function leerDatosEntrada(id_) 
-        {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                    .done(function(data) {
-                        data = $.parseJSON(data);
-                        $("#nombre").val(data.nombre);
-                        $("#saldo").val(data.cantidad);
-                        $("#id").val(data.id);
-                    }, "json");                    
-        }
-    
-       function leerDatosSalida(id_) 
-        {
-            $.post("../../Funciones/DatosArticulo.php", {id: id_})
-                    .done(function(data) {
-                        data = $.parseJSON(data);
-                        $("#nombresalida").val(data.nombre);
-                        $("#saldosalida").val(data.cantidad);
-                        $("#idsalida").val(data.id);
-                    }, "json");                    
-        }
     
         function LlenaSelect() 
         {
@@ -222,46 +185,6 @@
                      $("#cbTipoArticulo").append(data);
                 });
         }
-        //llena el textarea #codigo con el POSIBLE código a generar
-       function PosibleCodigo(){
-            $.post("../../Funciones/PosibleId.php")
-                    .done(function (data){
-                        $("#codigo").val(data);
-            });
-        }
-
-        function RegistraTipo()
-        {
-            var nombre = $("#nombreTipo").val();
-            $.post("../../Funciones/nuevoTipo.php",{nombre:nombre})
-                    .done(function(data){
-                        LlenaTipo();
-                    });
-        }
-
-        function LlenaTipo() {
-            $.post("../../Funciones/llenarTipo.php")
-                    .done(function(data) {
-                         $("#cbTipo").html("");
-                         $("#cbTipo").append('<option value="0">Seleccione tipo</option>');
-                         $("#cbTipo").append(data);
-                         $("#nombreTipo").val("");
-                    });
-        }
-
-        function DefineSalida(val)
-        {
-
-            if (val===2)
-            {
-                $("#divmodulos").prop("hidden",false);
-            }else
-                {
-                    $("#divmodulos").prop("hidden",true);
-                }
-                
-        }
-
         function Filtro()
         {
             var id = $("#cbTipoArticulo").val();

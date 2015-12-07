@@ -16,7 +16,7 @@
 
     <title>Listar Proveedores</title>
 
-    <!-- Bootstrap Core CSS -->
+   <!-- Bootstrap Core CSS -->
     <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
@@ -27,8 +27,11 @@
 
     <!-- Custom CSS -->
     <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
-   
     
+    
+    <link href="../../Jquery2/jquery-ui.css" rel="stylesheet">
+
+
   </head>
 
   <body>
@@ -47,7 +50,7 @@
     <div id="page-wrapper" >    
         <div class="row">
             <br>
-        <div class="panel panel-success" >
+        <div class="panel panel-info" >
         <div class="panel-heading"><b>Listado de Proveedores</b></div>
             <div class="panel-body">    
                 <div class="row">
@@ -67,10 +70,10 @@
                         <div class="col-xs-2 ">
                             <p class="text-center"><b>RUC</b></p>
                         </div>    
-                        <div class="col-xs-1 ">
+                        <div class="col-xs-1">
                             <p class="text-center"><b>Añadir Artículo</b></p>
                         </div>    
-                        <div class="col-xs-1">
+                        <div class="col-xs-1 col-xs-offset-1">
                             <p class="text-center"><b>Articulos Registrados</b></p>
                         </div>                            
                     </div>
@@ -80,14 +83,15 @@
                 $obj=new Proveedor();
                 $obj->ListarProveedores();
                 ?>
+                <input type="hidden" id="idArt" name="idArt">
+                <input type="hidden" id="idProv" name="idProv">
             </div>
         </div>        
         </div>        
     </div>        
         
         
-        <!-- Modal Nuevo Proveedor-->
-     
+        <!-- Modal Nuevo Proveedor-->    
         <form name="frmgrabarProveedor" id="frmgrabarProveedor" method="post" action="../../Funciones/ActualizaProveedor.php">
             <div class="modal fade" id="ActualizaProveedor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -115,38 +119,26 @@
 
         <!-- Modal GestionarArtículo-->
             <div class="modal fade" id="GestionaArticulo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog-prov">
+                <div class="modal-dialog">
                     <div class="modal-content">
 
                         <div class="modal-header">
                             <h4>Articulo Proveedor</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="panel panel-info">
-                                <div class="panel-heading"><b>Registro de Artículos</b>
-                                    <div class="panel-body panel-success">
-                                        <div class="col-xs-12">    
-                                            <div class="col-xs-5">
-                                                <input autocomplete="on" type="text" class="form-control" name="articulo" id="txtarticulo" required placeholder="Artículo">
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <input type="text" class="form-control" name="unidad" id="unidad" readonly required placeholder="Unidad">
-                                            </div>
-                                            <div class="col-xs-3">
-                                                <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="col-xs-3">
                             </div>
+                            <div class="col-xs-1">
+                                <input  type="text" onkeypress="" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                            </div>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control" name="unidad" id="unidad" readonly required placeholder="Unidad">
+                            </div>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio">
+                            </div>         
                         </div>
                         <div class="modal-footer">
-                            <input type="hidden" id="idArt" name="idArt">
-                            <input type="hidden" id="idProv" name="idProv">
                             <button type="submit" class="btn btn-primary btn-success" onclick="RegistrarArticuloProveedor()" aria-hidden="true">Aceptar</button>
                             <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
                         </div>
@@ -194,36 +186,31 @@
                         </div>
                     </div>
                 </div>
-            </div>            
-                        
+            </div>                                    
         <!-- /Modal ArticuloxProveedor-->                    
-
-
         
     </div>
             
-     
+<script src="../../bootstrap/bower_components/jquery/dist/jquery.js"></script>     
 
-    <!-- jQuery -->
-    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../Jquery/jquery-ui.js"></script>     
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+<script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    
-    <script type="text/javascript">
-    
+<script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+<script type="text/javascript">    
+
+    function completa(){
     $("#txtarticulo").autocomplete({
         source:"../../Funciones/BuscarArticulo.php",
         minLength:1,
         select: SeleccionarRegistro,// se ejecuta una vez que se ha seleccionado
         focus: MarcarRegistro //se ejecuta cuando se está seleccionando el item
     });    
+    }
     
     function SeleccionarProveedor(id)
     {
@@ -303,12 +290,22 @@
        });
     }
     
-    
     function MostrarArticulosPorProveedor(idProv)
     {
         var  proveedor ="#proveedor";
 
         $.post("../../Funciones/MostrarArticulosProveedor.php",{proveedor:idProv})
+                .done(function(data){
+
+                    $(proveedor.concat(idProv)).html(data);
+                });
+    }
+
+    function MostrarGestionArticulo(idProv)
+    {
+        var  proveedor ="#gestionproveedor";
+
+        $.post("../../Funciones/MostrarGestionarArticulosProveedor.php",{proveedor:idProv})
                 .done(function(data){
 
                     $(proveedor.concat(idProv)).html(data);

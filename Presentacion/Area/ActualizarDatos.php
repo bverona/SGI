@@ -16,9 +16,18 @@
 
     <title>Actualiza Datos Personales</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../bootstrap/css/Jumbotron.css">
+     <!-- Bootstrap Core CSS -->
+    <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../bootstrap/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bootstrap/bower_components/metisMenu/src/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
 
   </head>
 
@@ -159,107 +168,18 @@
             <!-- /Modal Nuevo Área-->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../Jquery/jquery.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.js"></script>
-        <script type="text/javascript">
+    <!-- jQuery -->
+    <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
 
-                                            var valorrb;
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bootstrap/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-                                            $('#myModal').on('shown.bs.modal', function()
-                                            {
-                                                $('#nombre').focus();
-                                            });
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bootstrap/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-                                            function leerDatos(id_)
-                                            {
-                                                $.post("../../Funciones/BuscarUsuario.php", {id: id_})
-                                                        .done(function(data) {
-                                                            data = $.parseJSON(data);
-                                                            $("#nombre").val(data.nombre);
-                                                            $("#id").val(data.id);
-                                                            if (data.idArea == '-' || data.idArea == '0')
-                                                            {
-                                                                //alert("almacen "+data.idAlmacen);
-                                                                SelectAlmacen();
+    <!-- Custom Theme JavaScript -->
+    <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
 
-                                                                $("#antiguo").val(data.idAlmacen);
-                                                                $("#cbModulos").val(data.idAlmacen);
-                                                            } else
-                                                            {
-                                                                //alert("area "+data.idArea);
-                                                                SelectArea();
-                                                                $("#antiguo").val(data.idArea);
-                                                                $("#cbModulos").val(data.idAlmacen);
-                                                            }
-
-                                                        }, "json");
-
-
-                                            }
-
-                                            function eliminar(p_dni)
-                                            {
-
-                                                if (confirm("Esta seguro de eliminar")) {
-                                                    $.post("../../Funciones/EliminaUsuario.php", {id_usu: p_dni})
-                                                            .done(function(data) {
-                                                                document.location.href = "/Gerente/ListarUsuarios.php";
-                                                            });
-                                                }
-
-                                            }
-
-                                            function SelectAlmacen()
-                                            {
-                                                $("#area").prop("checked", false);
-                                                $("#almacen").prop("checked", true);
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: 4})
-                                                        .done(function(data) {
-                                                            $("#cbModulos").html(data);
-                                                            $("#cbModulos").val(valor);
-                                                        });
-                                            }
-
-                                            function SelectArea()
-                                            {
-                                                $("#almacen").prop("checked", false);
-                                                $("#area").prop("checked", true);
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: 2})
-                                                        .done(function(data) {
-                                                            $("#cbModulos").html(data);
-                                                            $("#cbModulos").val(valor);
-                                                        });
-                                            }
-
-
-                                            function ValorArea() {
-                                                valorrb = $('#area').val();
-                                            }
-
-                                            function ValorAlmacen() {
-                                                valorrb = $('#almacen').val();
-                                            }
-
-                                            function LlenaSelect(val) {
-                                                $.post("../../Funciones/llenarSelect.php", {valor_Rb: val})
-                                                        .done(function(data) {
-
-                                                            $("#cbModulos").html(data);
-                                                        });
-                                            }
-
-                                            function LlenaSelectNuevo(val) {
-
-                                                $.post("../../Funciones/llenarSelectNuevo.php", {valor_Rb: val})
-                                                        .done(function(data) {
-
-                                                            $("#cbModulosNuevo").html(data);
-                                                        });
-                                            }
-        </script>
 
   </body>
 </html>

@@ -23,7 +23,8 @@
             $resultado=$objConexion->Consultar($sql)->fetch();
 
             //cadena para insertar en la tabla registro
-            $sql2="insert into registro (id_usu_reg,fecha_reg,hora_reg) values(".$resultado["id"].",'". date("Y-m-d")."','". date("h:i:s")."')";
+            //$sql2="insert into registro (id_usu_reg,fecha_reg,hora_reg,acceso_reg) values(".$resultado["id"].",'". date("Y-m-d")."','". date("h:i:s")."',now())";
+            $sql2="insert into registro (id_usu_reg,acceso_reg) values(".$resultado["id"].",now())";
 
             if( ($resultado['pass']==md5($pass)) )
             {

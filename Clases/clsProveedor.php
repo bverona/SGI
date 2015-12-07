@@ -171,22 +171,43 @@ class Proveedor {
                          <p>&nbsp</p>           
                     </div>';
 
-                echo'    
-                    <div class="col-xs-1">
-                        <button class="btn btn-success" data-toggle="modal" '
-                    . 'data-target="#GestionaArticulo" onclick="SeleccionarProveedor('.$registro["id"].')">Gestionar</button>
-                    </div>';
                 echo'
                     <div class="col-xs-1">
-                    <a class="btn btn-success" data-toggle="collapse" href="#proveedor'.$registro["id"].'" 
+                    <p class="text-center"><a class="btn btn-info" data-toggle="collapse" href="#gestionproveedor'.$registro["id"].'"'.
+                     ' aria-expanded="false" aria-controls="#gestionproveedor'.$registro["id"].
+                    '" onclick="SeleccionarProveedor('.$registro["id"].');MostrarGestionArticulo('.$registro["id"].')">Gestionar</a></p>
+                    </div>';
+                echo'
+                    <div class="col-xs-1 col-xs-offset-1">
+                    <p class="text-center"><a class="btn btn-info" data-toggle="collapse" href="#proveedor'.$registro["id"].'" 
                         onclick="SeleccionarProveedor('.$registro["id"].');MostrarArticulosPorProveedor('.$registro["id"].')" aria-expanded="false" aria-controls="#proveedor'.$registro["id"].'"> 
-                    Articulos Registrados</a>
+                    Articulos Registrados</a></p>
                     </div>';            
             echo'</div>';
         echo'</div >';
 
-        echo'<div class="row collapse" aria-expanded="false" id="proveedor'.$registro["id"].'">
-
+        echo' <div class="row collapse" aria-expanded="false" id="proveedor'.$registro["id"].'">
+        </div>';
+        echo' <div class="row collapse" aria-expanded="false" id="gestionproveedor'.$registro["id"].'">
+            <div class="panel panel-info">
+                        <div class="panel-heading"><b>Registra Artículo</b></div>
+                <div class="panel-body">
+                    <div class="col-xs-12 ">    
+                        <div class="col-xs-3">
+                            <input  type="text" disabled="true" autocomplete="on" class="form-control" name="articulo" id="txtarticulo" required placeholder="Artículo">
+                        </div>    
+                        <div class="col-xs-1">
+                                <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                        </div>    
+                        <div class="col-xs-2 ">
+                                <input type="text" class="form-control" name="unidad" id="unidad" readonly required placeholder="Unidad">
+                        </div>                            
+                        <div class="col-xs-1 ">
+                                <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio">
+                        </div>                            
+                    </div>
+                </div>
+            </div>
         </div>';
 
         }
@@ -405,7 +426,36 @@ class Proveedor {
             echo '</div>';
         echo '</div>';
     }
-    
+
+    public function ListarGestionarArticulos()
+    {
+
+            echo'
+                <div class="panel panel-info">
+                        <div class="panel-heading"><b>Registra Artículo</b></div>
+                            <div class="panel-body">';
+            echo'
+                <div class="col-xs-12 ">    
+                    <div class="col-xs-2">
+                        <input  type="text" onkeypress="completa()"  autocomplete="on" class="form-control" name="articulo" id="txtarticulo" required placeholder="Artículo">
+                    </div>    
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control" name="cantidad" id="cantidad" required placeholder="Cantidad">
+                    </div>    
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control" name="unidad" id="unidad" readonly required placeholder="Unidad">
+                    </div>                            
+                    <div class="col-xs-2">
+                        <input type="text" class="form-control" name="precio" id="precio" placeholder="Precio">
+                    </div>                            
+                    <div class="col-xs-2">
+                        <input type="button" class="btn btn-success" id="btnRegistrar" value="Registrar">
+                    </div>                                             
+                </div>';        
+        echo'</div>';                   
+            
+    }
+
     public function ListarProveedoresCombo() {
         
         require 'clsConexion.php';
@@ -426,8 +476,6 @@ class Proveedor {
         }
         
     }
-
-    
     
         }
 

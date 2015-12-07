@@ -118,6 +118,14 @@
                             </ul>
                             <!--nav-second-level -->
                         </li>
+                        
+                        <li>
+                            <a href="s"><i class="fa fa-bar-chart-o fa-fw"></i>Demanda<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="CalculaDemanda.php">Calcula Demanda</a></li>
+                                <li><a href="Demanda.php">Listar Demandas</a></li>
+                            </ul>                   
+                        </li>
 
                     </ul>
                 </div>
@@ -319,7 +327,8 @@
                                 <li><a href="PedidosArea.php">Listar Pedidos de Áreas</a></li>
                                 <li><a href="MovimientosPorAlmacen.php">Listar Movimientos por Almacén</a></li>
                                 <li><a href="Existencias.php">Existencias</a></li>
-                                <!--<li><a href="StockPorAlmacen.php">Listar Movimientos por Artículo</a></li>-->
+                                <li><a href="ResumenExistencias.php">Resumen Existencias</a></li>
+                                <li><a href="CostoArticulos.php">Costo Artículos</a></li>
                             </ul>                   
                         </li>
                     
@@ -335,6 +344,7 @@
                             <a href="s"><i class="fa fa-clock-o fa-fw"></i>Pedidos Almacen<span class="fa arrow "> </span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="PedidosAlmacen.php">Pedidos de Almacenes No Atendidos</a></li>
+                                <li><a href="ResumenPedidosAlmacen.php">Resumen Pedidos de Almacenes</a></li>
                                 <li><a href="PedidosAlmacenAtendidos.php">Pedidos de Almacenes Atendidos</a></li>
                             </ul>                   
                         </li>
@@ -344,6 +354,13 @@
                             <a href="s"><i class="fa fa-shopping-cart fa-fw"></i>Órdenes de Compra<span class="fa arrow "> </span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="ListaOrdenesCompra.php">Órdenes de Compra Realizadas</a></li>
+                            </ul>                   
+                        </li>
+                        
+                        <li>
+                            <a href="s"><i class="glyphicon glyphicon-road"></i> Accesos<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="Accesos.php">Listar Accesos</a></li>
                             </ul>                   
                         </li>
 
@@ -542,9 +559,21 @@
                         <li>
                             <a href="s"><i class="fa fa-file-text  fa-fw"></i>Reportes<span class="fa arrow "> </span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="PedidosSubAlmacen.php">Pedidos Realizados</a></li>
+                                <li><a href="PedidosSubAlmacenAtendidos.php">Pedidos Atendidos</a></li>
+                                <li><a href="PedidosSubAlmacenNoAtendidos.php">Pedidos No Atendidos</a></li>
+                                <li><a href="ListadoEntradas.php"> Listar Entradas</a></li>
+                                <li><a href="ListadoSalidas.php">Listar Salidas</a></li>
+                                <li><a href="CostoArticulosSubAlmacen.php">Costo Artículos</a></li>                                
                             </ul>                   
                         </li>
+
+                        <li>
+                            <a href="s"><i class="glyphicon glyphicon-road"></i> Accesos<span class="fa arrow "> </span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="Accesos.php">Listar Accesos</a></li>
+                            </ul>                   
+                        </li>                        
+
 
                     </ul>
                 </div>

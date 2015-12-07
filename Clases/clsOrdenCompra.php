@@ -118,7 +118,7 @@ class OrdenCompra {
         }
     }
 
-    
+    public function OrdenCompraFaltante($prioridad);
     
 }
 
