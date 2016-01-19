@@ -15,7 +15,7 @@
     <meta name="description" content="SGI">
     <meta name="author" content="Bruno Verona">
 
-    <title>Demanda</title>
+    <title>Demandas</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../bootstrap/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
     <link href="../../bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
 
 </head>
-<body>
+<body onload="llenarDemanda()">
  
     <div id="wrapper">
 
@@ -43,112 +43,35 @@
         ?>
         <!-- Nav Bar -->
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Sistema Gestor de Compras</h1>
+            
+          <div class="row">              
+                <div class="col-xs-12 col-md-9 col-lg-6">
+                     <br>
+                     <div class="panel panel-success">
+                         <div class="panel-heading">
+                             <b>Listado de Demandas</b>
+                         </div>
+                             <div class="panel-body">
+                                 <div class="table-responsive table-hover">
+                                     <table class="table table-condensed table-hover">
+                                       <thead>
+                                         <tr>
+                                           <th><p class="text-center">Articulo</p></th>
+                                           <th><p class="text-center">Cantidad</p></th>
+                                           <th><p class="text-center">Estado</p></th>
+                                         </tr>
+                                       </thead>
+                                       <tbody id="tbody">
+
+                                       </tbody>
+                                     </table>
+                                 </div>
+                             </div>
+                     </div>    
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->     
-            
-            <div class="row">
-
-                <div class="col-xs-12 col-lg-offset-2 col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-envelope-o fa-fw"></i> Solicitudes de Compra
-                                                        
-                        </div>
-                        <!-- /.panel-heading -->
-
-                        <div class="panel-body">
-                            <p>
-                                <b>Requiere:</b>
-                            </p>
-                            <p>
-                                10 tn Piedra chancada de 1/2
-                            </p>
-                            <p>
-                                <b>Prioridad</b> Alta
-                            </p>
-                            <p>
-                                <b>Obra:</b> Pavimientación calle El Carmen
-                            </p>
-                            <p>
-                                <b>Días a Esperar</b> 03
-                            </p>
-                            <p>
-                                <b>Horas a Esperar</b> 04 
-                            </p>
-                            
-                            <p>
-                                <a href="#" class="btn btn-outline btn-lg btn-primary" data-toggle="modal" data-target="#Proveedores">Cotizaciones</a>
-                            </p>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->                    
-                </div>
-                <!-- /.col-lg-8 -->
-            </div>
-            <!-- /.row -->
-            
-            
-    <!-- Modal Proveedor-->
-            <form name="frmgrabarAlmacen" id="frmgrabarAlmacen" method="post" action="../../Funciones/NuevoAlmacen.php">
-                <div class="modal fade" id="Proveedores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4>Proveedores</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Proveedor</th>
-                                            <th>Artículo</th>
-                                            <th>Precio</th>                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Marañon E.I.R.L</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>150.5</td>
-                                            <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>FerPerú S.A.C</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>160</td>
-                                            <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tumi S.A.</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>151.2</td>
-                                            <td><a href="#" class="btn btn-outline btn-primary" >Comprar</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-success" aria-hidden="true">Aceptar</button>
-                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-    <!-- /Modal Proveedor-->                
-            
-            
+          </div>
+<!-- /.row -->
+                        
             
         </div>
         <!-- /#page-wrapper -->
@@ -167,6 +90,17 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+    
+    <script>
+        function llenarDemanda(usuario){
+        $.post("../../Funciones/LlenarDemandas.php",{usuario:usuario})
+            .done(function(data) {
+                $("#tbody").html(data);
+                });
+        }
+    </script>
 
+    
+    
   </body>
 </html>

@@ -135,13 +135,14 @@ class Pedido {
         $obj = new Conexion();
         //para obtener el indice del último pedido agregado
         $sql = "select MAX(id_ped)as maximo from pedido;";
-
+        echo $sql;
         $resultado = $obj->Consultar($sql);
         $registro = $resultado->fetch();
 
         $sql = "insert into detalle_pedido(Pedido_id_ped,articulo_id_art,cantidad_art)"
                 . "values(" . $registro["maximo"] . "," . $id_art . "," . $cant . ")";
-
+        echo $sql;
+        
         if (($obj->Consultar($sql)) == !0) {
             $correcto = true;
         }
@@ -535,32 +536,34 @@ class Pedido {
         
         while ($registro = $resultado->fetch()) {
 
-        echo'<div class="row">';
+
             echo'<div class="col-xs-12">';
                 echo'            
                     <div class="col-xs-2">
-                        <p class="text-center">'.$registro["articulo"].'</p> 
+                        <p class="text-center" id="art'.$registro["id"].'">'.$registro["articulo"].'</p> 
                     </div>';     
                 echo'            
                     <div class="col-xs-2">
-                        <p class="text-center">'.$registro["cantidad"].'</p> 
+                        <p class="text-center" id="cant'.$registro["id"].'">'.$registro["cantidad"].'</p> 
                     </div>';                 
                 echo'            
                     <div class="col-xs-2">
-                        <p class="text-center">'.$registro["saldo"].'</p> 
+                        <p class="text-center" id="stock'.$registro["id"].'">'.$registro["saldo"].'</p> 
                     </div>';                 
                 echo'            
                     <div class="col-xs-2" >
-                        <p class="text-center">'.($registro["cantidad"]+$registro["cantidad"])*.15.'</p> 
+                        <p class="text-center" id="proy'.$registro["id"].'">'.($registro["cantidad"]+$registro["cantidad"])*.15.'</p> 
                     </div>';                 
                 echo'            
                     <div class="col-xs-2">
-                        <p class="text-center">'.((($registro["cantidad"]+$registro["cantidad"])*.15)+$registro["cantidad"]+$registro["saldo"]).'</p> 
-                    </div>';                 
-                
-            echo'</div>';
-        echo'</div >';
-        
+                        <p class="text-center" id="dem'.$registro["id"].'">'.((($registro["cantidad"]+$registro["cantidad"])*.15)+$registro["cantidad"]+$registro["saldo"]).'</p> 
+                    </div>';                                 
+                echo'
+                    <div class="col-xs-2">
+                        <button class="btn  btn-success" data-toggle="modal" data-target="#CalculaDemanda" onclick="leerDatosDemanda('.$registro["id"].');">Calcular</button>
+                    </div>';
+            echo'</div><br>';
+            echo'<div><br></div>';
         }
     }
     

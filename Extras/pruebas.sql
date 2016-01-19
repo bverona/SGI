@@ -1,9 +1,134 @@
-
-
-
-
-
-
+SELECT 
+                    
+                    a.id,
+                    a.articulo,
+                    a.cantidad,
+                    a.precio,
+                    a.costo,
+                    COALESCE(b.saldo, 0) as saldo
+                FROM
+                    (SELECT 
+                        art.id_art AS id,
+                            art.nombre_art AS articulo,
+                            SUM(dp.cantidad_art) AS cantidad,
+                            ROUND(art.precio_art, 2) AS precio,
+                            ROUND((SUM(dp.cantidad_art) * art.precio_art), 2) AS costo
+                    FROM
+                        almacen a
+                    INNER JOIN pedido p ON a.id_alm = p.almacen_id_alm
+                    INNER JOIN detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                    INNER JOIN articulo art ON dp.articulo_id_art = art.id_art
+                    INNER JOIN usuario u ON p.id_usu_ped = u.id_usu
+                    WHERE
+                        dp.atendido_det_ped = 0
+                    GROUP BY art.id_art) a
+                        LEFT JOIN
+                    (SELECT 
+                        a.articulo, a.nombre, SUM(a.saldo) AS saldo
+                    FROM
+                        (SELECT 
+                        (art.id_art) AS articulo,
+                            (art.nombre_art) AS nombre,
+                            a.nombre_alm AS almacen,
+                            ((SELECT 
+                                    (saldo_movimiento)
+                                FROM
+                                    movimiento
+                                WHERE
+                                    id_mov = (SELECT 
+                                            MAX(id_mov) AS maximo
+                                        FROM
+                                            movimiento m
+                                        WHERE
+                                            m.almacen_id_alm = a.id_alm
+                                                AND articulo_id_art = art.id_art))) AS saldo
+                    FROM
+                        almacen a
+                    INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                    INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                    INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                    WHERE
+                        (SELECT 
+                                saldo_movimiento
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento
+                                    WHERE
+                                        almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art)) > 0
+                    GROUP BY articulo , almacen , saldo
+                    ORDER BY 2) a
+                    GROUP BY a.articulo) b ON (a.id = b.articulo) 
+                UNION SELECT 
+                    a.id,
+                    a.articulo,
+                    a.cantidad,
+                    a.precio,
+                    a.costo,
+                    COALESCE(b.saldo, 0) AS saldo
+                FROM
+                    (SELECT 
+                        art.id_art AS id,
+                            art.nombre_art AS articulo,
+                            SUM(dp.cantidad_art) AS cantidad,
+                            ROUND(art.precio_art, 2) AS precio,
+                            ROUND((SUM(dp.cantidad_art) * art.precio_art), 2) AS costo
+                    FROM
+                        almacen a
+                    INNER JOIN pedido p ON a.id_alm = p.almacen_id_alm
+                    INNER JOIN detalle_pedido dp ON p.id_ped = dp.Pedido_id_ped
+                    INNER JOIN articulo art ON dp.articulo_id_art = art.id_art
+                    INNER JOIN usuario u ON p.id_usu_ped = u.id_usu
+                    WHERE
+                        dp.atendido_det_ped = 0
+                    GROUP BY art.id_art) a
+                        RIGHT JOIN
+                    (SELECT 
+                        a.articulo, a.nombre, SUM(a.saldo) AS saldo
+                    FROM
+                        (SELECT 
+                        (art.id_art) AS articulo,
+                            (art.nombre_art) AS nombre,
+                            a.nombre_alm AS almacen,
+                            ((SELECT 
+                                    (saldo_movimiento)
+                                FROM
+                                    movimiento
+                                WHERE
+                                    id_mov = (SELECT 
+                                            MAX(id_mov) AS maximo
+                                        FROM
+                                            movimiento m
+                                        WHERE
+                                            m.almacen_id_alm = a.id_alm
+                                                AND articulo_id_art = art.id_art))) AS saldo
+                    FROM
+                        almacen a
+                    INNER JOIN movimiento m ON a.id_alm = m.almacen_id_alm
+                    INNER JOIN articulo art ON m.articulo_id_art = art.id_art
+                    INNER JOIN tipoarticulo t ON art.TipoArticulo_id_tip_art = t.idTipoArticulo
+                    WHERE
+                        (SELECT 
+                                saldo_movimiento
+                            FROM
+                                movimiento
+                            WHERE
+                                id_mov = (SELECT 
+                                        MAX(id_mov) AS maximo
+                                    FROM
+                                        movimiento
+                                    WHERE
+                                        almacen_id_alm = a.id_alm
+                                            AND articulo_id_art = art.id_art)) > 0
+                    GROUP BY articulo , almacen , saldo
+                    ORDER BY 2) a
+                    GROUP BY a.articulo) b ON (a.id = b.articulo)
+                WHERE
+                    a.id IS NOT NULL;
 
 
 

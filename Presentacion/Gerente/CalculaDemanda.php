@@ -30,7 +30,7 @@ if (!isset($_SESSION["usuario"])) {
 
     </head>
 
-    <body>
+    <body onload="MuestraDemanda();">
 
         <div id="wrapper">
 
@@ -71,13 +71,47 @@ if (!isset($_SESSION["usuario"])) {
                             </div>        
                         </div>
                     </div>
-                    <?php 
-                        $objPed->ListarDemandaPedidos();
-                    ?>
+                    <div class="row" id="Listado">
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+        
+    <!-- Modal Calcula Demanda-->
+        <div class="modal fade" id="CalculaDemanda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4>Nuevo Usuario</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="demanda">Demanda</label>
+                            <input type="text" readonly class="form-control" name="demanda" id="demanda" >
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Costo Preparación</label>
+                            <input type="text" class="form-control" name="costoPreparacion" id="costoPreparacion" required placeholder="Costo de Preparacion">
+                        </div>
+                        <div class="form-group">
+                            <label for="pass">Costo Almacenamiento</label>
+                            <input type="text" class="form-control" name="costoAlmacenamiento" id="costoAlmacenamiento" required placeholder="Costo de Almacenamiento">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-success" id="btnNuevoUsuario" onclick="ValidaCampos();ProcesaDemanda()" aria-hidden="true">Aceptar</button>
+                        <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    <!-- /Modal Calcula Demanda-->        
+        
+        
         
 <!-- jQuery -->
 <script src="../../bootstrap/bower_components/jquery/dist/jquery.min.js"></script>
@@ -90,6 +124,60 @@ if (!isset($_SESSION["usuario"])) {
 
 <!-- Custom Theme JavaScript -->
 <script src="../../bootstrap/dist/js/sb-admin-2.js"></script>
+
+<script src="../../Jquery/numeric.js"></script>
+
+
+<script>
+
+//        $("#txtprecio").numeric({ decimal: false, negative: false });
+//        $("#txtdni").numeric({ decimal: false, negative: false });
+//        $("#txttelefono").numeric({ decimal: false, negative: false });
+//        $("#txtdescuento").numeric({ decimal: false, negative: false });
+//        $("#txtcantidad").numeric({ decimal: false, negative: false });
+
+    $("#costoAlmacenamiento").numeric({ decimalPlaces: 2, negative: false });
+    $("#costoPreparacion").numeric({ decimalPlaces: 2, negative: false });
+    var idArt;
+    
+    function leerDatosDemanda(id)
+    {
+        idArt=id;
+        $("#demanda").val($("#dem"+id).html());
+    }
+
+    function MuestraDemanda()
+    {
+        $.post("../../Funciones/MuestraDemanda.php")
+            .done(function(data) {
+                $("#Listado").html(data);
+            });
+    }
+    
+    function ValidaCampos(){
+        if($("#costoPreparacion").val()=="")
+        {
+            $("#costoPreparacion").focus();
+        }else 
+            if($("#costoAlmacenamiento").val()=="")
+            {
+                $("#costoAlmacenamiento").focus();
+            }
+    }
+    
+    function ProcesaDemanda()
+    {
+        $.post("../../Funciones/ProcesaDemanda.php",
+        {
+            id_art:idArt,
+            demanda:$("#demanda").val(),
+            costoAlmacenamiento:$("#costoAlmacenamiento").val(),
+            costoPreparacion:$("#costoPreparacion").val()
+        }).done(function(data){
+            alert(data);
+        })
+    }
+</script>
 
 </body>
 </html>

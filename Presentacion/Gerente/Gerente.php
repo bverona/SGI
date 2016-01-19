@@ -67,19 +67,19 @@ if (!isset($_SESSION["usuario"])) {
                                 <b>Requiere:</b>
                             </p>
                             <p>
-                                10 tn Piedra chancada de 1/2
+                                500 bolsas Cemento azul tipo portland 
                             </p>
                             <p>
                                 <b>Prioridad</b> Alta
                             </p>
                             <p>
-                                <b>Obra:</b> Pavimientación calle El Carmen
+                                <b>Obra:</b> Parque Urbanización Sanchez Cerro
                             </p>
                             <p>
-                                <b>Días a Esperar</b> 03
+                                <b>Días a Esperar</b> 02
                             </p>
                             <p>
-                                <b>Horas a Esperar</b> 04 
+                                <b>Horas a Esperar</b> 06 
                             </p>
                             
                             <p>
@@ -121,22 +121,28 @@ if (!isset($_SESSION["usuario"])) {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Marañon E.I.R.L</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>150.5</td>
+                                            <td>Inversones Falla</td>
+                                            <td>Cemento azul tipo portland</td>
+                                            <td>17.2</td>
                                             <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
                                         </tr>
                                         <tr>
-                                            <td>FerPerú S.A.C</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>160</td>
+                                            <td>Ferretería Tumi E.I.R.L</td>
+                                            <td>Cemento azul tipo portland</td>
+                                            <td>16.5</td>
                                             <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
                                         </tr>
                                         <tr>
-                                            <td>Tumi S.A.</td>
-                                            <td>Piedra chancada de 1/2</td>
-                                            <td>151.2</td>
-                                            <td><a href="#" class="btn btn-outline btn-primary" >Comprar</a></td>
+                                            <td>Ferretería Marañon</td>
+                                            <td>Cemento azul tipo portland</td>
+                                            <td>17.5</td>
+                                            <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ferretería Mi Jesus</td>
+                                            <td>Cemento azul tipo portland</td>
+                                            <td>16.8</td>
+                                            <td><a href="#" class="btn btn-outline btn-primary">Comprar</a></td>
                                         </tr>
                                     </tbody>
                                 </table>

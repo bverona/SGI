@@ -360,7 +360,7 @@ class Articulo {
         $sql = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_um as unidad,
                         (select 
                             saldo_movimiento
                          from movimiento 
@@ -381,7 +381,9 @@ class Articulo {
                         inner join articulo art 
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
-                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo 
+                        inner join unidad_de_medida um 
+                        on art.id_um=um.id_um 
                         where m.almacen_id_alm=" . $almacen . " and 
                         (select 
                             saldo_movimiento
@@ -398,7 +400,7 @@ class Articulo {
         $sql2 = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_um as unidad,
                         (select 
                             saldo_movimiento
                          from movimiento 
@@ -419,7 +421,9 @@ class Articulo {
                         inner join articulo art 
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
-                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        on art.TipoArticulo_id_tip_art=t.idTipoArticulo 
+                        inner join unidad_de_medida um 
+                        on art.id_um=um.id_um 
                         where    (select 
                             saldo_movimiento
                          from movimiento 
@@ -527,7 +531,7 @@ class Articulo {
         $sql = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_unidad as unidad,
                         (select 
                             saldo_movimiento
                          from movimiento 
@@ -559,6 +563,8 @@ class Articulo {
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        inner join unidad_de_medida um 
+                        on um.id_um=art.id_um 
                         where    (select 
                             saldo_movimiento
                          from movimiento 
@@ -595,7 +601,7 @@ class Articulo {
         $sql = "select 
                         art.id_art,
                         (art.nombre_art) as nombre,
-                        art.unidad_art as unidad,
+                        um.nombre_um as unidad,
                         (select 
                             saldo_movimiento
                          from movimiento 
@@ -627,6 +633,8 @@ class Articulo {
                         on m.articulo_id_art=art.id_art
                         inner join tipoarticulo t
                         on art.TipoArticulo_id_tip_art=t.idTipoArticulo
+                        inner join unidad_de_medida um 
+                        on um.id_um = art.id_um
                         where    (select 
                             saldo_movimiento
                          from movimiento 

@@ -559,6 +559,7 @@
                         <li>
                             <a href="s"><i class="fa fa-file-text  fa-fw"></i>Reportes<span class="fa arrow "> </span></a>
                             <ul class="nav nav-second-level">
+                                <li><a href="MovimientosPorAlmacen.php">Listar Movimientos</a></li>
                                 <li><a href="PedidosSubAlmacenAtendidos.php">Pedidos Atendidos</a></li>
                                 <li><a href="PedidosSubAlmacenNoAtendidos.php">Pedidos No Atendidos</a></li>
                                 <li><a href="ListadoEntradas.php"> Listar Entradas</a></li>
